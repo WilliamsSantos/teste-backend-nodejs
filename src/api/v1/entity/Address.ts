@@ -1,4 +1,6 @@
 import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
+import { address } from "./interface";
+import { addressValidate } from "./validates/address.validates";
 
 @Entity()
 export class Address {
@@ -44,5 +46,9 @@ export class Address {
     country: string
 
     @Column()
-	postal_code: number
+    postal_code: number
+    
+    validate(data: address) {
+        addressValidate(data);
+    }
 }

@@ -7,16 +7,17 @@ import {
 
 import { Log } from "../../../utils/log";
 import { requestDenounce, responseDenounce } from "./interfaces";
+import { address } from "../entity/interface";
 
 export class DenounceController {
     logs: Log;
-    address: AddressModel;
+    addessModel: AddressModel;
     errorCodes: ErrorCodesModel;
     denunciatorModel: DenunciatorModel;
     denounceModel: DenouncesModel;
 
     constructor(){
-        this.address = new AddressModel();
+        this.addessModel = new AddressModel();
         this.denunciatorModel = new DenunciatorModel();
         this.errorCodes = new ErrorCodesModel();
         this.denounceModel = new DenouncesModel();
@@ -29,12 +30,22 @@ export class DenounceController {
         let { denunciator, denounces, latitude, longitude } = data;
 
         try {
-            const denunciatorSave = this.denunciatorModel.save(denunciator); 
-            const denouncesSave = this.denounceModel.save(denounces);
-            
+            const denunciatorSave = this.denunciatorModel.save(denunciator),
+                  denouncesSave = this.denounceModel.save(denounces);
+
+            const address: address = {
+                street: '',
+                neightborhood: '',
+                city: '',
+                state: '',
+                country: '',
+                postal_code: ''
+            }
+
+            const addressSave = this.addessModel.save(address);
+
             // getAddressInformation();
 
-            // const address = {};
 
             // const errorCodes = {};
         } catch (error) {
