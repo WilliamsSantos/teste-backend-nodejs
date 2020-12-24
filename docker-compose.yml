@@ -1,0 +1,16 @@
+version: '3'
+services:
+  roga-teste-postgres-compose:
+    image: postgres
+    env_file:
+      - .env
+
+    environment:
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_DB: "${DB}"
+
+    volumes:
+      - "${DB_VOLUME}"
+    ports:
+      - "${DB_PORT}:${DB_PORT}"
