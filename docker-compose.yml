@@ -1,5 +1,14 @@
 version: '3'
+
 services:
+
+  redis-server: 
+    image: "redis"
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    expose:
+      - "${REDIS_PORT}"
+
   roga-teste-postgres-compose:
     image: postgres
     env_file:

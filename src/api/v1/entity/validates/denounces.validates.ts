@@ -1,5 +1,4 @@
 import { denounce } from "../interface";
-import { errorsThow } from "../../utils/util";
 
 const errors: object[] = [];
 
@@ -48,6 +47,5 @@ export function denounceValidate (have: denounce) {
     }
 
     if (errors.length) {
-        return errorsThow(errors);      
     }
 } 

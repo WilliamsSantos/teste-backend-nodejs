@@ -5,26 +5,36 @@ import * as loggerMorgan  from "morgan";
 import * as expressWinston from "express-winston";
 import { logger } from "../logs";
 import { connectServerOnDB } from "./config/db";
+import { log } from "./utils/util";
 
 export const app = express();
 
 // ROUTES
 import routerDenounces = require("./api/v1/routes/denounces");
-import { log } from "./utils/util";
+import routerGeo = require("./api/v1/routes/geo");
 
 function requestDenouncesMiddleware(request: express.Request, response: express.Response, next) {
   const data = request.body,
         objectPropertsAccept = [
           'latitude', 
           'longitude', 
-          { 'denunciante': ['nome','cpf'] }, 
-          { 'denuncia': ['titulo', 'descricao'] },
+          { 
+            'denunciante': [
+              'nome',
+              'cpf'
+            ] 
+          }, 
+          { 
+            'denuncia': [
+              'titulo', 
+              'descricao'
+            ] 
+          },
           'nome', 
           'cpf'
         ];
 
   const errors:Array<object> = [];
-
   objectPropertsAccept.forEach(item => {
 		if(typeof item != 'object'){
 			if(!data.hasOwnProperty(item)){
@@ -32,11 +42,11 @@ function requestDenouncesMiddleware(request: express.Request, response: express.
 			}
     } else {
 			let property = Object.getOwnPropertyNames(item)[0];
-      	for(let i of item[property]){
-					if(!data[property].hasOwnProperty(i)){
-						errors.push({'campo': item, 'description': `Campo ${item} requerido!`});
-					}
-				}
+      for(let i of item[property]){
+        if(!data[property].hasOwnProperty(i)){
+          errors.push({'campo': item, 'description': `Campo ${item} requerido!`});
+        }
+      }
 		}
   })  
 
@@ -63,8 +73,9 @@ app.use(expressWinston.logger({
 connectServerOnDB();
 
 app.use(`/api/${process.env.API_VERSION}/denuncias`, requestDenouncesMiddleware, routerDenounces);
+app.use(`/api/${process.env.API_VERSION}/geo`, routerGeo);
 
 // No routing indexed
 app.use('*', (req: express.Request, res: express.Response) => {
-    res.status(405).json('Router Not Implement');
+  return res.status(405).json('Router Not Implement');
 });
