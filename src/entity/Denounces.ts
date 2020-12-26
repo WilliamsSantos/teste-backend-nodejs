@@ -5,14 +5,15 @@ import { denounceValidate } from "./validates/denounces.validates";
 @Entity()
 export class Denounces {
 
+    constructor(data:denounce){
+        this.address_id = data.address_id;
+        this.denunciator_id = data.denunciator_id;
+        this.title = data.title;
+        this.description = data.description;
+    }
+
     @PrimaryGeneratedColumn()
     id: number;
-
-    @Column()
-    name: string;
-
-    @Column()
-    cpf: number;
 
     @Column()
     created_at: Date;
@@ -37,7 +38,7 @@ export class Denounces {
     @Column()    
     address_id: number;   
 
-    validate(data: denounce) {
-        denounceValidate(data);
+    validate() {
+        denounceValidate(this);
     }
 }

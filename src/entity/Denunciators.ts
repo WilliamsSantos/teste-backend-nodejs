@@ -5,6 +5,11 @@ import { denounciatorValidate } from "./validates/denounciators.validates";
 @Entity()
 export class Denunciators {
 
+    constructor(data:denounciator) {
+        this.name = data.name;
+        this.cpf = data.cpf;
+    }
+
     @PrimaryGeneratedColumn()
     id: number;
 
@@ -20,7 +25,7 @@ export class Denunciators {
     @Column()
     updated_at: Date;
 
-    validate(data: denounciator) {
-        denounciatorValidate(data);
+    validate() {
+        denounciatorValidate(this);
     }
 }

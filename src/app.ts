@@ -5,34 +5,36 @@ import * as loggerMorgan  from "morgan";
 import * as expressWinston from "express-winston";
 import { logger } from "../logs";
 import { connectServerOnDB } from "./config/db";
-import { log } from "./utils/util";
+import { errorResponse, log } from "./utils/util";
 
 export const app = express();
 
 // ROUTES
 import routerDenounces = require("./api/v1/routes/denounces");
-import routerGeo = require("./api/v1/routes/geo");
 
 function requestDenouncesMiddleware(request: express.Request, response: express.Response, next) {
   const data = request.body,
-        objectPropertsAccept = [
-          'latitude', 
-          'longitude', 
-          { 
-            'denunciante': [
-              'nome',
-              'cpf'
-            ] 
-          }, 
-          { 
-            'denuncia': [
-              'titulo', 
-              'descricao'
-            ] 
-          },
-          'nome', 
-          'cpf'
-        ];
+  objectPropertsAccept = [
+    'latitude', 
+    'longitude', 
+    { 
+      'denunciante': [
+        'nome',
+        'cpf'
+      ] 
+    }, 
+    { 
+      'denuncia': [
+        'titulo', 
+        'descricao'
+      ] 
+    },
+  ];
+
+  if (Object.keys(data).length == 0) {
+    const error = errorResponse([{code: 0, message: 'Requisição Nula'}]);
+    response.status(409).json(error);
+  }
 
   const errors:Array<object> = [];
   objectPropertsAccept.forEach(item => {
@@ -54,6 +56,19 @@ function requestDenouncesMiddleware(request: express.Request, response: express.
     log('error', `Request middleware error: ${JSON.stringify(errors)}`);
     return response.status(403).json(errors);
   } else {
+    const translateEnglish = {
+      'latitude': data.latitude, 
+      'longitude': data.longitude, 
+      'denunciator': {
+        'name': data.denunciante.nome,
+        'cpf': data.denunciante.cpf
+      }, 
+      'denounces': {
+        'description': data.denuncia.descricao,
+        'title': data.denuncia.titulo, 
+      }
+    }
+    request.body = translateEnglish;
     next();
   }
 }
@@ -73,9 +88,8 @@ app.use(expressWinston.logger({
 connectServerOnDB();
 
 app.use(`/api/${process.env.API_VERSION}/denuncias`, requestDenouncesMiddleware, routerDenounces);
-app.use(`/api/${process.env.API_VERSION}/geo`, routerGeo);
 
 // No routing indexed
-app.use('*', (req: express.Request, res: express.Response) => {
+app.use('*', (_req: express.Request, res: express.Response) => {
   return res.status(405).json('Router Not Implement');
 });

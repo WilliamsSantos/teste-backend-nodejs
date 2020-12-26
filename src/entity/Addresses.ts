@@ -3,7 +3,18 @@ import { address } from "./interface";
 import { addressValidate } from "./validates/address.validates";
 
 @Entity()
-export class Address {
+export class Addresses {
+
+    constructor(data:address) {
+        this.city = data.city;
+        this.country = data.country;
+        this.lat = data.lat;
+        this.lng = data.lng;
+        this.neightborhood = data.neightborhood;
+        this.postal_code = data.postal_code;
+        this.state = data.state;
+        this.street = data.street;        
+    }
 
     @PrimaryGeneratedColumn()
     id: number;
@@ -46,9 +57,9 @@ export class Address {
     country: string
 
     @Column()
-    postal_code: number
-    
-    validate(data: address) {
-        addressValidate(data);
+    postal_code: string
+
+    validate() {
+        addressValidate(this);
     }
 }
