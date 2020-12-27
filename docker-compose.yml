@@ -1,8 +1,7 @@
-version: '3'
+version: "3"
 
 services:
-
-  redis-server: 
+  redis-server:
     image: "redis"
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"

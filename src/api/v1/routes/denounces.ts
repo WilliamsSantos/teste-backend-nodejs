@@ -32,10 +32,19 @@ routerDenounces.post('/', async (req: Request, res: Response): Promise<void> => 
                 await new AddressController(addressFinded)
                     .save(transactionalEntityManager);
 
+            denounces.address_id = addressSave.id;
+            denounces.denunciator_id = denunciatorSave.id;
             denouncesSave =
                 await new DenounceController(denounces)
                     .save(transactionalEntityManager);
         });
+
+        const fieldsToRemove: Array<string> = [
+            'id', 'created_at', 'updated_at', 'address_id', 'denunciator_id', 'tableName'
+        ];
+        removeUnnecessaryFields(denunciatorSave, fieldsToRemove);
+        removeUnnecessaryFields(denouncesSave, fieldsToRemove, 'id');
+        removeUnnecessaryFields(addressSave, fieldsToRemove);
 
         const responseJson: responseDenounce = {
             id: denouncesSave['id'],
@@ -46,13 +55,26 @@ routerDenounces.post('/', async (req: Request, res: Response): Promise<void> => 
             address: addressSave
         };
 
-        res.status(200).json(responseJson);
+        removeUnnecessaryFields(responseJson.denounces, 'id');
+
+        res.status(201).json(responseJson);
     } catch (error) {
-        const errors = errorResponse([{ message: error.message, code: error.code }]);
+        const errors = errorResponse(error);
 
         log('error', `Erro message on denounces router catch: ${errors}`);
         res.status(500).json(errors);
     }
 });
+
+function removeUnnecessaryFields(object: any, fields: Array<string> | string, ignore?: string) {
+    if (!Array.isArray(fields)) {
+        delete object[fields]
+    }
+    for (const field of fields) {
+        if (object[field] && field != ignore) {
+            delete object[field]
+        }
+    }
+}
 
 export = routerDenounces;

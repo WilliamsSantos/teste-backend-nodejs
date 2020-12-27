@@ -4,19 +4,21 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    BaseEntity
 } from "typeorm";
 
+import { entityBase } from "./abstractEntityBase";
+
 @Entity()
-export class Logs extends BaseEntity {
+export class Logs extends entityBase {
 
     constructor(data?: any) {
-        if (!data) data = {};
-
         super();
+
+        if (!data) data = {};
         this.cpf = data.cpf;
         this.json_response = data.json_response;
         this.json_send = data.json_send;
+        this.setTableName('Logs')
     }
 
     @PrimaryGeneratedColumn()
@@ -36,4 +38,8 @@ export class Logs extends BaseEntity {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    validate(): Promise<any> {
+        throw new Error("Method not implemented to logs.");
+    }
 }

@@ -2,22 +2,23 @@ import {
     Entity,
     PrimaryGeneratedColumn,
     Column,
-    BaseEntity,
     CreateDateColumn,
     UpdateDateColumn
 } from "typeorm";
+import { entityBase } from "./abstractEntityBase";
 
 import { denounciatorValidate } from "./validates/denounciators.validates";
 
 @Entity()
-export class Denunciators extends BaseEntity {
+export class Denunciators extends entityBase {
 
     constructor(data?: any) {
-        if (!data) data = {};
+        super()
 
-        super();
+        if (!data) data = {};
         this.name = data.name;
         this.cpf = data.cpf;
+        this.setTableName('Denunciators')
     }
 
     @PrimaryGeneratedColumn()
@@ -36,6 +37,6 @@ export class Denunciators extends BaseEntity {
     updated_at: Date;
 
     validate() {
-        denounciatorValidate(this);
+        return denounciatorValidate(this);
     }
 }

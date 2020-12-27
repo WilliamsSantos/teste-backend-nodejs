@@ -5,7 +5,9 @@ import * as loggerMorgan from "morgan";
 import * as expressWinston from "express-winston";
 import { logger } from "../logs";
 import { connectServerOnDB } from "./config/db";
-import { validateRequestDenouncesMiddleware } from "./api/middlewares/requestDenouncesMiddleware";
+import {
+  validateRequestDenouncesMiddleware
+} from "./api/middlewares/requestDenouncesMiddleware";
 
 export const app = express();
 

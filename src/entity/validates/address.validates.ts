@@ -1,50 +1,38 @@
+import { commonValidateEntityErrors } from "../../utils/util";
 import { address } from "../interface";
 
 const errors: object[] = [];
 
-export function addressValidate( element: address ) {
-    if (element.city) {
-        errors.push({
-            title: 'Sem Cidade',
-            description: 'Cidade não informada.'
-        });
-    }
+export function addressValidate(have: address) {
+    return new Promise((resolve, reject) => {
+        if (!have.city) {
+            errors.push({
+                code: 'Cidade',
+                message: commonValidateEntityErrors('empty', 'Cidade')
+            });
+        }
 
-    if (element.country) {
-        errors.push({
-            title: 'Sem pais',
-            description: 'Pais não informado.'
-        });
-    }
+        if (have.city.length > 35) {
+            errors.push({
+                code: 'Cidade',
+                message: commonValidateEntityErrors('str:max', 'Cidade', 35)
+            });
+        }
 
-    if (element.neightborhood) {
-        errors.push({
-            title: 'Sem Logradouro',
-            description: 'Logradouro não informado.'
-        });
-    }
+        if (!have.country) {
+            errors.push({
+                code: 'Pais',
+                message: commonValidateEntityErrors('empty', 'Pais')
+            });
+        }
 
-    if (element.postal_code) {
-        errors.push({
-            title: 'Sem Caixa Postal',
-            description: 'Caixa Postal não informada.'
-        });
-    }
+        if (!have.state) {
+            errors.push({
+                code: 'Estado',
+                message: commonValidateEntityErrors('empty', 'Estado')
+            });
+        }
 
-    if (element.state) {
-        errors.push({
-            title: 'Sem Estado',
-            description: 'Estado não informado.'
-        });
-    }
-
-    if (element.street) {
-        errors.push({
-            title: 'Sem Rua',
-            description: 'Rua não informado.'
-        });
-    }
-
-    if (errors.length) {
-    }
-} 
+        errors.length ? reject(errors) : resolve(true);
+    })
+}

@@ -1,13 +1,15 @@
-import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { addressValidate } from "./validates/address.validates";
+import { entityBase } from "./abstractEntityBase";
 
 @Entity()
-export class Addresses extends BaseEntity {
+export class Addresses extends entityBase {
 
     constructor(data?: any) {
-        if (!data) data = {};
+        super()
 
-        super();
+        if (!data) data = {}
+
         this.city = data.city;
         this.country = data.country;
         this.lat = data.lat;
@@ -16,6 +18,7 @@ export class Addresses extends BaseEntity {
         this.postal_code = data.postal_code;
         this.state = data.state;
         this.street = data.street;
+        this.setTableName('Addresses');
     }
 
     @PrimaryGeneratedColumn()
@@ -62,6 +65,6 @@ export class Addresses extends BaseEntity {
     postal_code: string
 
     validate() {
-        addressValidate(this);
+        return addressValidate(this)
     }
 }

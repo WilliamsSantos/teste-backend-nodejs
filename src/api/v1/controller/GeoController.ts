@@ -5,7 +5,7 @@ import { errorResponse, log } from "../../../utils/util";
 import { URL } from "url";
 
 export class GeoController {
-    protected KEY_APP: string = process.env.COSTUMER_KEY;
+    protected KEY: string = process.env.COSTUMER_KEY;
     protected URL: string = process.env.GEO_URL_API;
 
     latitude: number;
@@ -19,13 +19,10 @@ export class GeoController {
     getAddress = async (): Promise<address> => {
         return new Promise(async (resolve, reject) => {
 
-            const addressInCache: address = await new RedisCache()
+            const addressInCache = await new RedisCache()
                 .getAddress({ lat: this.latitude, lng: this.longitude } as geoLocation)
                 .then(res => res)
-                .catch(err => {
-                    reject(`Falha no cache redis: ${err}`)
-                    return err
-                });
+                .catch(err => err);
 
             if (addressInCache) {
                 if (this.isValidAddress(addressInCache)) {
@@ -38,7 +35,7 @@ export class GeoController {
                 }
             }
 
-            let params = `?key=${this.KEY_APP}`;
+            let params = `?key=${this.KEY}`;
             params += `&location=${this.latitude},${this.longitude}`;
             params += `&includeRoadMetadata=true&includeNearestIntersection=true`;
 
@@ -104,6 +101,11 @@ export class GeoController {
     }
 
     private isValidAddress(address: address): boolean {
-        return (!address.city || !address.country || !address.state) ? false : true;
+        if (address.city && address.city.length
+            && address.state && address.state.length
+            && address.country && address.country.length) {
+            return true;
+        }
+        return false
     }
 }

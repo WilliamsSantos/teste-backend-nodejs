@@ -1,23 +1,16 @@
 import { address } from "../../../entity/interface";
 import { Addresses } from "../../../entity";
-import { log } from "../../../utils/util";
+import { BaseController } from "./abstractBaseController";
+import { EntityManager } from "typeorm";
 
-export class AddressController {
-    private entity: Addresses;
+export class AddressController extends BaseController {
+    entity: Addresses;
 
     constructor(data: address) {
-        this.entity = new Addresses(data);
+        super(new Addresses(data))
     }
 
-    save = async (transaction?: any): Promise<address> => {
-        try {
-            this.entity.validate();
-
-            return await transaction.save(this.entity);
-        } catch (error) {
-            log('error', `Falha ao registrar o endereço: ${error.message}`);
-
-            throw new Error("Falha ao registrar o endereço.");
-        }
+    save = async (transaction?: EntityManager): Promise<address> => {
+        return await this.store(transaction)
     }
 }

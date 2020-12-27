@@ -26,8 +26,8 @@ export function validateRequestDenouncesMiddleware(
     },
   ];
 
-  if (Object.keys(data).length == 0) {
-    response.status(409).json(errorResponse([{ code: 0, message: 'Requisição Nula' }]));
+  if (Object.keys(data).length === 0) {
+    response.status(400).json(errorResponse([{ code: 0, message: 'Requisição vazia.' }]));
   }
 
   let errors: Array<object | string> = [];
@@ -38,7 +38,7 @@ export function validateRequestDenouncesMiddleware(
         errors.push(item);
       }
     } else {
-      let property = Object.getOwnPropertyNames(item)[0];
+      let property: string = Object.getOwnPropertyNames(item)[0];
       for (let i of item[property]) {
         if (!data[property].hasOwnProperty(i)) {
           errors.push(item);
@@ -49,15 +49,15 @@ export function validateRequestDenouncesMiddleware(
 
   if (errors.length) {
 
-    let errorsToTratment:Array<object> = []
+    let errorsToTratment: Array<object> = []
     errors.forEach(element => {
       errorsToTratment.push({ message: `Campo ${element} requerido`, code: element })
     });
 
-    let errRequest:Array<object> = errorResponse(errorsToTratment);
+    let errRequest: Array<object> = errorResponse(errorsToTratment);
     log('error', `Request middleware error: ${JSON.stringify(errRequest)}`);
 
-    return response.status(403).json(errRequest);
+    return response.status(400).json(errRequest);
   } else {
     request.body = translateRequestToEnglish(data);
     next();

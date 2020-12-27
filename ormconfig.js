@@ -9,7 +9,6 @@ module.exports = {
    "logging": process.env.TYPEORM_LOGGING,
    "entities": [
       "src/entity/**/*.entity.ts"
-      // "src/teste/**/*.ts"
    ],
    "migrations": [
       "src/migration/**/*.ts"

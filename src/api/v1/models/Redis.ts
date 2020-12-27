@@ -5,7 +5,7 @@ export class RedisCache {
     getAddress({ lat, lng }): Promise<address> {
         return new Promise(async (resolve, reject) => {
             const rawData = await redisClient.getAsync(`${lat},${lng}`);
-            rawData ? resolve(rawData) : reject();
+            rawData ? resolve(JSON.parse(rawData)) : reject(false);
         })
     }
     saveAddresInCache({ lat, lng }, newAddress: address): Promise<address> {

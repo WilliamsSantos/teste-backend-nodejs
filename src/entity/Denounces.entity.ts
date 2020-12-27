@@ -1,17 +1,19 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { entityBase } from "./abstractEntityBase";
 import { denounceValidate } from "./validates/denounces.validates";
 
 @Entity()
-export class Denounces extends BaseEntity {
+export class Denounces extends entityBase {
 
     constructor(data?: any) {
-        if (!data) data = {};
-
         super();
+
+        if (!data) data = {};
         this.address_id = data.address_id;
         this.denunciator_id = data.denunciator_id;
         this.title = data.title;
         this.description = data.description;
+        this.setTableName('Denounces');
     }
 
     @PrimaryGeneratedColumn()
@@ -41,6 +43,6 @@ export class Denounces extends BaseEntity {
     address_id: number;
 
     validate() {
-        denounceValidate(this);
+        return denounceValidate(this);
     }
 }

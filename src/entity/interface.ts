@@ -1,4 +1,5 @@
 export interface denounce {
+    id?: number,
     title: string,
     description: string,
     denunciator_id: number,
@@ -6,11 +7,13 @@ export interface denounce {
 }
 
 export interface denounciator {
+    id?: number,
     name: string,
     cpf: string
 }
 
 export interface address {
+    id?: number,
     lat: number,
     lng: number,
     street: string,

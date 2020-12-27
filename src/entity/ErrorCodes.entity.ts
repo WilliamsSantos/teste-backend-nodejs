@@ -4,17 +4,20 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
-    BaseEntity,
 } from "typeorm";
 
-@Entity()
-export class ErrorCodes extends BaseEntity {
-    constructor(data?: any) {
-        if (!data) data = {};
+import { entityBase } from "./abstractEntityBase";
 
+@Entity()
+export class ErrorCodes extends entityBase {
+
+    constructor(data?: any) {
         super();
+
+        if (!data) data = {};
         this.code = data.code;
         this.description = data.description;
+        this.setTableName('ErrorCodes');
     }
 
     @PrimaryGeneratedColumn()
@@ -34,4 +37,8 @@ export class ErrorCodes extends BaseEntity {
 
     @UpdateDateColumn()
     updated_at: Date;
+
+    validate(): Promise<any> {
+        throw new Error("Method not implemented to ErrorsCode.");
+    }
 }
