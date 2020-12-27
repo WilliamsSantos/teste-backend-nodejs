@@ -1,33 +1,38 @@
+import { getRepository } from "typeorm";
 import { logger } from "../../logs";
+import { ErrorCodes } from "../entity";
 
-export function log(type:string, message:string | object) :void {
+export function log(type: string, message: string | object): void {
     logger[type](message);
 }
 
-export function errorResponse(errors: Array<object>): Array<object> {
-    let errorsMessage:Array<any> = []; 
-    errors.forEach(item => {
-        errorsMessage.push({ message: item['message'], code: item['code'] });        
+export function errorResponse(errors: any): Array<object> {
+    let errorsMessage: Array<any> = [];
+
+    if (!Array.isArray(errors)) errors = [{ message: errors, code: 0 }];
+
+    errors.forEach((item: { [x: string]: any; }) => {
+        errorsMessage.push({ message: item['message'], code: item['code'] });
     });
     return errorsMessage;
 }
 
-export function errorTratment(errors: any): Array<object> {
-    if (!Array.isArray(errors)) {
-        errors = [errors];
+export async function errorTratmentToCode(errorCode: number) {
+    try {
+        const errorRepository = getRepository(ErrorCodes),
+            errorHandled = await errorRepository.find({
+                code: Number(errorCode)
+            });
+        if (!errorHandled.length) {
+            return communErrors['standard'];
+        }
+        return errorHandled;
+    } catch (error) {
+        throw new Error(error.message);
     }
+}
 
-    let errorArray = [];
-    for (const item of errors) {
-        switch (item) {
-            case '0': errorArray.push(); break;
-            case '0': errorArray.push(); break;
-            case '0': errorArray.push(); break;
-            case '0': errorArray.push(); break;
-            case '0': errorArray.push(); break;
-            case '0': errorArray.push(); break;
-            default: break;
-        }   
-    }
-    return errorArray;
+export const communErrors: object = {
+    'addressNotFound': 0,
+    'standard': 'Falha interna, tente novamente mais tarde'
 }

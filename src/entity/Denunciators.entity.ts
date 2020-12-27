@@ -1,11 +1,21 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
-import { denounciator } from "./interface";
+import {
+    Entity,
+    PrimaryGeneratedColumn,
+    Column,
+    BaseEntity,
+    CreateDateColumn,
+    UpdateDateColumn
+} from "typeorm";
+
 import { denounciatorValidate } from "./validates/denounciators.validates";
 
 @Entity()
-export class Denunciators {
+export class Denunciators extends BaseEntity {
 
-    constructor(data:denounciator) {
+    constructor(data?: any) {
+        if (!data) data = {};
+
+        super();
         this.name = data.name;
         this.cpf = data.cpf;
     }
@@ -19,10 +29,10 @@ export class Denunciators {
     @Column()
     cpf: string;
 
-    @Column()
+    @CreateDateColumn()
     created_at: Date;
 
-    @Column()
+    @UpdateDateColumn()
     updated_at: Date;
 
     validate() {

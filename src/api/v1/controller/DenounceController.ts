@@ -1,25 +1,23 @@
-import { getManager } from "typeorm"; 
 import { log } from "../../../utils/util";
 import { Denounces } from "../../../entity";
 import { denounce } from "../../../entity/interface";
 
 export class DenounceController {
-    entity:Denounces;
+    private entity: Denounces;
 
-    constructor(data:denounce){
+    constructor(data: denounce) {
         this.entity = new Denounces(data);
     }
 
-    save = async (): Promise<denounce> => {
+    save = async (transation?: any): Promise<denounce> => {
         try {
-            // this.entity.validate();
+            this.entity.validate();
 
-            return await getManager().save(this.entity);
-
+            return await transation.save(this.entity);
         } catch (error) {
-            console.log(error);
-            log('error', `Error in denounce register: ${error.message}`);
-            throw new Error("Falha ao registrar o denunciante.");
+            log('error', `Falha ao registrar denuncia: ${error.message}`);
+
+            throw new Error("Falha ao registrar denuncia.");
         }
     }
 }

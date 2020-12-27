@@ -1,6 +1,5 @@
-export * from './Addresses'
-export * from './Denounces'
-export * from './Denunciators'
-export * from './ErrorCodes'
-export * from './Logs'
-
+export * from './Addresses.entity'
+export * from './Denounces.entity'
+export * from './Denunciators.entity'
+export * from './ErrorCodes.entity'
+export * from './Logs.entity'

@@ -1,11 +1,13 @@
-import {Entity, PrimaryGeneratedColumn, Column} from "typeorm";
-import { address } from "./interface";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, BaseEntity } from "typeorm";
 import { addressValidate } from "./validates/address.validates";
 
 @Entity()
-export class Addresses {
+export class Addresses extends BaseEntity {
 
-    constructor(data:address) {
+    constructor(data?: any) {
+        if (!data) data = {};
+
+        super();
         this.city = data.city;
         this.country = data.country;
         this.lat = data.lat;
@@ -13,7 +15,7 @@ export class Addresses {
         this.neightborhood = data.neightborhood;
         this.postal_code = data.postal_code;
         this.state = data.state;
-        this.street = data.street;        
+        this.street = data.street;
     }
 
     @PrimaryGeneratedColumn()
@@ -25,10 +27,10 @@ export class Addresses {
     @Column("float")
     lng: number;
 
-    @Column("date")
+    @CreateDateColumn()
     created_at: Date;
 
-    @Column("date")
+    @UpdateDateColumn()
     updated_at: Date;
 
     @Column({

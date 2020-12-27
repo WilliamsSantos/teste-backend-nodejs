@@ -22,10 +22,10 @@ export interface address {
 }
 
 export interface log {
-    cpf:string,
-    json_reponse:string,
-    json_request:string,
-    created_at:Date,
+    cpf: string,
+    json_reponse: string,
+    json_request: string,
+    created_at: Date,
 }
 
 export interface geoLocation {
