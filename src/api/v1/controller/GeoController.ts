@@ -1,74 +1,109 @@
 import * as http from "http";
-import { getManager } from "typeorm"; 
-import { 
-    RedisCache
-} from "../models";
+import { RedisCache } from "../models";
 import { address, geoLocation } from "../../../entity/interface";
-import { errorResponse, errorTratment, log } from "../../../utils/util";
+import { errorResponse, log } from "../../../utils/util";
+import { URL } from "url";
 
 export class GeoController {
-    protected KEY_APP = process.env.COSTUMER_KEY;
-    protected URL: string = process.env.GEO_URL_API
-    lat:number;
-    lng:number;
+    protected KEY_APP: string = process.env.COSTUMER_KEY;
+    protected URL: string = process.env.GEO_URL_API;
 
-    constructor(data: geoLocation){
-        this.lng = data.lng;
-        this.lat = data.lat;
+    latitude: number;
+    longitude: number;
+
+    constructor(data: geoLocation) {
+        this.latitude = data.lat;
+        this.longitude = data.lng;
     }
 
     getAddress = async (): Promise<address> => {
+        return new Promise(async (resolve, reject) => {
 
-        let params: string = `?key=${this.KEY_APP}`;
-        params += `&location=${this.lat},${this.lng}`;
-        params += `&includeRoadMetadata=true&includeNearestIntersection=true`;
-    
-        const address: address = await new RedisCache().getAddress({ lat: this.lat, lng: this.lng } as geoLocation)
-        .then(res => res)
-        .catch(err => err);
+            const addressInCache: address = await new RedisCache()
+                .getAddress({ lat: this.latitude, lng: this.longitude } as geoLocation)
+                .then(res => res)
+                .catch(err => {
+                    reject(`Falha no cache redis: ${err}`)
+                    return err
+                });
 
-        if (address) {
-            return address;
-        } else {
-            http.get(`${this.URL}${params}`, (response) => {
-                let data:string = '';
+            if (addressInCache) {
+                if (this.isValidAddress(addressInCache)) {
+                    resolve(addressInCache);
+                } else {
+                    reject({
+                        code: 0,
+                        message: 'Endereço não encontrado para essa localidade.'
+                    })
+                }
+            }
+
+            let params = `?key=${this.KEY_APP}`;
+            params += `&location=${this.latitude},${this.longitude}`;
+            params += `&includeRoadMetadata=true&includeNearestIntersection=true`;
+
+            const options = new URL(`${this.URL}${params}`);
+            const req = http.request(options, (response) => {
+
+                let data: string = '', error: Error;
+
+                if (response.statusCode !== 200) {
+                    error = new Error('Request Failed.\n' +
+                        `Status Code: ${response.statusCode}`);
+                }
+
+                if (error) {
+                    log('error', `Error in GeoController: ${error.message}`);
+                    response.resume();
+                    reject(error.message);
+                }
+
                 // called when a data chunk is received.
-                response.on('data', (chunk) => {
-                    data += chunk;
-                    if (response.statusCode != 200) {
-                        const errors:Array<object> = errorTratment(response);
-                        return errorResponse(errors);
-                    }
-                });
-                // called when the complete responseponse is received.
+                response.on('data', async (chunk) => data += chunk);
                 response.on('end', async () => {
-                    data = JSON.parse(data);
-    
-                    const adressFound = data['results'][0]['locations'][0];
-                    console.log('323432342422344234234', adressFound)
-                    const address:address = {
-                        lat: this.lat, 
-                        lng: this.lng,
-                        country: adressFound['adminArea1'],
-                        state: adressFound['adminArea3'],
-                        city : adressFound['adminArea5'],
-                        neightborhood : adressFound['adminArea6'],
-                        street : adressFound['street'],
-                        postal_code: adressFound['postalCode'],
-                    }
-    
-                    await new RedisCache().saveAddresInCache({ lat: this.lat, lng: this.lng }, address);
-    
-                    return address;
-                });
-            }).on("error", (err) => {
-                console.log("Error: ", err.message);
+                    try {
+                        data = JSON.parse(data);
 
+                        const adressFound = data['results'][0]['locations'][0];
+                        const address: address = {
+                            lat: this.latitude,
+                            lng: this.longitude,
+                            country: adressFound['adminArea1'],
+                            state: adressFound['adminArea3'],
+                            city: adressFound['adminArea5'],
+                            neightborhood: adressFound['adminArea6'],
+                            street: adressFound['street'],
+                            postal_code: adressFound['postalCode'],
+                        };
+
+                        await new RedisCache().saveAddresInCache({
+                            lat: this.latitude,
+                            lng: this.longitude
+                        }, address);
+
+                        if (this.isValidAddress(address)) {
+                            resolve(address);
+                        } else {
+                            let errorCode = {
+                                code: 0,
+                                message: 'Endereço não encontrado para essa localidade.'
+                            };
+                            log('error', `${errorCode}`);
+                            reject(errorCode);
+                        }
+                    } catch (e) {
+                        reject(e.message);
+                    }
+                });
+            }).on("error", async (err) => {
                 log('error', `Error in GeoController catch: ${err.message}`);
-                
-                const errors:Array<object> = errorTratment(err.message);
-                return errorResponse(errors);
+                reject(errorResponse(errorResponse(err.message)));
             });
-        }
+            req.end();
+        })
+    }
+
+    private isValidAddress(address: address): boolean {
+        return (!address.city || !address.country || !address.state) ? false : true;
     }
 }
