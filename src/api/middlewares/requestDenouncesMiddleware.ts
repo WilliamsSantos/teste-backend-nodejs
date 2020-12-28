@@ -33,7 +33,7 @@ export function validateRequestDenouncesMiddleware(
   } else {
     const missingFields = 
       requiredFields.filter((este, i) => Object.keys(data).indexOf(este) !== i);
-    if (missingFields) {
+    if (missingFields.length) {
       response.status(400).json(errorResponse([{ code: 0, message: `Requisição invalida, ${missingFields[0]} não encontrado.` }]));
     }
   }
