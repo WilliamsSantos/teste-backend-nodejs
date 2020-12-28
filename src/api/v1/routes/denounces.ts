@@ -10,10 +10,18 @@ import {
 
 import { address, denounce, denounciator, geoLocation } from "../../../entity/interface";
 import { requestDenounce, responseDenounce } from "./interfaces";
+import * as rateLimit from "express-rate-limit";
+import * as slowDown from "express-slow-down";
 
 const routerDenounces = Router();
 
-routerDenounces.post('/', async (req: Request, res: Response): Promise<void> => {
+const requestLimiter = rateLimit({ windowMs: 10 * 60 * 1000, max: 100 }),
+speedRequestLimiter = slowDown({
+    windowMs: 15 * 60 * 1000, // 15 minutes
+    delayAfter: 100, // allow 100 requests per 15 minutes, then...
+    delayMs: 500 // begin adding 500ms of delay per request above 100:
+});
+routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Request, res: Response): Promise<void> => {
     const { denounces, denunciator, longitude, latitude }: requestDenounce = req.body;
 
     let denouncesSave: denounce, denunciatorSave: denounciator, addressSave: address;
@@ -59,10 +67,11 @@ routerDenounces.post('/', async (req: Request, res: Response): Promise<void> => 
 
         res.status(201).json(responseJson);
     } catch (error) {
-        const errors = errorResponse(error);
-
-        log('error', `Erro message on denounces router catch: ${errors}`);
-        res.status(500).json(errors);
+        const errors = { 
+            errors: errorResponse(error)
+        } 
+        log('error', `Erro message: ${JSON.stringify(errors)}`);
+        res.json(errors);
     }
 });
 

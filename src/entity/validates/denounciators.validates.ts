@@ -1,9 +1,9 @@
 import { commonValidateEntityErrors } from "../../utils/util";
 import { denounciator } from "../interface";
 
-const errors: object[] = [];
-
 export function denounciatorValidate(element: denounciator) {
+    const errors: object[] = [];
+
     return new Promise((resolve, reject) => {
 
         if (!element.cpf) {
@@ -27,7 +27,7 @@ export function denounciatorValidate(element: denounciator) {
             });
         }
 
-        if (element.cpf.length > 11) {
+        if (element.cpf.length != 11 && typeof !isNaN(+element.cpf)) {
             errors.push({
                 code: 'Cpf inválido',
                 message: 'Cpf não deve conter caractéres especiais e ter no máximo 11 dígitos.'

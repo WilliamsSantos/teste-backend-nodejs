@@ -14,6 +14,7 @@ export const app = express();
 // ROUTES
 import routerDenounces = require("./api/v1/routes/denounces");
 
+app.set('trust proxy', 1);
 app.use(cors());
 app.use(bodyParser.json());
 app.use(loggerMorgan('dev'));
@@ -28,7 +29,7 @@ app.use(expressWinston.logger({
 // database connect
 connectServerOnDB();
 
-app.use(`/api/${process.env.API_VERSION}/denuncias`, validateRequestDenouncesMiddleware, routerDenounces);
+app.use(`/${process.env.API_VERSION}/denuncias`, validateRequestDenouncesMiddleware, routerDenounces);
 
 // No routing indexed
 app.use('*', (_req: express.Request, res: express.Response) => {

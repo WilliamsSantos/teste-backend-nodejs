@@ -16,7 +16,6 @@ export abstract class BaseController {
             return await transaction.save(this.entity);
         } catch (error) {
             log('error', `Falha ao salvar registro na entidade ${this.entity.getTableName()}: ${JSON.stringify(error)}`);
-            console.log(error)
             throw error
         }
     }

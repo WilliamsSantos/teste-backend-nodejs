@@ -26,8 +26,16 @@ export function validateRequestDenouncesMiddleware(
     },
   ];
 
+  const requiredFields = ['latitude', 'longitude', 'denunciante', 'denuncia'];
+
   if (Object.keys(data).length === 0) {
     response.status(400).json(errorResponse([{ code: 0, message: 'Requisição vazia.' }]));
+  } else {
+    const missingFields = 
+      requiredFields.filter((este, i) => Object.keys(data).indexOf(este) !== i);
+    if (missingFields) {
+      response.status(400).json(errorResponse([{ code: 0, message: `Requisição invalida, ${missingFields[0]} não encontrado.` }]));
+    }
   }
 
   let errors: Array<object | string> = [];

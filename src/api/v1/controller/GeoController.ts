@@ -28,10 +28,7 @@ export class GeoController {
                 if (this.isValidAddress(addressInCache)) {
                     resolve(addressInCache);
                 } else {
-                    reject({
-                        code: 0,
-                        message: 'Endereço não encontrado para essa localidade.'
-                    })
+                    reject('Endereço não encontrado para essa localidade.')
                 }
             }
 
@@ -85,8 +82,8 @@ export class GeoController {
                                 code: 0,
                                 message: 'Endereço não encontrado para essa localidade.'
                             };
-                            log('error', `${errorCode}`);
-                            reject(errorCode);
+                            log('error', `${JSON.stringify(errorCode)}`);
+                            reject('Endereço não encontrado para essa localidade.');
                         }
                     } catch (e) {
                         reject(e.message);
