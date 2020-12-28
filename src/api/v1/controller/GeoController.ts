@@ -11,7 +11,10 @@ export class GeoController {
     latitude: number;
     longitude: number;
 
-    constructor(data: geoLocation) {
+    constructor(data?: geoLocation) {
+        if (!data) {
+            data = {lat:0, lng:0};
+        }
         this.latitude = data.lat;
         this.longitude = data.lng;
     }
@@ -101,7 +104,7 @@ export class GeoController {
         })
     }
 
-    private isValidAddress(address: address): boolean {
+    isValidAddress(address: address): boolean {
         if (address.city && address.city.length
             && address.state && address.state.length
             && address.country && address.country.length) {

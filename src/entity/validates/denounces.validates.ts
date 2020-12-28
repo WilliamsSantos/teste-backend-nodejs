@@ -12,7 +12,7 @@ export function denounceValidate(have: denounce) {
             });
         }
 
-        if (have.title.length < 10) {
+        if (have.title && have.title.length < 10) {
             errors.push({
                 code: 'Titulo',
                 message: commonValidateEntityErrors('str:min', 'Titulo', 10)
@@ -33,20 +33,31 @@ export function denounceValidate(have: denounce) {
             });
         }
 
-        if (have.description.length < 35) {
+        if (have.description && have.description.length < 35) {
             errors.push({
                 code: 'Descrição',
                 message: commonValidateEntityErrors('str:min', 'Descrição', 35)
             });
         }
 
-        if (have.description.length > 100) {
+        if (have.description && have.description.length > 355) {
             errors.push({
                 code: 'Descrição Muito Grande',
-                message: commonValidateEntityErrors('str:max', 'Descrição', 100)
+                message: commonValidateEntityErrors('str:max', 'Descrição', 355)
             });
         }
-
+        if (!have.address_id) {
+            errors.push({
+                code: 'Endereço',
+                message: commonValidateEntityErrors('empty', 'Endereço')
+            });
+        }
+        if (!have.denunciator_id) {
+            errors.push({
+                code: 'Denunciante',
+                message: commonValidateEntityErrors('empty', 'Denunciante')
+            });
+        }
         errors.length ? reject(errors) : resolve(true);
     })
 } 

@@ -12,7 +12,7 @@ export function addressValidate(have: address) {
             });
         }
 
-        if (have.city.length > 35) {
+        if (have.city && have.city.length > 35) {
             errors.push({
                 code: 'Cidade',
                 message: commonValidateEntityErrors('str:max', 'Cidade', 35)
