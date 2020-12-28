@@ -42,15 +42,11 @@ export function validateRequestDenouncesMiddleware(
 
   objectPropertsAccept.forEach(item => {
     if (typeof item != 'object') {
-      if (!data.hasOwnProperty(item)) {
-        errors.push(item);
-      }
+      if (!data.hasOwnProperty(item)) errors.push(item);
     } else {
       let property: string = Object.getOwnPropertyNames(item)[0];
       for (let i of item[property]) {
-        if (!data[property].hasOwnProperty(i)) {
-          errors.push(item);
-        }
+        if (!data[property].hasOwnProperty(i)) errors.push(item);
       }
     }
   });
