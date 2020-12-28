@@ -59,31 +59,35 @@ export class GeoController {
                         data = JSON.parse(data);
 
                         const adressFound = data['results'][0]['locations'][0];
-                        const address: address = {
-                            lat: this.latitude,
-                            lng: this.longitude,
-                            country: adressFound['adminArea1'],
-                            state: adressFound['adminArea3'],
-                            city: adressFound['adminArea5'],
-                            neightborhood: adressFound['adminArea6'],
-                            street: adressFound['street'],
-                            postal_code: adressFound['postalCode'],
-                        };
-
-                        await new RedisCache().saveAddresInCache({
-                            lat: this.latitude,
-                            lng: this.longitude
-                        }, address);
-
-                        if (this.isValidAddress(address)) {
-                            resolve(address);
-                        } else {
-                            let errorCode = {
-                                code: 0,
-                                message: 'Endereço não encontrado para essa localidade.'
+                        if (adressFound) {                            
+                            const address: address = {
+                                lat: this.latitude,
+                                lng: this.longitude,
+                                country: adressFound['adminArea1'],
+                                state: adressFound['adminArea3'],
+                                city: adressFound['adminArea5'],
+                                neightborhood: adressFound['adminArea6'],
+                                street: adressFound['street'],
+                                postal_code: adressFound['postalCode'],
                             };
-                            log('error', `${JSON.stringify(errorCode)}`);
-                            reject('Endereço não encontrado para essa localidade.');
+
+                            await new RedisCache().saveAddresInCache({
+                                lat: this.latitude,
+                                lng: this.longitude
+                            }, address);
+
+                            if (this.isValidAddress(address)) {
+                                resolve(address);
+                            } else {
+                                log('error', 'Endereço não encontrado para essa localidade.');
+                                reject('Endereço não encontrado para essa localidade.');
+                            }
+                        } else {
+                            await new RedisCache().saveAddresInCache({
+                                lat: this.latitude,
+                                lng: this.longitude
+                            }, {});
+                            reject('Endereço não encontrado para essa localidade.')
                         }
                     } catch (e) {
                         reject(e.message);

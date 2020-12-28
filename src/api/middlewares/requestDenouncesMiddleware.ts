@@ -27,18 +27,17 @@ export function validateRequestDenouncesMiddleware(
   ];
 
   const requiredFields = ['latitude', 'longitude', 'denunciante', 'denuncia'];
+  let errors: Array<object | string> = [];
 
   if (Object.keys(data).length === 0) {
-    response.status(400).json(errorResponse([{ code: 0, message: 'Requisição vazia.' }]));
+    response.status(400).json({ code: 0, message: 'Requisição vazia.' })
   } else {
     const missingFields = 
       requiredFields.filter((este, i) => Object.keys(data).indexOf(este) !== i);
     if (missingFields.length) {
-      response.status(400).json(errorResponse([{ code: 0, message: `Requisição invalida, ${missingFields[0]} não encontrado.` }]));
+      response.status(400).json({ code: 0, message: `Requisição invalida, ${missingFields[0]} não encontrado.` })
     }
   }
-
-  let errors: Array<object | string> = [];
 
   objectPropertsAccept.forEach(item => {
     if (typeof item != 'object') {
@@ -51,6 +50,7 @@ export function validateRequestDenouncesMiddleware(
     }
   });
 
+
   if (errors.length) {
 
     let errorsToTratment: Array<object> = []
@@ -58,7 +58,8 @@ export function validateRequestDenouncesMiddleware(
       errorsToTratment.push({ message: `Campo ${element} requerido`, code: element })
     });
 
-    let errRequest: Array<object> = errorResponse(errorsToTratment);
+    let errRequest = errorResponse(errorsToTratment);
+
     log('error', `Request middleware error: ${JSON.stringify(errRequest)}`);
 
     return response.status(400).json(errRequest);

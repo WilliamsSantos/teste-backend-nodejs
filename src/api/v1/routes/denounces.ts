@@ -35,7 +35,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
             let addressFinded =
                 await new GeoController({ lng: longitude, lat: latitude } as geoLocation)
                     .getAddress();
-
+            
             addressSave =
                 await new AddressController(addressFinded)
                     .save(transactionalEntityManager);
@@ -67,9 +67,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
 
         res.status(201).json(responseJson);
     } catch (error) {
-        const errors = { 
-            errors: errorResponse(error)
-        } 
+        const errors = errorResponse(error)
         log('error', `Erro message: ${JSON.stringify(errors)}`);
         res.json(errors);
     }

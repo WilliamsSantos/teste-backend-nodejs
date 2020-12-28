@@ -7,8 +7,8 @@ export function log(type: string, message: string | object): void {
     logger[type](message);
 }
 
-export function errorResponse(errors: any): Array<object> {
-    let errorsMessage: Array<any> = [];
+export function errorResponse(errors: any): object {
+    let errorsMessage = { errors: [] };
 
     if (!Array.isArray(errors)) errors = [{ message: errors, code: 0 }];
 
@@ -16,7 +16,7 @@ export function errorResponse(errors: any): Array<object> {
         let errObj = {};
         errObj['code'] = (item['code']) ? item['code'] : 0;
         errObj['message'] = (item['message']) ? item['message'] : 'Falha na requisição.'; 
-        errorsMessage.push(errObj);
+        errorsMessage.errors.push(errObj);
     });
 
     return errorsMessage;

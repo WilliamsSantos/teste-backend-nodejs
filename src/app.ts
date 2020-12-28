@@ -12,7 +12,7 @@ import {
 export const app = express();
 
 // ROUTES
-import routerDenounces = require("./api/v1/routes/denounces");
+import * as routerDenounces from "./api/v1/routes/denounces";
 
 app.set('trust proxy', 1);
 app.use(cors());
