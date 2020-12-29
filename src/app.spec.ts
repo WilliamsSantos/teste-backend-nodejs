@@ -152,7 +152,7 @@ describe("Test the request fields validates", () => {
                 })
             });
     });
-    test("It should return a errors message to field cpf with special caracter", async () => {
+    test("It should return a errors array with message and code to some error request", async () => {
         const bodyRequest = {
             "latitude": -9.648198,
             "longitude": -35.713458,
