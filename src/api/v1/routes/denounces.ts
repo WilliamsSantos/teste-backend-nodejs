@@ -28,7 +28,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
     let denouncesSave: denounce, denunciatorSave: denounciator, addressSave: address //,addressFinded: any;
 
     try {
-        await getConnection().transaction(async transactionalEntityManager => {
+        await getConnection().transaction("SERIALIZABLE", async transactionalEntityManager => {
             denunciatorSave =
                 await new DenounciatorController(denunciator)
                     .save(transactionalEntityManager);

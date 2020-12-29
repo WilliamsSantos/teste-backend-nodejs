@@ -1,21 +1,24 @@
 require('dotenv').config()
-const { createLogger, format, transports } = require("winston");
-const { combine, timestamp, prettyPrint, printf } = format;
+const { createLogger, transports } = require("winston");
 require('winston-papertrail').Papertrail;
-
+const winston = require("winston")
 const HOST = process.env.LOGS_HOST;
 const PORT = process.env.LOGS_PORT;
 const LEVEL = process.env.LOGS_LEVEL;
 
-export const logger = new createLogger({
+const transport = new winston.transports.Http({
+	host: HOST,
+	port: PORT,
+	ssl: true,
+});
+const papertrailTransport = new transports.Papertrail({
+	host: HOST,
+	port: PORT,
+})
+export const logger = winston.createLogger({
+	format: winston.format.simple(),
+	levels: winston.config.syslog.levels,
 	transports: [
-		new transports.Papertrail({
-			host: HOST,
-			port: PORT,
-			logFormat: function (level: string, message: string) {
-				return '<<<' + level + '>>> ' + message;
-			}
-		})
+		process.env.NODE_ENV === 'test' ? transport : papertrailTransport 
 	]
 });
-//logger.info('this is my message');

@@ -14,6 +14,9 @@ export const app = express();
 // ROUTES
 import * as routerDenounces from "./api/v1/routes/denounces";
 
+// database connect
+connectServerOnDB();
+
 app.set('trust proxy', 1);
 app.use(cors());
 app.use(bodyParser.json());
@@ -25,9 +28,6 @@ app.use(expressWinston.logger({
   expressFormat: false,
   colorize: true
 }));
-
-// database connect
-connectServerOnDB();
 
 app.use(`/${process.env.API_VERSION}/denuncias`, validateRequestDenouncesMiddleware, routerDenounces);
 

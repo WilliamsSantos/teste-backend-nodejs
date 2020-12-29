@@ -16,17 +16,17 @@ describe("Test the GEO Controller", () => {
             "longitude": -35.713458,
         }
         return await new controller.GeoController({ lat: geoData.latitude, lng: geoData.longitude }).getAddress().then(res => {
-            return expect(res).toMatchObject(
-                {
-                    "city": "Maceió",
-                    "country": "BR",
-                    "lat": -9.648198,
-                    "lng": -35.713458,
-                    "neightborhood": "",
-                    "postal_code": "57036-371",
-                    "state": "Alagoas",
-                    "street": "Avenida Dona Constança de Góes Monteiro"
-                }
+            return expect(res).toEqual(
+                expect.objectContaining({
+                    "city":"Maceió",
+                    "country":"BR",
+                    "lat":-9.648198,
+                    "lng":-35.713458,
+                    "neightborhood":"",
+                    "postal_code":"57036-371",
+                    "state":"Alagoas",
+                    "street":"Avenida Dona Constança de Góes Monteiro"
+                })
             )
         })
     });

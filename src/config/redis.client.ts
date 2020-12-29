@@ -1,11 +1,20 @@
-require('dotenv').config();
-
 import * as redis from "redis";
 import { promisify } from "util";
 
+let connect =  {
+  host: process.env.REDIS_HOST_TEST,
+  port: parseInt(process.env.REDIS_PORT_TEST)
+}
+
+if (process.env.NODE_ENV === 'test') {
+  connect = {
+    host: process.env.REDIS_HOST,
+    port: parseInt(process.env.REDIS_PORT)
+  }
+}
+
 const client: redis.RedisClient = redis.createClient({
-  host: process.env.REDIS_HOST,
-  port: parseInt(process.env.REDIS_PORT)
+  ...connect
 });
 
 export = {
