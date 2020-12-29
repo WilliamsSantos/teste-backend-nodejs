@@ -2,14 +2,14 @@ import * as redis from "redis";
 import { promisify } from "util";
 
 let connect =  {
-  host: process.env.REDIS_HOST_TEST,
-  port: parseInt(process.env.REDIS_PORT_TEST)
+  host: process.env.REDIS_HOST,
+  port: parseInt(process.env.REDIS_PORT)
 }
 
 if (process.env.NODE_ENV === 'test') {
   connect = {
-    host: process.env.REDIS_HOST,
-    port: parseInt(process.env.REDIS_PORT)
+    host: process.env.REDIS_HOST_TEST,
+    port: parseInt(process.env.REDIS_PORT_TEST)
   }
 }
 
