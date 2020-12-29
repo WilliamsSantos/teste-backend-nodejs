@@ -4,12 +4,13 @@ import {
     Column,
     CreateDateColumn,
     UpdateDateColumn,
+    BaseEntity,
 } from "typeorm";
 
 import { entityBase } from "./abstractEntityBase";
 
 @Entity()
-export class Audit extends entityBase {
+export class Audit extends BaseEntity {
 
     constructor(data?: any) {
         super();
@@ -18,7 +19,6 @@ export class Audit extends entityBase {
         this.cpf = data.cpf;
         this.json_response = data.json_response;
         this.json_send = data.json_send;
-        this.setTableName('Logs')
     }
 
     @PrimaryGeneratedColumn()
@@ -32,6 +32,9 @@ export class Audit extends entityBase {
 
     @Column()
     json_send: string
+
+    @Column()
+    sucess: boolean = false
 
     @CreateDateColumn()
     created_at: Date;

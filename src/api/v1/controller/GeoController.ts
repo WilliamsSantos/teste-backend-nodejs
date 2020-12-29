@@ -12,10 +12,10 @@ export class GeoController {
     }
     latitude: number;
     longitude: number;
-
+    identifierRqt: any;
     constructor(data?: geoLocation) {
         if (!data) {
-            data = {lat:0, lng:0};
+            data = { lat:0, lng:0 };
         }
         this.latitude = data.lat;
         this.longitude = data.lng;
@@ -75,12 +75,13 @@ export class GeoController {
                                 street: adressFound['street'],
                                 postal_code: adressFound['postalCode'],
                             };
+                            address['json'] = data;
 
                             await new RedisCache().saveAddresInCache({
                                 lat: this.latitude,
                                 lng: this.longitude
                             }, address);
-
+                            
                             if (this.isValidAddress(address)) {
                                 resolve(address);
                             } else {

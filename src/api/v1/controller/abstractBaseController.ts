@@ -1,4 +1,5 @@
-import { EntityManager } from "typeorm";
+import { EntityManager, getManager } from "typeorm";
+import { Audit } from "../../../entity";
 import { log } from "../../../utils/util";
 
 export abstract class BaseController {
