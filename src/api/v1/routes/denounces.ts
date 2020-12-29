@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { getConnection } from "typeorm";
-import { log, errorResponse } from "../../../utils/util";
+import { log, errorResponse, removeUnnecessaryFields } from "../../../utils/util";
 import {
     DenounceController,
     AddressController,
@@ -50,9 +50,9 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
         const fieldsToRemove: Array<string> = [
             'id', 'created_at', 'updated_at', 'address_id', 'denunciator_id', 'tableName'
         ];
-        removeUnnecessaryFields(denunciatorSave, fieldsToRemove);
-        removeUnnecessaryFields(denouncesSave, fieldsToRemove, 'id');
-        removeUnnecessaryFields(addressSave, fieldsToRemove);
+        denunciatorSave = removeUnnecessaryFields(denunciatorSave, fieldsToRemove);
+        denouncesSave = removeUnnecessaryFields(denouncesSave, fieldsToRemove, 'id');
+        addressSave = removeUnnecessaryFields(addressSave, fieldsToRemove);
 
         const responseJson: responseDenounce = {
             id: denouncesSave['id'],
@@ -63,7 +63,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
             address: addressSave
         };
 
-        removeUnnecessaryFields(responseJson.denounces, 'id');
+        responseJson.denounces = removeUnnecessaryFields(responseJson.denounces, 'id');
 
         res.status(201).json(responseJson);
     } catch (error) {
@@ -72,16 +72,5 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
         res.json(errors);
     }
 });
-
-function removeUnnecessaryFields(object: any, fields: Array<string> | string, ignore?: string) {
-    if (!Array.isArray(fields)) {
-        delete object[fields]
-    }
-    for (const field of fields) {
-        if (object[field] && field != ignore) {
-            delete object[field]
-        }
-    }
-}
 
 export = routerDenounces;

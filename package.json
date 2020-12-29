@@ -42,6 +42,7 @@
     "test": "jest",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
+    "db:seed": "ts-node src/seed/errors.seed.ts",
     "start": "ts-node src/server.ts"
   },
   "main": "ormconfig.js",

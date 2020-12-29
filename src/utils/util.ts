@@ -52,3 +52,14 @@ export const commonValidateEntityErrors = (errorType: string, field?: string, pr
         return "Campo inválido."
     }
 }
+export function removeUnnecessaryFields(object: any, fields: Array<string> | string, ignore?: string) {
+    if (!Array.isArray(fields)) {
+        delete object[fields]
+    }
+    for (const field of fields) {
+        if (object[field] && field != ignore) {
+            delete object[field]
+        }
+    }
+    return object;
+}

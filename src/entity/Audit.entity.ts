@@ -9,7 +9,7 @@ import {
 import { entityBase } from "./abstractEntityBase";
 
 @Entity()
-export class Logs extends entityBase {
+export class Audit extends entityBase {
 
     constructor(data?: any) {
         super();

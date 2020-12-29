@@ -7,7 +7,9 @@ import { URL } from "url";
 export class GeoController {
     protected KEY: string = process.env.COSTUMER_KEY;
     protected URL: string = process.env.GEO_URL_API;
-
+    private comumnErrorsMessage = {
+        notFound: 'Endereço não encontrado para essa localidade.'
+    }
     latitude: number;
     longitude: number;
 
@@ -31,7 +33,7 @@ export class GeoController {
                 if (this.isValidAddress(addressInCache)) {
                     resolve(addressInCache);
                 } else {
-                    reject('Endereço não encontrado para essa localidade.')
+                    reject(this.comumnErrorsMessage.notFound)
                 }
             }
 
@@ -82,15 +84,15 @@ export class GeoController {
                             if (this.isValidAddress(address)) {
                                 resolve(address);
                             } else {
-                                log('error', 'Endereço não encontrado para essa localidade.');
-                                reject('Endereço não encontrado para essa localidade.');
+                                log('error', this.comumnErrorsMessage.notFound);
+                                reject(this.comumnErrorsMessage.notFound);
                             }
                         } else {
                             await new RedisCache().saveAddresInCache({
                                 lat: this.latitude,
                                 lng: this.longitude
                             }, {});
-                            reject('Endereço não encontrado para essa localidade.')
+                            reject(this.comumnErrorsMessage.notFound)
                         }
                     } catch (e) {
                         reject(e.message);
