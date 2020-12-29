@@ -32,7 +32,7 @@ export function validateRequestDenouncesMiddleware(
   if (Object.keys(data).length === 0) {
     response.status(400).json({ code: 0, message: 'Requisição vazia.' })
   } else {
-    const missingFields = 
+    const missingFields =
       requiredFields.filter((este, i) => Object.keys(data).indexOf(este) !== i);
     if (missingFields.length) {
       response.status(400).json({ code: 0, message: `Requisição invalida, ${missingFields[0]} não encontrado.` })

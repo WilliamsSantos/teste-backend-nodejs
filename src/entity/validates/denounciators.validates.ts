@@ -40,7 +40,7 @@ export function denounciatorValidate(element: denounciator) {
                 message: 'Cpf deve ter 11 digitos e não deve possuir barras pontos ou qualquer caracter especial.'
             });
         }
-        
+
         errors.length ? reject(errors) : resolve(true);
     })
 } 

@@ -15,7 +15,7 @@ export class GeoController {
     identifierRqt: any;
     constructor(data?: geoLocation) {
         if (!data) {
-            data = { lat:0, lng:0 };
+            data = { lat: 0, lng: 0 };
         }
         this.latitude = data.lat;
         this.longitude = data.lng;
@@ -64,7 +64,7 @@ export class GeoController {
                         data = JSON.parse(data);
 
                         const adressFound = data['results'][0]['locations'][0];
-                        if (adressFound) {                            
+                        if (adressFound) {
                             const address: address = {
                                 lat: this.latitude,
                                 lng: this.longitude,
@@ -81,7 +81,7 @@ export class GeoController {
                                 lat: this.latitude,
                                 lng: this.longitude
                             }, address);
-                            
+
                             if (this.isValidAddress(address)) {
                                 resolve(address);
                             } else {

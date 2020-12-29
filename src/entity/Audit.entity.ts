@@ -7,8 +7,6 @@ import {
     BaseEntity,
 } from "typeorm";
 
-import { entityBase } from "./abstractEntityBase";
-
 @Entity()
 export class Audit extends BaseEntity {
 

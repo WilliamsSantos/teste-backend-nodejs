@@ -29,8 +29,6 @@ services:
     build: .
     volumes:
       - ./:/app
-    ports: [
-      "${DEFAULT_PORT}:${DEFAULT_PORT}"
-    ]
+    ports: ["${DEFAULT_PORT}:${DEFAULT_PORT}"]
     depends_on:
       - roga-teste-postgres-compose

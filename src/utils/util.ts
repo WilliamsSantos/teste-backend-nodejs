@@ -15,7 +15,7 @@ export function errorResponse(errors: any): object {
     errors.forEach((item: { [x: string]: any; }) => {
         let errObj = {};
         errObj['code'] = (item['code']) ? item['code'] : 0;
-        errObj['message'] = (item['message']) ? item['message'] : 'Falha na requisição.'; 
+        errObj['message'] = (item['message']) ? item['message'] : 'Falha na requisição.';
         errorsMessage.errors.push(errObj);
     });
 

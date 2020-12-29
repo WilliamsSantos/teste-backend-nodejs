@@ -12,22 +12,6 @@ describe("Test the Denounciator Entity", () => {
         connection.close()
     });
 
-    test("It should be returned an Denounciator object created", async () => {
-        const dataNewDenunciator = {
-            name: 'Teste Denunciator',
-            cpf: '11112312315'
-        }
-        const create = await connection.getRepository(Denunciators).save(dataNewDenunciator);
-        return expect(create).toStrictEqual(
-            {
-                "name": 'Teste Denunciator',
-                "cpf": '11112312315',
-                "created_at": create['created_at'],
-                "updated_at": create['updated_at'],
-                "id": create['id'],
-            }
-        )
-    });
     test("It should be returned an error if cpf not passed", async () => {
         const dataNewDenunciator = {
             name: 'Teste Denunciator',

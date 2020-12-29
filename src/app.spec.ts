@@ -5,17 +5,19 @@ describe("Test the router not implement", () => {
     test("It should response with 405 code Method Not Allowed", async () => {
         return await request(server.app)
             .get("/v1/denunciar")
+            .expect('Content-Type', /json/)
+            .expect(405)
             .then(response => {
-                expect(response.status).toBe(405);
                 expect(response.body).toEqual("Router Not Implement");
             });
     });
     test("It should response router not Implements message", async () => {
         return await request(server.app)
             .post("/v1/denunciar")
+            .expect('Content-Type', /json/)
+            .expect(405)
             .then(response => {
                 expect(response.body).toEqual("Router Not Implement");
-                expect(response.status).toBe(405);
             });
     });
 });
@@ -24,8 +26,9 @@ describe("Test the router request middleware", () => {
     test("It should response with empty request message and status 400, if not have body send", async () => {
         return await request(server.app)
             .post("/v1/denuncias")
+            .expect('Content-Type', /json/)
+            .expect(400)
             .then(response => {
-                expect(response.status).toBe(400);
                 expect(response.body).toStrictEqual({
                     "code": 0,
                     "message": "Requisição vazia.",
@@ -44,8 +47,9 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(400)
             .then(response => {
-                expect(response.status).toBe(400);
                 expect(response.body).toStrictEqual({
                     "code": 0,
                     "message": "Requisição invalida, denunciante não encontrado.",
@@ -67,8 +71,9 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(400)
             .then(response => {
-                expect(response.status).toBe(400);
                 expect(response.body).toStrictEqual({
                     "code": 0,
                     "message": "Requisição invalida, latitude não encontrado.",
@@ -142,11 +147,11 @@ describe("Test the request fields validates", () => {
             .expect('Content-Type', /json/)
             .expect(200)
             .then(response => {
-                expect(response.body).toStrictEqual({ 
+                expect(response.body).toStrictEqual({
                     "errors": [
-                        { 
-                            "code": "Cpf inválido", 
-                            "message": "Cpf deve ter 11 digitos e não deve possuir barras pontos ou qualquer caracter especial." 
+                        {
+                            "code": "Cpf inválido",
+                            "message": "Cpf deve ter 11 digitos e não deve possuir barras pontos ou qualquer caracter especial."
                         }
                     ]
                 })
@@ -174,14 +179,15 @@ describe("Test the request fields validates", () => {
                 expect(response.body).toStrictEqual({
                     "errors": [
                         {
-                            "code": "Cpf inválido", 
+                            "code": "Cpf inválido",
                             "message": "Cpf não deve conter caractéres especiais."
-                        }, 
+                        },
                         {
-                            "code": "Cpf inválido", 
+                            "code": "Cpf inválido",
                             "message": "Cpf deve ter 11 digitos e não deve possuir barras pontos ou qualquer caracter especial."
                         }
-                    ]}
+                    ]
+                }
                 );
             });
     });
@@ -193,12 +199,12 @@ describe("Test the sucessfull registre a denounce", () => {
             "latitude": -9.648198,
             "longitude": -35.713458,
             "denunciante": {
-              "nome": "williams teste1",
-              "cpf": "12345678901"
+                "nome": "williams teste1",
+                "cpf": "12345678901"
             },
             "denuncia": {
-              "titulo": "agora agora",
-              "descricao": "Aqui vai um post com errosaasasasass"
+                "titulo": "agora agora",
+                "descricao": "Aqui vai um post com errosaasasasass"
             }
         }
         return await request(server.app)
@@ -209,12 +215,10 @@ describe("Test the sucessfull registre a denounce", () => {
             .then(response => {
                 response.body.id = 1;
                 expect(response.body).toStrictEqual(
-                    {  
-                        "address":{
+                    {
+                        "address": {
                             "city": "Maceió",
                             "country": "BR",
-                            "lat": -9.648198,
-                            "lng": -35.713458,
                             "neightborhood": "",
                             "postal_code": "57036-371",
                             "state": "Alagoas",
@@ -224,15 +228,15 @@ describe("Test the sucessfull registre a denounce", () => {
                             "description": "Aqui vai um post com errosaasasasass",
                             "title": "agora agora",
                         },
-                       "denunciator": {
+                        "denunciator": {
                             "cpf": "12345678901",
                             "name": "williams teste1",
                         },
-                       "id": 1,
-                       "latitude": -9.648198,
-                       "longitude": -35.713458
+                        "id": 1,
+                        "latitude": -9.648198,
+                        "longitude": -35.713458
                     }
                 );
-        });
+            });
     });
 })

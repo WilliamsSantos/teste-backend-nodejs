@@ -34,9 +34,9 @@ export interface log {
 export interface geoLocation {
     lat: number,
     lng: number
-} 
+}
 
-export interface audit{
+export interface audit {
     cpf: string;
     json_response: string;
     json_send: string

@@ -1,5 +1,5 @@
 import { Request, Response, Router } from "express";
-import { createConnection, getConnection, getManager, getRepository } from "typeorm";
+import { getConnection } from "typeorm";
 import { log, errorResponse, removeUnnecessaryFields } from "../../../utils/util";
 import {
     DenounceController,

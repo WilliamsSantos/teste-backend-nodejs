@@ -1,10 +1,7 @@
 import { Denounces } from "./Denounces.entity";
-import { Denunciators } from "./Denunciators.entity";
 import { createConnection } from "typeorm";
-import { Addresses } from "./Addresses.entity";
-import { getConnection } from "typeorm";
 
-describe.only("Test the Address Entity", () => {
+describe("Test the Address Entity", () => {
 
     let connection = null;
     beforeAll(async () => {
@@ -15,44 +12,6 @@ describe.only("Test the Address Entity", () => {
         connection.close()
     });
 
-    test("It should be returned an Denounces object created", async () => {
-        const dataNewAddress = {
-            lat: -9.648198,
-            lng: -35.713458,
-            country: 'BR',
-            state: 'Alagoas',
-            city: 'Maceió',
-            neightborhood: '',
-            street: 'Avenida Dona Constança de Góes Monteiro',
-            postal_code: '57036-371'
-        }
-        const dataNewDenunciator = {
-            name: 'Teste Denunciator',
-            cpf: '11112312315'
-        }
-
-        const saveTestAddress = await connection.getRepository(Addresses).save(dataNewAddress);
-        const saveTestDenunciator = await connection.getRepository(Denunciators).save(dataNewDenunciator);
-
-        const dataDenounces = {
-            title: 'denunce test title',
-            description: "Existe um esgoto a céu aberto nesta localidade.",
-            denunciator_id: saveTestDenunciator['id'],
-            address_id: saveTestAddress['id']
-        }
-        const create = await connection.getRepository(Denounces).save(dataDenounces);
-        return expect(create).toStrictEqual(
-            { 
-                "address_id": saveTestAddress['id'], 
-                "denunciator_id": saveTestDenunciator['id'], 
-                "description": "Existe um esgoto a céu aberto nesta localidade.", 
-                "created_at": create['created_at'],
-                "updated_at": create['updated_at'],
-                "id": create['id'],
-                "title": "denunce test title"
-            }
-        )
-    });
     test("It should be returned an error if denunciator_id not passed", async () => {
         const dataDenounces = {
             title: 'denunce test title',
@@ -63,8 +22,8 @@ describe.only("Test the Address Entity", () => {
         const create = new Denounces(dataDenounces);
         return await create.validate().catch(res => {
             expect(res).toStrictEqual([
-                { 
-                    "code": "Denunciante", 
+                {
+                    "code": "Denunciante",
                     "message": "Denunciante não informado."
                 }
             ])
@@ -80,8 +39,8 @@ describe.only("Test the Address Entity", () => {
         const create = new Denounces(dataDenounces);
         return await create.validate().catch(res => {
             expect(res).toStrictEqual([
-                { 
-                    "code": "Endereço", 
+                {
+                    "code": "Endereço",
                     "message": "Endereço não informado."
                 }
             ])
@@ -98,7 +57,7 @@ describe.only("Test the Address Entity", () => {
         return await create.validate().catch(res => {
             expect(res).toStrictEqual([
                 {
-                    "code": "Titulo", 
+                    "code": "Titulo",
                     "message": "Titulo deve ter no minimo 10 letras."
                 }
             ])
@@ -115,7 +74,7 @@ describe.only("Test the Address Entity", () => {
         return await create.validate().catch(res => {
             expect(res).toStrictEqual([
                 {
-                    "code": "Titulo", 
+                    "code": "Titulo",
                     "message": "Titulo deve ter no máximo 35 letras."
                 }
             ])
