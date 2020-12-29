@@ -25,7 +25,7 @@ curl -X POST \
 A reposta
 ```
 {
-  "id": 221,
+  "id": 01,
   "latitude": -9.5667657,
   "longitude": -35.7232721,
   "denunciator": {
@@ -39,8 +39,6 @@ A reposta
   "address": {
     "city": "Maceió",
     "country": "BR",
-    "lat": -9.5667657,
-    "lng": -35.7232721,
     "neightborhood": "",
     "postal_code": "57046295",
     "state": "Alagoas",
