@@ -22,3 +22,15 @@ services:
       - "${DB_VOLUME}"
     ports:
       - "${DB_PORT}:${DB_PORT}"
+
+  app:
+    container_name: denounces-api
+    restart: always
+    build: .
+    volumes:
+      - ./:/app
+    ports: [
+      "${DEFAULT_PORT}:${DEFAULT_PORT}"
+    ]
+    depends_on:
+      - roga-teste-postgres-compose
