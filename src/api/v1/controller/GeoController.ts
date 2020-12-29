@@ -98,7 +98,7 @@ export class GeoController {
                 });
             }).on("error", async (err) => {
                 log('error', `Error in GeoController catch: ${err.message}`);
-                reject(errorResponse(errorResponse(err.message)));
+                reject(errorResponse(err.message));
             });
             req.end();
         })

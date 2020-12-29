@@ -19,7 +19,7 @@ export function denounceValidate(have: denounce) {
             });
         }
 
-        if (have.title.length > 35) {
+        if (have.title && have.title.length > 35) {
             errors.push({
                 code: 'Titulo',
                 message: commonValidateEntityErrors('str:max', 'Titulo', 35)

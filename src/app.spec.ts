@@ -90,8 +90,9 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(400)
             .then(response => {
-                expect(response.status).toBe(400);
                 expect(response.body).toStrictEqual({
                     "code": 0,
                     "message": "Requisição invalida, longitude não encontrado.",
@@ -110,6 +111,8 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
                     "code": 0,
@@ -136,6 +139,8 @@ describe("Test the request fields validates", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(200)
             .then(response => {
                 expect(response.body).toStrictEqual({ 
                     "errors": [
@@ -163,6 +168,8 @@ describe("Test the request fields validates", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(200)
             .then(response => {
                 expect(response.body).toStrictEqual({
                     "errors": [
@@ -181,7 +188,7 @@ describe("Test the request fields validates", () => {
 })
 
 describe("Test the sucessfull registre a denounce", () => {
-    test("It should response with 201 create status and denounce object response", async () => {
+    test("It should response with 201 create status and denounce on object response", async () => {
         const bodyRequest = {
             "latitude": -9.648198,
             "longitude": -35.713458,
@@ -197,8 +204,9 @@ describe("Test the sucessfull registre a denounce", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(201)
             .then(response => {
-                expect(response.status).toBe(201);
                 response.body.id = 1;
                 expect(response.body).toStrictEqual(
                     {  
