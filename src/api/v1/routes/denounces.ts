@@ -79,7 +79,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
     } catch (error) {
         const errors = errorResponse(error)
         log('error', `Erro message: ${JSON.stringify(errors)}`);
-        res.json(errors);
+        res.status(400).json(errors);
     }
 });
 

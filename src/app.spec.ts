@@ -145,7 +145,7 @@ describe("Test the request fields validates", () => {
             .post("/v1/denuncias")
             .send(bodyRequest)
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
                     "errors": [
@@ -174,7 +174,7 @@ describe("Test the request fields validates", () => {
             .post("/v1/denuncias")
             .send(bodyRequest)
             .expect('Content-Type', /json/)
-            .expect(200)
+            .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
                     "errors": [
