@@ -1,7 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { DenounceObject } from "../interfaces/entity/Interface";
 import { entityBase } from "./AbstractEntityBase";
-import { denounceValidate } from "./validates/Denounces.validates";
+import { DenounceValidate } from "./validators/Denounces.validator";
 
 @Entity()
 export class Denounces extends entityBase {
@@ -50,6 +50,6 @@ export class Denounces extends entityBase {
     address_id: number;
 
     validate() {
-        return denounceValidate(this);
+        return new DenounceValidate(this).validate();
     }
 }

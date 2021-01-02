@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
-import { addressValidate } from "./validates/Address.validates";
+import { addressValidate } from "./validators/Address.validator";
 import { entityBase } from "./AbstractEntityBase";
 import { Address } from "../interfaces/entity/Interface";
 
@@ -76,6 +76,6 @@ export class Addresses extends entityBase {
     postal_code: string
 
     validate() {
-        return addressValidate(this)
+        return new addressValidate(this).validate();
     }
 }

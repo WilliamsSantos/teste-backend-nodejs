@@ -3,7 +3,7 @@ import { Denunciators } from "../../../entity";
 import { BaseController } from "./AbstractBaseController";
 import { DenunciatorObject, DenunciatorCreated } from "../../../interfaces/entity/Interface";
 
-export class DenounciatorController extends BaseController {
+export class DenunciatorController extends BaseController {
     entity: Denunciators;
 
     constructor(data: DenunciatorObject) {

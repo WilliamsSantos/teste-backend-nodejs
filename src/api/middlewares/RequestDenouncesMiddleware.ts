@@ -45,11 +45,10 @@ export function validateRequestDenouncesMiddleware(
     } else {
       let property: string = Object.getOwnPropertyNames(item)[0];
       for (let i of item[property]) {
-        if (!data[property].hasOwnProperty(i)) errors.push(item);
+        if (!data[property].hasOwnProperty(i)) errors.push(`${property} > ${i}`);
       }
     }
   });
-
 
   if (errors.length) {
 

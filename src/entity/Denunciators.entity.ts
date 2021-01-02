@@ -8,7 +8,7 @@ import {
 import { DenunciatorObject } from "../interfaces/entity/Interface";
 import { entityBase } from "./AbstractEntityBase";
 
-import { denounciatorValidate } from "./validates/Denounciators.validates";
+import { DenunciatorValidate } from "./validators/Denounciators.validator";
 
 @Entity()
 export class Denunciators extends entityBase {
@@ -42,6 +42,6 @@ export class Denunciators extends entityBase {
     updated_at: Date;
 
     validate() {
-        return denounciatorValidate(this);
+        return new DenunciatorValidate(this).validate();
     }
 }

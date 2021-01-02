@@ -5,7 +5,7 @@ describe("Test the Address Entity", () => {
 
     let connection = null;
     beforeAll(async () => {
-        connection = await createConnection()
+        connection = await createConnection();
     });
 
     afterAll(async () => {

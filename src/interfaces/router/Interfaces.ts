@@ -11,21 +11,21 @@ export interface ResponseDenounce {
     id: number,
     latitude: number,
     longitude: number,
-    denunciator: {
-        name: string,
+    denunciante: {
+        nome: string,
         cpf: string
     },
-    denounces: {
-        title: string,
-        description: string,
+    denuncia: {
+        titulo: string,
+        descricao: string,
     },
-    address: {
-        street: string,
-        neightborhood: string,
-        city: string,
-        state: string,
-        country: string,
-        postal_code: string
+    endereco: {
+        logradouro: string,
+        bairro: string,
+        cidade: string,
+        estado: string,
+        pais: string,
+        codigo_postal: string
     }
 }
 
