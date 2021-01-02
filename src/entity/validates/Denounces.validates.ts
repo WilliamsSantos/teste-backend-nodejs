@@ -1,7 +1,7 @@
 import { commonValidateEntityErrors } from "../../utils/Util";
-import { denounce } from "../Interface";
+import { DenounceObject } from "../../interfaces/entity/Interface";
 
-export function denounceValidate(have: denounce) {
+export function denounceValidate(have: DenounceObject) {
     const errors: object[] = [];
 
     return new Promise((resolve, reject) => {

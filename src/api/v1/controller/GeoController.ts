@@ -1,6 +1,5 @@
 import * as http from "http";
 import { RedisCache } from "../models";
-import { address, geoLocation } from "../../../entity/Interface";
 import { TreatedAddressObject } from "../../../interfaces/geolocalization/Interfaces";
 import { errorResponse, log } from "../../../utils/Util";
 import { URL } from "url";
@@ -25,7 +24,7 @@ export class GeoController {
         return new Promise(async (resolve, reject) => {
 
             const addressInCache = await new RedisCache()
-                .getAddress({ lat: this.latitude, lng: this.longitude } as geoLocation);
+                .getAddress({ lat: this.latitude, lng: this.longitude } as GeoLocation);
 
             if (addressInCache) {
                 if (this.isValidAddress(addressInCache)) {
@@ -105,7 +104,7 @@ export class GeoController {
         })
     }
 
-    isValidAddress(address: address): boolean {
+    isValidAddress(address: TreatedAddressObject): boolean {
         if (address.city && address.city.length
             && address.state && address.state.length
             && address.country && address.country.length) {

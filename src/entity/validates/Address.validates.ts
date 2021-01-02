@@ -1,7 +1,7 @@
 import { commonValidateEntityErrors } from "../../utils/Util";
-import { address } from "../Interface";
+import { Address } from "../../interfaces/entity/Interface";
 
-export function addressValidate(have: address) {
+export function addressValidate(have: Address) {
     const errors: object[] = [];
 
     return new Promise((resolve, reject) => {

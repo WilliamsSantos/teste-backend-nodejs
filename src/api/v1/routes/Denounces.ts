@@ -8,7 +8,7 @@ import {
     DenounciatorController
 } from "../controller";
 
-import { address, denounce, denounciator, geoLocation } from "../../../entity/Interface";
+import { AddressCreated, DenounceCreated, DenunciatorCreated, GeoLocation } from "../../../interfaces/entity/Interface";
 import { requestDenounce, responseDenounce } from "./Interfaces";
 import * as rateLimit from "express-rate-limit";
 import * as slowDown from "express-slow-down";
@@ -25,7 +25,7 @@ const requestLimiter = rateLimit({ windowMs: 10 * 60 * 1000, max: 100 }),
 routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Request, res: Response): Promise<void> => {
     const { denounces, denunciator, longitude, latitude }: requestDenounce = req.body;
 
-    let denouncesSave: denounce, denunciatorSave: denounciator, addressSave: address //,addressFinded: any;
+    let denouncesSave: DenounceCreated, denunciatorSave: DenunciatorCreated, addressSave: AddressCreated //,addressFinded: any;
 
     try {
         await getConnection().transaction("SERIALIZABLE", async transactionalEntityManager => {
@@ -34,7 +34,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
                     .save(transactionalEntityManager);
 
             let addressFinded =
-                await new GeoController({ lng: longitude, lat: latitude } as geoLocation)
+                await new GeoController({ lng: longitude, lat: latitude } as GeoLocation)
                     .getAddress();
 
             addressSave =

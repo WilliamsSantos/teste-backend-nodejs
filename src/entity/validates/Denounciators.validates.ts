@@ -1,7 +1,7 @@
 import { commonValidateEntityErrors } from "../../utils/Util";
-import { denounciator } from "../Interface";
+import { DenunciatorObject } from "../../interfaces/entity/Interface";
 
-export function denounciatorValidate(element: denounciator) {
+export function denounciatorValidate(element: DenunciatorObject) {
     const errors: object[] = [];
 
     return new Promise((resolve, reject) => {
