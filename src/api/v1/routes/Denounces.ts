@@ -50,7 +50,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
             transactionalEntityManager.save(
                 new Audit({
                     cpf: denunciatorSave.cpf,
-                    json_response: addressFinded['json'],
+                    json_response: JSON.stringify(addressFinded['json']),
                     json_send: req.body,
                     sucess: true
                 })

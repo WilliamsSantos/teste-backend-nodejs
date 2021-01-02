@@ -5,21 +5,26 @@ import {
     CreateDateColumn,
     UpdateDateColumn,
 } from "typeorm";
+import { ErrorCodeObject } from "../interfaces/entity/Interface";
 
 import { entityBase } from "./AbstractEntityBase";
 
 @Entity()
 export class ErrorCodes extends entityBase {
 
-    constructor(data?: any) {
+    constructor(data: ErrorCodeObject = {
+        code: 0,
+        description: ''
+    }) {
         super();
 
-        if (!data) data = {};
-        this.code = data.code;
-        this.description = data.description;
+        const { code, description } = data;
+
+        this.code = code;
+        this.description = description;
+
         this.setTableName('ErrorCodes');
     }
-
     @PrimaryGeneratedColumn()
     id: number;
 

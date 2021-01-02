@@ -5,6 +5,7 @@ import {
     CreateDateColumn,
     UpdateDateColumn
 } from "typeorm";
+import { DenunciatorObject } from "../interfaces/entity/Interface";
 import { entityBase } from "./AbstractEntityBase";
 
 import { denounciatorValidate } from "./validates/Denounciators.validates";
@@ -12,12 +13,16 @@ import { denounciatorValidate } from "./validates/Denounciators.validates";
 @Entity()
 export class Denunciators extends entityBase {
 
-    constructor(data?: any) {
+    constructor(data: DenunciatorObject = {
+        cpf: '',
+        name: ''
+    }) {
         super();
 
-        if (!data) data = {};
-        this.name = data.name;
-        this.cpf = data.cpf;
+        const { name, cpf } = data;
+
+        this.name = name;
+        this.cpf = cpf;
         this.setTableName('Denunciators');
     }
 

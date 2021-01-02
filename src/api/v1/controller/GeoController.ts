@@ -25,9 +25,7 @@ export class GeoController {
         return new Promise(async (resolve, reject) => {
 
             const addressInCache = await new RedisCache()
-                .getAddress({ lat: this.latitude, lng: this.longitude } as geoLocation)
-                .then(res => res)
-                .catch(err => err);
+                .getAddress({ lat: this.latitude, lng: this.longitude } as geoLocation);
 
             if (addressInCache) {
                 if (this.isValidAddress(addressInCache)) {
@@ -61,9 +59,9 @@ export class GeoController {
                 response.on('data', async (chunk) => data += chunk);
                 response.on('end', async () => {
                     try {
-                        data = JSON.parse(data);
+                        const dataParse = JSON.parse(data);
 
-                        const adressFound = data['results'][0]['locations'][0];
+                        const adressFound = dataParse['results'][0]['locations'][0];
                         if (adressFound) {
                             const addressTreated: TreatedAddressObject = {
                                 lat: this.latitude,
@@ -74,7 +72,7 @@ export class GeoController {
                                 neightborhood: adressFound['adminArea6'],
                                 street: adressFound['street'],
                                 postal_code: adressFound['postalCode'],
-                                json: JSON.parse(data)
+                                json: dataParse
                             };
 
                             await new RedisCache().saveAddresInCache({

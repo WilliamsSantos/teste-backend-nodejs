@@ -1,18 +1,25 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
+import { DenounceObject } from "../interfaces/entity/Interface";
 import { entityBase } from "./AbstractEntityBase";
 import { denounceValidate } from "./validates/Denounces.validates";
 
 @Entity()
 export class Denounces extends entityBase {
 
-    constructor(data?: any) {
+    constructor(data: DenounceObject = {
+        address_id: 0,
+        denunciator_id: 0,
+        description: '',
+        title: ''
+    }) {
         super();
+        const { address_id, denunciator_id, title, description } = data;
 
-        if (!data) data = {};
-        this.address_id = data.address_id;
-        this.denunciator_id = data.denunciator_id;
-        this.title = data.title;
-        this.description = data.description;
+        this.address_id = address_id;
+        this.denunciator_id = denunciator_id;
+        this.title = title;
+        this.description = description;
+
         this.setTableName('Denounces');
     }
 

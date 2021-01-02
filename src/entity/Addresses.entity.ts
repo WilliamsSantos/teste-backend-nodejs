@@ -1,23 +1,34 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
 import { addressValidate } from "./validates/Address.validates";
 import { entityBase } from "./AbstractEntityBase";
+import { Address } from "../interfaces/entity/Interface";
 
 @Entity()
 export class Addresses extends entityBase {
 
-    constructor(data?: any) {
+    constructor(data: Address = {
+        lat: 0,
+        lng: 0,
+        country: '',
+        state: '',
+        city: '',
+        neightborhood: '',
+        street: '',
+        postal_code: '',
+    }) {
         super();
+        const { city, country, lat, lng,
+            neightborhood, postal_code, state, street } = data;
 
-        if (!data) data = {}
+        this.city = city;
+        this.country = country;
+        this.lat = lat;
+        this.lng = lng;
+        this.neightborhood = neightborhood;
+        this.postal_code = postal_code;
+        this.state = state;
+        this.street = street;
 
-        this.city = data.city;
-        this.country = data.country;
-        this.lat = data.lat;
-        this.lng = data.lng;
-        this.neightborhood = data.neightborhood;
-        this.postal_code = data.postal_code;
-        this.state = data.state;
-        this.street = data.street;
         this.setTableName('Addresses');
     }
 

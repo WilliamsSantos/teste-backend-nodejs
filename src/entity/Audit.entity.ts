@@ -6,17 +6,23 @@ import {
     UpdateDateColumn,
     BaseEntity,
 } from "typeorm";
+import { AuditObject } from "../interfaces/entity/Interface";
 
 @Entity()
 export class Audit extends BaseEntity {
 
-    constructor(data?: any) {
+    constructor(data: AuditObject = {
+        cpf: '',
+        json_response: '',
+        json_send: '',
+        sucess: false
+    }) {
         super();
+        const { json_response, cpf, json_send } = data
 
-        if (!data) data = {};
-        this.cpf = data.cpf;
-        this.json_response = data.json_response;
-        this.json_send = data.json_send;
+        this.cpf = cpf;
+        this.json_response = json_response;
+        this.json_send = json_send;
     }
 
     @PrimaryGeneratedColumn()
