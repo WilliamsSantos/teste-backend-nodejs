@@ -1,7 +1,7 @@
 import { getConnection } from "typeorm";
-import { connectServerOnDB } from "../config/db";
+import { connectServerOnDB } from "../config/Db";
 import { ErrorCodes } from "../entity/ErrorCodes.entity";
-import { log } from "../utils/util";
+import { log } from "../utils/Util";
 
 const exec = async () => {
     try {

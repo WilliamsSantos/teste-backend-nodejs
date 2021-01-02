@@ -1,6 +1,6 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn } from "typeorm";
-import { entityBase } from "./abstractEntityBase";
-import { denounceValidate } from "./validates/denounces.validates";
+import { entityBase } from "./AbstractEntityBase";
+import { denounceValidate } from "./validates/Denounces.validates";
 
 @Entity()
 export class Denounces extends entityBase {

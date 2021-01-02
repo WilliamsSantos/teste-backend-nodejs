@@ -1,7 +1,7 @@
 import * as http from "http";
 import { RedisCache } from "../models";
-import { address, geoLocation } from "../../../entity/interface";
-import { errorResponse, log } from "../../../utils/util";
+import { address, geoLocation } from "../../../entity/Interface";
+import { errorResponse, log } from "../../../utils/Util";
 import { URL } from "url";
 
 export class GeoController {

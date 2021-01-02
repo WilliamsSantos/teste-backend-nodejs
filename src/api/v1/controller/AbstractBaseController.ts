@@ -1,6 +1,6 @@
 import { EntityManager, getManager } from "typeorm";
 import { Audit } from "../../../entity";
-import { log } from "../../../utils/util";
+import { log } from "../../../utils/Util";
 
 export abstract class BaseController {
     entity?: any
@@ -17,7 +17,7 @@ export abstract class BaseController {
             return await transaction.save(this.entity);
         } catch (error) {
             log('error', `Falha ao salvar registro na entidade ${this.entity.getTableName()}: ${JSON.stringify(error)}`);
-            throw error
+            throw error;
         }
     }
 } 

@@ -4,15 +4,15 @@ import * as cors from "cors";
 import * as loggerMorgan from "morgan";
 import * as expressWinston from "express-winston";
 import { logger } from "../logs";
-import { connectServerOnDB } from "./config/db";
+import { connectServerOnDB } from "./config/Db";
 import {
   validateRequestDenouncesMiddleware
-} from "./api/middlewares/requestDenouncesMiddleware";
+} from "./api/middlewares/RequestDenouncesMiddleware";
 
 export const app = express();
 
 // ROUTES
-import * as routerDenounces from "./api/v1/routes/denounces";
+import * as routerDenounces from "./api/v1/routes/Denounces";
 
 // database connect
 connectServerOnDB();

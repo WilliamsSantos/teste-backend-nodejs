@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
 import { getConnection } from "typeorm";
-import { log, errorResponse, removeUnnecessaryFields } from "../../../utils/util";
+import { log, errorResponse, removeUnnecessaryFields } from "../../../utils/Util";
 import {
     DenounceController,
     AddressController,
@@ -8,8 +8,8 @@ import {
     DenounciatorController
 } from "../controller";
 
-import { address, denounce, denounciator, geoLocation } from "../../../entity/interface";
-import { requestDenounce, responseDenounce } from "./interfaces";
+import { address, denounce, denounciator, geoLocation } from "../../../entity/Interface";
+import { requestDenounce, responseDenounce } from "./Interfaces";
 import * as rateLimit from "express-rate-limit";
 import * as slowDown from "express-slow-down";
 import { Audit } from "../../../entity";

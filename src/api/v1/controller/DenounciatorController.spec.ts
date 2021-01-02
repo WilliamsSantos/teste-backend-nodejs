@@ -1,5 +1,5 @@
 import { createConnection, getConnection } from "typeorm";
-import { denounciator } from "../../../entity/interface";
+import { denounciator } from "../../../entity/Interface";
 import controller = require("./DenunciatorController");
 
 describe("Test the Denunciator Controller", () => {

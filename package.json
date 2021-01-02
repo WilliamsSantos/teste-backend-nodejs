@@ -39,12 +39,12 @@
     "winston-transport-papertrail": "^0.0.2"
   },
   "scripts": {
-    "dev": "NODE_ENV=dev nodemon --exec ts-node src/server.ts",
+    "dev": "NODE_ENV=dev nodemon --exec ts-node src/Server.ts",
     "test": "NODE_ENV=test jest",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
-    "db:seed": "ts-node src/seed/errors.seed.ts",
-    "start": "NODE_ENV=prod ts-node src/server.ts"
+    "db:seed": "ts-node src/seed/Errors.seed.ts",
+    "start": "NODE_ENV=prod ts-node src/Server.ts"
   },
   "main": "ormconfig.js",
   "directories": {

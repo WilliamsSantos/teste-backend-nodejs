@@ -1,5 +1,5 @@
-import { commonValidateEntityErrors } from "../../utils/util";
-import { denounciator } from "../interface";
+import { commonValidateEntityErrors } from "../../utils/Util";
+import { denounciator } from "../Interface";
 
 export function denounciatorValidate(element: denounciator) {
     const errors: object[] = [];

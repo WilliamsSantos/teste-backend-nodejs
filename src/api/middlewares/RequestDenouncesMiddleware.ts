@@ -1,7 +1,7 @@
 import express = require("express");
-import { log } from "../../utils/util";
-import { errorResponse } from "../../utils/util";
-import { requestApi } from "./interfaces";
+import { log } from "../../utils/Util";
+import { errorResponse } from "../../utils/Util";
+import { requestApi } from "./Interfaces";
 
 export function validateRequestDenouncesMiddleware(
   request: express.Request,

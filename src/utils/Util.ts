@@ -1,7 +1,7 @@
 import { getRepository } from "typeorm";
 import { logger } from "../../logs";
 import { ErrorCodes } from "../entity";
-import { entityErrors } from "./enumEntityError";
+import { entityErrors } from "./EnumEntityError";
 
 export function log(type: string, message: string | object): void {
     logger[type](message);

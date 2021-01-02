@@ -1,5 +1,5 @@
 import { createConnection } from "typeorm";
-import { log } from "../utils/util";
+import { log } from "../utils/Util";
 
 export const connectServerOnDB = async (): Promise<void> => {
     try {
@@ -8,7 +8,7 @@ export const connectServerOnDB = async (): Promise<void> => {
             connection.close().then(() => console.log('DB connection closed'));
         })
     } catch (error) {
-        log('error', `Error in db config: ${error.message}`)
+        log('error', `Error in db config: ${error.message}`);
         throw new Error(`Error in db config: ${error.message}`);
     }
 }

@@ -1,4 +1,4 @@
-import { address, denounce, denounciator } from "../../../entity/interface";
+import { address, denounce, denounciator } from "../../../entity/Interface";
 
 export interface requestDenounce {
     latitude: number,

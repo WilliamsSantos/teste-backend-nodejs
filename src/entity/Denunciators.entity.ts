@@ -5,20 +5,20 @@ import {
     CreateDateColumn,
     UpdateDateColumn
 } from "typeorm";
-import { entityBase } from "./abstractEntityBase";
+import { entityBase } from "./AbstractEntityBase";
 
-import { denounciatorValidate } from "./validates/denounciators.validates";
+import { denounciatorValidate } from "./validates/Denounciators.validates";
 
 @Entity()
 export class Denunciators extends entityBase {
 
     constructor(data?: any) {
-        super()
+        super();
 
         if (!data) data = {};
         this.name = data.name;
         this.cpf = data.cpf;
-        this.setTableName('Denunciators')
+        this.setTableName('Denunciators');
     }
 
     @PrimaryGeneratedColumn()

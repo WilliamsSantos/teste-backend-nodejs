@@ -6,7 +6,7 @@ import {
     UpdateDateColumn,
 } from "typeorm";
 
-import { entityBase } from "./abstractEntityBase";
+import { entityBase } from "./AbstractEntityBase";
 
 @Entity()
 export class ErrorCodes extends entityBase {

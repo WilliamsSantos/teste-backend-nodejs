@@ -1,5 +1,5 @@
-import { address } from "../../../entity/interface";
-import redisClient = require('../../../config/redis.client');
+import { address } from "../../../entity/Interface";
+import redisClient = require('../../../config/Redis.client');
 
 export class RedisCache {
     getAddress({ lat, lng }): Promise<address> {

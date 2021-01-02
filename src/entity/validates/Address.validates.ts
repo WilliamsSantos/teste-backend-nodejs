@@ -1,5 +1,5 @@
-import { commonValidateEntityErrors } from "../../utils/util";
-import { address } from "../interface";
+import { commonValidateEntityErrors } from "../../utils/Util";
+import { address } from "../Interface";
 
 export function addressValidate(have: address) {
     const errors: object[] = [];

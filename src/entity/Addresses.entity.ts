@@ -1,12 +1,12 @@
 import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn } from "typeorm";
-import { addressValidate } from "./validates/address.validates";
-import { entityBase } from "./abstractEntityBase";
+import { addressValidate } from "./validates/Address.validates";
+import { entityBase } from "./AbstractEntityBase";
 
 @Entity()
 export class Addresses extends entityBase {
 
     constructor(data?: any) {
-        super()
+        super();
 
         if (!data) data = {}
 

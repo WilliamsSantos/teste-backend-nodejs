@@ -1,5 +1,5 @@
-import { commonValidateEntityErrors } from "../../utils/util";
-import { denounce } from "../interface";
+import { commonValidateEntityErrors } from "../../utils/Util";
+import { denounce } from "../Interface";
 
 export function denounceValidate(have: denounce) {
     const errors: object[] = [];

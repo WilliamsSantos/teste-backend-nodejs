@@ -1,5 +1,5 @@
 import * as request from "supertest";
-import server = require("./app");
+import server = require("./App");
 
 describe("Test the router not implement", () => {
     test("It should response with 405 code Method Not Allowed", async () => {
