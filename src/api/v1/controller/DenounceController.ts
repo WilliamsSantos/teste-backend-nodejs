@@ -1,16 +1,16 @@
-import { Denounces } from "../../../entity";
-import { denounce } from "../../../entity/Interface";
-import { BaseController } from "./AbstractBaseController";
 import { EntityManager } from "typeorm";
+import { Denounces } from "../../../entity";
+import { DenounceObject, DenounceCreated } from "../../../interfaces/entity/Interface";
+import { BaseController } from "./AbstractBaseController";
 
 export class DenounceController extends BaseController {
     entity: Denounces;
 
-    constructor(data: denounce) {
+    constructor(data: DenounceObject) {
         super(new Denounces(data));
     }
 
-    save = async (transaction?: EntityManager): Promise<denounce> => {
+    save = async (transaction?: EntityManager): Promise<DenounceCreated> => {
         return await this.store(transaction);
     }
 }

@@ -1,7 +1,7 @@
-import express = require("express");
+import * as express from "express";
 import { log } from "../../utils/Util";
 import { errorResponse } from "../../utils/Util";
-import { requestApi } from "./Interfaces";
+import { RequestApi } from "../../interfaces/middleware/Interfaces";
 
 export function validateRequestDenouncesMiddleware(
   request: express.Request,
@@ -69,7 +69,7 @@ export function validateRequestDenouncesMiddleware(
   };
 }
 
-function translateRequestToEnglish(data: requestApi) {
+function translateRequestToEnglish(data: RequestApi) {
   return {
     'latitude': data.latitude,
     'longitude': data.longitude,

@@ -1,17 +1,35 @@
-import { address } from "../../../entity/Interface";
-import redisClient = require('../../../config/Redis.client');
+import { redisClient } from '../../../config/Redis.client';
+import { TreatedAddressObject } from "../../../interfaces/geolocalization/Interfaces";
 
 export class RedisCache {
-    getAddress({ lat, lng }): Promise<address> {
-        return new Promise(async (resolve, reject) => {
-            const rawData = await redisClient.getAsync(`${lat},${lng}`);
-            rawData ? resolve(JSON.parse(rawData)) : reject(false);
-        })
+    emptyAddress: TreatedAddressObject = {
+        lat: 0,
+        lng: 0,
+        country: '',
+        state: '',
+        city: '',
+        neightborhood: '',
+        street: '',
+        postal_code: '',
+        json: {}
     }
-    saveAddresInCache({ lat, lng }, newAddress: address | object): Promise<address | object> {
-        return new Promise(async (resolve, reject) => {
-            await redisClient.setAsync(`${lat},${lng}`, JSON.stringify(newAddress), 'EX', 60 * 60 * 24);
-            redisClient ? resolve(newAddress) : reject({})
-        })
+
+    async getAddress({ lat, lng }): Promise<TreatedAddressObject> {
+        const rawData = await redisClient.getAsync(`${lat},${lng}`);
+        return rawData
+            ? this.parseStringAddressToObject(rawData)
+            : this.emptyAddress;
+    }
+    async saveAddresInCache({ lat, lng }, newAddress: TreatedAddressObject): Promise<TreatedAddressObject> {
+        await redisClient.setAsync(`${lat},${lng}`, this.convertAddressObjectToString(newAddress), 'EX', 60 * 60 * 24);
+        return redisClient
+            ? newAddress
+            : this.emptyAddress;
+    }
+    private convertAddressObjectToString(object: TreatedAddressObject): string {
+        return JSON.stringify(object);
+    }
+    private parseStringAddressToObject(stringAddress: string): TreatedAddressObject {
+        return JSON.parse(stringAddress);
     }
 }

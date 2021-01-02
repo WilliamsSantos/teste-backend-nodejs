@@ -1,19 +1,19 @@
 import * as http from "http";
 import { RedisCache } from "../models";
 import { address, geoLocation } from "../../../entity/Interface";
+import { TreatedAddressObject } from "../../../interfaces/geolocalization/Interfaces";
 import { errorResponse, log } from "../../../utils/Util";
 import { URL } from "url";
+import { GeoLocation } from "../../../interfaces/entity/Interface";
+import { entityErrors } from "../../../utils/EnumEntityError";
 
 export class GeoController {
     protected KEY: string = process.env.COSTUMER_KEY;
     protected URL: string = process.env.GEO_URL_API;
-    private comumnErrorsMessage = {
-        notFound: 'Endereço não encontrado para essa localidade.'
-    }
     latitude: number;
     longitude: number;
     identifierRqt: any;
-    constructor(data?: geoLocation) {
+    constructor(data: GeoLocation) {
         if (!data) {
             data = { lat: 0, lng: 0 };
         }
@@ -21,7 +21,7 @@ export class GeoController {
         this.longitude = data.lng;
     }
 
-    getAddress = async (): Promise<address> => {
+    getAddress = async (): Promise<TreatedAddressObject> => {
         return new Promise(async (resolve, reject) => {
 
             const addressInCache = await new RedisCache()
@@ -33,7 +33,7 @@ export class GeoController {
                 if (this.isValidAddress(addressInCache)) {
                     resolve(addressInCache);
                 } else {
-                    reject(this.comumnErrorsMessage.notFound)
+                    reject(entityErrors.geo.notFound)
                 }
             }
 
@@ -65,7 +65,7 @@ export class GeoController {
 
                         const adressFound = data['results'][0]['locations'][0];
                         if (adressFound) {
-                            const address: address = {
+                            const addressTreated: TreatedAddressObject = {
                                 lat: this.latitude,
                                 lng: this.longitude,
                                 country: adressFound['adminArea1'],
@@ -74,26 +74,26 @@ export class GeoController {
                                 neightborhood: adressFound['adminArea6'],
                                 street: adressFound['street'],
                                 postal_code: adressFound['postalCode'],
+                                json: JSON.parse(data)
                             };
-                            address['json'] = data;
 
                             await new RedisCache().saveAddresInCache({
                                 lat: this.latitude,
                                 lng: this.longitude
-                            }, address);
+                            }, addressTreated);
 
-                            if (this.isValidAddress(address)) {
-                                resolve(address);
+                            if (this.isValidAddress(addressTreated)) {
+                                resolve(addressTreated);
                             } else {
-                                log('error', this.comumnErrorsMessage.notFound);
-                                reject(this.comumnErrorsMessage.notFound);
+                                log('error', entityErrors.geo.notFound);
+                                reject(entityErrors.geo.notFound);
                             }
                         } else {
                             await new RedisCache().saveAddresInCache({
                                 lat: this.latitude,
                                 lng: this.longitude
-                            }, {});
-                            reject(this.comumnErrorsMessage.notFound)
+                            }, null);
+                            reject(entityErrors.geo.notFound)
                         }
                     } catch (e) {
                         reject(e.message);

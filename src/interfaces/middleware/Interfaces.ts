@@ -1,4 +1,4 @@
-export interface requestApi {
+export interface RequestApi {
     latitude: number;
     longitude: number;
     denunciante: {

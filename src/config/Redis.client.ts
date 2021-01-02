@@ -1,23 +1,17 @@
 import * as redis from "redis";
 import { promisify } from "util";
+import { redisConfig } from "../config/Configurations";
 
 let connect =  {
-  host: process.env.REDIS_HOST,
-  port: parseInt(process.env.REDIS_PORT)
-}
-
-if (process.env.NODE_ENV === 'test') {
-  connect = {
-    host: process.env.REDIS_HOST_TEST,
-    port: parseInt(process.env.REDIS_PORT_TEST)
-  }
+  "host": redisConfig.host,
+  "port": parseInt(redisConfig.port)
 }
 
 const client: redis.RedisClient = redis.createClient({
   ...connect
 });
 
-export = {
+export const redisClient = {
   ...client,
   getAsync: promisify(client.get).bind(client),
   setAsync: promisify(client.set).bind(client),
