@@ -1,33 +1,17 @@
-import * as express from "express";
+import { Request, Response, NextFunction } from "express";
 import { log } from "../../utils/Util";
 import { errorResponse } from "../../utils/Util";
-import { RequestApi } from "../../interfaces/middleware/Interfaces";
+import { propertiesAcceptsArray, requiredFieldsArray, translateRequestToEnglish } from "./request.util";
 
 export function validateRequestDenouncesMiddleware(
-  request: express.Request,
-  response: express.Response,
-  next: express.NextFunction
-):void {
+  request: Request,
+  response: Response,
+  next: NextFunction
+): void {
   const data = request.body;
-  const objectPropertsAccept = [
-    'latitude',
-    'longitude',
-    {
-      'denunciante': [
-        'nome',
-        'cpf'
-      ]
-    },
-    {
-      'denuncia': [
-        'titulo',
-        'descricao'
-      ]
-    },
-  ];
-
-  const requiredFields = ['latitude', 'longitude', 'denunciante', 'denuncia'];
   const errors = [];
+  const requiredFields = requiredFieldsArray;
+  const objectPropertsAccept = propertiesAcceptsArray
 
   if (Object.keys(data).length === 0) {
     response.status(400).json({ code: 0, message: 'Requisição vazia.' })
@@ -68,17 +52,3 @@ export function validateRequestDenouncesMiddleware(
   }
 }
 
-function translateRequestToEnglish(data: RequestApi) {
-  return {
-    'latitude': data.latitude,
-    'longitude': data.longitude,
-    'denunciator': {
-      'name': data.denunciante.nome,
-      'cpf': data.denunciante.cpf
-    },
-    'denounces': {
-      'description': data.denuncia.descricao,
-      'title': data.denuncia.titulo,
-    }
-  }
-}

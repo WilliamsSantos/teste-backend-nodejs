@@ -7,6 +7,19 @@ export interface RequestDenounce {
     denounces: DenounceObject
 }
 
+export interface RequestEnglishTranslateDenounce {
+    latitude: number,
+    longitude: number,
+    denunciator: {
+        name: string,
+        cpf: number
+    },
+    denounces: {
+        description: string,
+        title: string,
+    }
+}
+
 export interface ResponseDenounce {
     id: number,
     latitude: number,
@@ -29,8 +42,8 @@ export interface ResponseDenounce {
     }
 }
 
-export interface BruteObjectsDenounces { 
-    address: Address; 
-    denounce: DenounceCreated; 
-    denunciator: DenunciatorCreated; 
+export interface BruteObjectsDenounces {
+    address: Address;
+    denounce: DenounceCreated;
+    denunciator: DenunciatorCreated;
 }
