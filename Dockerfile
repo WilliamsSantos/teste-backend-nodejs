@@ -6,7 +6,7 @@ WORKDIR /app
 
 COPY package*.json ./
 
-RUN npm install --global && npm install --save && npm update
+RUN npm install --save && npm update
 
 COPY . /app
 

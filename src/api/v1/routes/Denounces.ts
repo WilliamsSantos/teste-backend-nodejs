@@ -39,7 +39,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
         await getConnection().transaction("SERIALIZABLE", async transactionalEntityManager => {
             denunciatorSave =
                 await new DenunciatorController(denunciator)
-                    .save(transactionalEntityManager);
+                    .store(transactionalEntityManager);
 
             const coordenadas: GeoLocation = { lng: longitude, lat: latitude };
             let addressFound =
@@ -48,13 +48,13 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
 
             addressSave =
                 await new AddressController(addressFound)
-                    .save(transactionalEntityManager);
+                    .store(transactionalEntityManager);
 
             denounces.address_id = addressSave.id;
             denounces.denunciator_id = denunciatorSave.id;
             denouncesSave =
                 await new DenounceController(denounces)
-                    .save(transactionalEntityManager);
+                    .store(transactionalEntityManager);
 
             transactionalEntityManager.save(
                 new Audit({
@@ -80,4 +80,4 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
     }
 });
 
-export = routerDenounces
+export = routerDenounces;

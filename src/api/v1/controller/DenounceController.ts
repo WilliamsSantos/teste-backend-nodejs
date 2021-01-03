@@ -9,8 +9,4 @@ export class DenounceController extends BaseController {
     constructor(data: DenounceObject) {
         super(new Denounces(data));
     }
-
-    save = async (transaction?: EntityManager): Promise<DenounceCreated> => {
-        return await this.store(transaction);
-    }
 }

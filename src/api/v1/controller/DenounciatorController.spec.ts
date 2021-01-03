@@ -1,15 +1,15 @@
-import { createConnection, getConnection } from "typeorm";
-import { denounciator } from "../../../entity/Interface";
+import { Connection, createConnection, getConnection } from "typeorm";
 import controller = require("./DenunciatorController");
+import * as config from "../../../config/DbTestConfig";
 
 describe("Test the Denunciator Controller", () => {
-    let connection = null;
-    beforeAll(async () => {
-        connection = await createConnection()
+    let connection: Connection
+    beforeEach(() => {
+        createConnection(config.dbTestConfig);
+        connection = getConnection();
     });
-
-    afterAll(async () => {
-        connection.close()
+    afterEach(() => {
+        return connection.close();
     });
 
     test("It should be returned an Denounciator object created", async () => {
@@ -18,7 +18,7 @@ describe("Test the Denunciator Controller", () => {
             cpf: '11112312315'
         }
         await getConnection().transaction(async EntityManager => {
-            const create = await new controller.DenounciatorController(dataNewDenunciator).save(EntityManager);
+            const create = await new controller.DenunciatorController(dataNewDenunciator).store(EntityManager);
             return expect(create).toEqual({
                 "cpf": "11112312315",
                 "created_at": create['created_at'],
@@ -37,7 +37,7 @@ describe("Test the Denunciator Controller", () => {
             cpf: null
         }
         await getConnection().transaction(async EntityManager => {
-            const create = await new controller.DenounciatorController(dataNewDenunciator).save(EntityManager).catch(err => {
+            const create = await new controller.DenunciatorController(dataNewDenunciator).store(EntityManager).catch(err => {
                 return expect(err).toEqual([
                     {
                         "code": "Cpf",

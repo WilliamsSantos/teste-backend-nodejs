@@ -13,6 +13,14 @@ import * as winston  from "winston";
  */
 export const API_VERSION = process.env.API_VERSION;
 
+export const requestApiServiceConfig = {
+    "timeoutRequest": 3000,
+    "baseURL": process.env.GEO_URL_API,
+    "contentType": "application/json",
+    "accept": "application/json",
+    "key": process.env.COSTUMER_KEY
+}
+
 /**
  * Basic rate-limiting middleware for Express. 
  * Use to limit repeated requests to public APIs and/or endpoints such as password reset.

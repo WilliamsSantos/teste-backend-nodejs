@@ -1,16 +1,17 @@
-import { createConnection, getConnection } from "typeorm";
+import { Connection, createConnection, getConnection } from "typeorm";
 import { Addresses } from "../../../entity/Addresses.entity";
 import { Denunciators } from "../../../entity/Denunciators.entity";
 import controller = require("./DenounceController");
+import * as config from "../../../config/DbTestConfig";
 
 describe("Test the Denounce Controller", () => {
-    let connection = null;
-    beforeAll(async () => {
-        connection = await createConnection()
+    let connection: Connection;
+    beforeEach(() => {
+        createConnection(config.dbTestConfig);
+        connection = getConnection();
     });
-
-    afterAll(async () => {
-        connection.close()
+    afterEach(() => {
+        return connection.close();
     });
 
     test("It should be returned an Denounces object created", async () => {
@@ -39,7 +40,7 @@ describe("Test the Denounce Controller", () => {
             address_id: saveTestAddress['id']
         }
         await getConnection().transaction(async EntityManager => {
-            const create = await new controller.DenounceController(dataDenounces).save(EntityManager);
+            const create = await new controller.DenounceController(dataDenounces).store(EntityManager);
             return expect(create).toEqual(
                 {
                     "getTableName": expect.any(Function),
@@ -64,7 +65,7 @@ describe("Test the Denounce Controller", () => {
             address_id: 4344545
         }
         await getConnection().transaction(async EntityManager => {
-            await new controller.DenounceController(dataDenounces).save(EntityManager).catch(err => {
+            await new controller.DenounceController(dataDenounces).store(EntityManager).catch(err => {
                 return expect(err).toEqual([{ "code": "Denunciante", "message": "Denunciante não informado." }])
             });
         })

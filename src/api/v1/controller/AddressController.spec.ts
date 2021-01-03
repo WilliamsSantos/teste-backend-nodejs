@@ -1,14 +1,14 @@
 import { createConnection, getConnection } from "typeorm";
 import controller = require("./AddressController");
+import * as config from "../../../config/DbTestConfig";
 
 describe("Test the Address Controller", () => {
-    let connection = null;
-    beforeAll(async () => {
-        connection = await createConnection()
+    beforeEach(() => {
+        return createConnection(config.dbTestConfig);
     });
-
-    afterAll(async () => {
-        connection.close()
+    afterEach(() => {
+        let conn = getConnection();
+        return conn.close();
     });
 
     test("It should response with new object Address created", async () => {
@@ -23,7 +23,7 @@ describe("Test the Address Controller", () => {
             postal_code: '57036-371'
         }
         await getConnection().transaction(async EntityManager => {
-            const create = await new controller.AddressController(data).save(EntityManager);
+            const create = await new controller.AddressController(data).store(EntityManager);
             return expect(create).toEqual(
                 {
                     "getTableName": expect.any(Function),
@@ -56,7 +56,7 @@ describe("Test the Address Controller", () => {
             postal_code: '57036-371'
         }
         await getConnection().transaction(async EntityManager => {
-            await new controller.AddressController(data).save(EntityManager).catch(err=>{
+            await new controller.AddressController(data).store(EntityManager).catch(err=>{
                 return expect(err).toEqual([{"code": "Cidade", "message": "Cidade não informado."}, {"code": "Estado", "message": "Estado não informado."}])
             });
         })

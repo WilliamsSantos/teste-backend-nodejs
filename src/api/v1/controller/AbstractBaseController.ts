@@ -1,17 +1,20 @@
-import { EntityManager, getManager } from "typeorm";
-import { Audit } from "../../../entity";
+import { EntityManager } from "typeorm";
+import { AddressCreated, DenunciatorCreated, DenounceCreated, } from "../../../interfaces/entity/Interface";
 import { log } from "../../../utils/Util";
 
-export abstract class BaseController {
-    entity?: any
+interface BaseFunctions {
+    validate: () => Promise<Error>;
+    getTableName:() => string;
+}
+type BaseObjectsType = AddressCreated | DenunciatorCreated | DenounceCreated | BaseFunctions;
 
-    constructor(Model: any) {
+export abstract class BaseController {
+    entity;
+    constructor(Model: BaseObjectsType) {
         this.entity = Model;
     }
 
-    abstract save(): void
-
-    store = async (transaction?: EntityManager): Promise<any> => {
+    store = async (transaction: EntityManager) => {
         try {
             await this.entity.validate();
             return await transaction.save(this.entity);

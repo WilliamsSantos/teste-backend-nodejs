@@ -20,8 +20,8 @@ export class RedisCache {
             ? this.parseStringAddressToObject(rawData)
             : null;
     }
-    async saveAddresInCache({ lat, lng }, newAddress: TreatedAddressObject): Promise<TreatedAddressObject> {
-        await redisClient.setAsync(`${lat},${lng}`, this.convertAddressObjectToString(newAddress), 'EX', 60 * 60 * 24);
+    async saveAddresInCache(key:string, newAddress: TreatedAddressObject): Promise<TreatedAddressObject> {
+        await redisClient.setAsync(key, this.convertAddressObjectToString(newAddress), 'EX', 60 * 60 * 24);
         return redisClient
             ? newAddress
             : null;

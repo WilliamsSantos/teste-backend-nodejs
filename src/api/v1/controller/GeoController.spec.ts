@@ -35,11 +35,12 @@ describe("Test the GEO Controller", () => {
             lat: 1233444,
             lng: 34335534,
             country: 'Country test',
-            state: null,
+            state: 'null',
             city: 'city teste',
             neightborhood: 'neighboorhod test',
             street: 'street test',
             postal_code: '2343-234',
+            json:{}
         };
         const Geo = new controller.GeoController(null).isValidAddress(address)
         return expect(Geo).toBe(false)
@@ -54,6 +55,7 @@ describe("Test the GEO Controller", () => {
             neightborhood: 'neighboorhod test',
             street: 'street test',
             postal_code: '2343-234',
+            json:{}
         };
         const Geo = new controller.GeoController(null).isValidAddress(address)
         return expect(Geo).toBe(false)
@@ -68,6 +70,7 @@ describe("Test the GEO Controller", () => {
             neightborhood: 'neighboorhod test',
             street: 'street test',
             postal_code: '2343-234',
+            json:{}
         };
         const Geo = new controller.GeoController(null).isValidAddress(address)
         return expect(Geo).toBe(false)
@@ -82,6 +85,7 @@ describe("Test the GEO Controller", () => {
             neightborhood: 'neighboorhod test',
             street: 'street test',
             postal_code: '2343-234',
+            json:{}
         };
         const Geo = new controller.GeoController(null).isValidAddress(address)
         expect(Geo).toBe(true)

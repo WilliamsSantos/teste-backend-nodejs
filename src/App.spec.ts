@@ -216,21 +216,21 @@ describe("Test the sucessfull registre a denounce", () => {
                 response.body.id = 1;
                 expect(response.body).toStrictEqual(
                     {
-                        "address": {
-                            "city": "Maceió",
-                            "country": "BR",
-                            "neightborhood": "",
-                            "postal_code": "57036-371",
-                            "state": "Alagoas",
-                            "street": "Avenida Dona Constança de Góes Monteiro",
+                        "endereco": {
+                            "logradouro": "Avenida Dona Constança de Góes Monteiro",
+                            "bairro": "",
+                            "cidade": "Maceió",
+                            "estado": "Alagoas",
+                            "pais": "BR",
+                            "codigo_postal": "57036-371",
                         },
-                        "denounces": {
-                            "description": "Aqui vai um post com errosaasasasass",
-                            "title": "agora agora",
+                        "denuncia": {
+                            "descricao": "Aqui vai um post com errosaasasasass",
+                            "titulo": "agora agora",
                         },
-                        "denunciator": {
+                        "denunciante": {
                             "cpf": "12345678901",
-                            "name": "williams teste1",
+                            "nome": "williams teste1",
                         },
                         "id": 1,
                         "latitude": -9.648198,

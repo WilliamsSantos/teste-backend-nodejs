@@ -1,16 +1,11 @@
-import { EntityManager } from "typeorm";
 import { Denunciators } from "../../../entity";
 import { BaseController } from "./AbstractBaseController";
-import { DenunciatorObject, DenunciatorCreated } from "../../../interfaces/entity/Interface";
+import { DenunciatorObject } from "../../../interfaces/entity/Interface";
 
 export class DenunciatorController extends BaseController {
     entity: Denunciators;
 
     constructor(data: DenunciatorObject) {
         super(new Denunciators(data));
-    }
-
-    save = async (transaction?: EntityManager): Promise<DenunciatorCreated> => {
-        return await this.store(transaction);
     }
 }
