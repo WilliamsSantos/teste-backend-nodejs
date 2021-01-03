@@ -87,5 +87,8 @@ export const validators: ValidatorsFunctions = {
     },
     max: (item = '', max = 0) => {
         return item && item.length > max;
+    },
+    onlyNumbers: (item = 0) => {
+        return !/^\d+$/.test(String(item));
     }
 };

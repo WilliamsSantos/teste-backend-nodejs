@@ -2,6 +2,7 @@ export interface ValidatorsFunctions {
     require: (item: string) => boolean;
     min: (item: string, min: number) => boolean;
     max: (item: string, max: number) => boolean;
+    onlyNumbers: (item: number|string) => boolean;
 };
 
 export interface ErrorObjectStructure {

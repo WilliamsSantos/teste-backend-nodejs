@@ -60,8 +60,8 @@ export class GeoController {
         }
     }
 
-    private async saveAddressInCacheWithThe(key: string, addressToCached: TreatedAddressObject): Promise<void>{
-        await this.cache.saveAddresInCache(key, addressToCached);
+    private saveAddressInCacheWithThe(key: string, addressToCached: TreatedAddressObject): void{
+        this.cache.saveAddresInCache(key, addressToCached);
     }
 
     private async verifyAddressInCache(geo:GeoLocation = {lat:0, lng:0}):Promise<TreatedAddressObject>{
@@ -72,9 +72,8 @@ export class GeoController {
         if (addressInCache) {
             if (this.isValidAddress(addressInCache)) {
                 return addressInCache;
-            } else {
-                return;
             }
+            return
         }
     }
 

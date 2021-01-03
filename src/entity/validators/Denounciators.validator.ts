@@ -6,7 +6,7 @@ export class DenunciatorValidate extends ValidateEntity {
         super(denunciator);
         this.requiredFields = [
             { 'name': ['require', { 'min': 10 }, { 'max': 50 }] },
-            { 'cpf': ['require', { 'min': 11 }, { 'max': 11 }] },
+            { 'cpf': ['require', 'onlyNumbers', { 'min': 11 }, { 'max': 11 }] },
         ]
     }
 }

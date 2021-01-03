@@ -3,7 +3,7 @@ import { ErrorObjectStructure, PropertyMountObject, ValidateEntityMethods } from
 
 /**
  * Types of fields accepts and treatments
- * ex: [ 'require' , {  'max'/'min' : x } ]
+ * ex: [ 'require', 'only:numbers', {  'max'/'min' : x } ]
  */
 
 export class ValidateEntity implements ValidateEntityMethods {
@@ -40,6 +40,11 @@ export class ValidateEntity implements ValidateEntityMethods {
                                         if (isNotValid)
                                             errors.push(this.mountObjectError(item, { key: 'empty' }));
                                         break;
+                                    case 'onlyNumbers':
+                                        isNotValid = validators[rule](this.entity[item]);
+                                        if (isNotValid)
+                                            errors.push(this.mountObjectError(item, { key: 'onlyNumbers' }));
+                                        break
                                 }
                             continue;
                             }

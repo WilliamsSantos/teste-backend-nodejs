@@ -1,5 +1,15 @@
 import * as request from "supertest";
+import { createConnection, getConnection } from "typeorm";
 import server = require("./App");
+import * as config from "./config/DbTestConfig";
+
+beforeEach(() => {
+    return createConnection(config.dbTestConfig);
+});
+afterEach(() => {
+    let conn = getConnection();
+    return conn.close();
+});
 
 describe("Test the router not implement", () => {
     test("It should response with 405 code Method Not Allowed", async () => {
@@ -53,6 +63,62 @@ describe("Test the router request middleware", () => {
                 expect(response.body).toStrictEqual({
                     "code": 0,
                     "message": "Requisição invalida, denunciante não encontrado.",
+                });
+            });
+    });
+    test("It should reply with the missing field denunciante > nome in the request", async () => {
+        const bodyRequest = {
+            "latitude": -9.5481839,
+            "longitude": 340,
+            "denunciante": {
+                "cpf": "11548242011"
+            },
+            "denuncia": {
+                "titulo": "agora agora",
+                "descricao": "Aqui vai um post com errosaasasasass"
+            }
+        }
+        return await request(server.app)
+            .post("/v1/denuncias")
+            .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .then(response => {
+                expect(response.body).toStrictEqual({
+                    "errors": [
+                        {
+                            "code": "denunciante > nome",
+                            "message": "Campo denunciante > nome requerido",
+                        }
+                    ]
+                });
+            });
+    });
+    test("It should reply with the missing field denunciante > cpf in the request", async () => {
+        const bodyRequest = {
+            "latitude": -9.5481839,
+            "longitude": 340,
+            "denunciante": {
+                "nome": "Nome teste"
+            },
+            "denuncia": {
+                "titulo": "agora agora",
+                "descricao": "Aqui vai um post com errosaasasasass"
+            }
+        }
+        return await request(server.app)
+            .post("/v1/denuncias")
+            .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .then(response => {
+                expect(response.body).toStrictEqual({
+                    "errors": [
+                        {
+                            "code": "denunciante > cpf",
+                            "message": "Campo denunciante > cpf requerido",
+                        }
+                    ]
                 });
             });
     });
@@ -125,6 +191,62 @@ describe("Test the router request middleware", () => {
                 });
             });
     });
+    test("It should reply with the missing field denuncia > titulo in the request", async () => {
+        const bodyRequest = {
+            "latitude": -9.5481839,
+            "longitude": 340,
+            "denunciante": {
+                "nome": "Wweee",
+                "cpf": "11548242011"
+            },
+            "denuncia": {
+                "descricao": "Aqui vai um post com errosaasasasass"
+            }
+        }
+        return await request(server.app)
+            .post("/v1/denuncias")
+            .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .then(response => {
+                expect(response.body).toStrictEqual({
+                    "errors": [
+                        {
+                            "code": "denuncia > titulo",
+                            "message": "Campo denuncia > titulo requerido",
+                        }
+                    ]
+                });
+            });
+    });
+    test("It should reply with the missing field denuncia > descricao in the request", async () => {
+        const bodyRequest = {
+            "latitude": -9.5481839,
+            "longitude": 340,
+            "denunciante": {
+                "nome": "Wweee",
+                "cpf": "11548242011"
+            },
+            "denuncia": {
+                "titulo": "Titulo de teste aqui",
+            }
+        }
+        return await request(server.app)
+            .post("/v1/denuncias")
+            .send(bodyRequest)
+            .expect('Content-Type', /json/)
+            .expect(400)
+            .then(response => {
+                expect(response.body).toStrictEqual({
+                    "errors": [
+                        {
+                            "code": "denuncia > descricao",
+                            "message": "Campo denuncia > descricao requerido",
+                        }
+                    ]
+                });
+            });
+    });
 });
 
 describe("Test the request fields validates", () => {
@@ -141,7 +263,7 @@ describe("Test the request fields validates", () => {
                 "descricao": "Aqui vai um post com errosaasasasass"
             }
         };
-        return await request(server.app)
+        await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
             .expect('Content-Type', /json/)
@@ -150,14 +272,14 @@ describe("Test the request fields validates", () => {
                 expect(response.body).toStrictEqual({
                     "errors": [
                         {
-                            "code": "Cpf inválido",
-                            "message": "Cpf deve ter 11 digitos e não deve possuir barras pontos ou qualquer caracter especial."
+                            "code": "cpf",
+                            "message": "cpf deve ter no minimo 11 letras.",
                         }
                     ]
                 })
             });
     });
-    test("It should return a errors array with message and code to some error request", async () => {
+    test("It should return a errors array with message cpf must have a maximum of 11 letters and cpf must contain only digits", async () => {
         const bodyRequest = {
             "latitude": -9.648198,
             "longitude": -35.713458,
@@ -179,12 +301,12 @@ describe("Test the request fields validates", () => {
                 expect(response.body).toStrictEqual({
                     "errors": [
                         {
-                            "code": "Cpf inválido",
-                            "message": "Cpf não deve conter caractéres especiais."
+                            "code": "cpf",
+                            "message": "cpf deve conter apenas digitos.",
                         },
                         {
-                            "code": "Cpf inválido",
-                            "message": "Cpf deve ter 11 digitos e não deve possuir barras pontos ou qualquer caracter especial."
+                            "code": "cpf",
+                            "message": "cpf deve ter no máximo 11 letras.",
                         }
                     ]
                 }

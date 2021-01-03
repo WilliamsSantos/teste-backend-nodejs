@@ -5,7 +5,7 @@ import { Config, AxiosFunction, ParamsItens } from "../../interfaces/apiService/
 
 export class ApiService {
     axios: AxiosFunction;
-    config: Config 
+    config: Config;
 
     constructor(){
         this.axios = Axios;
@@ -24,9 +24,10 @@ export class ApiService {
 
             const response = await this.axios.create(this.config).get();
 
-            if (response.status != 200)
-                return this.errorResponseTreatment(response);
-            return response.data;
+            return response.status != 200 
+                ? this.errorResponseTreatment(response) 
+                    : response.data;
+
         } catch (error) {
             return error;
         }
