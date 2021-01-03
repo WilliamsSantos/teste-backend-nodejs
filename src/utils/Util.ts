@@ -9,9 +9,31 @@ export function log(type: string, message: string | object): void {
     logger[type](message);
 }
 
+export function translateFieldToPtBr(fieldToTranslate:string):string {
+    let field:string = "";
+    const fields:string[] = [ 
+        "latitude:Latitude",
+        "state:Estado",
+        "longitude:Longitude",
+        "denunciator:Denunciante",
+        "name:Nome",
+        "denounce:Denuncia",
+        "city:Cidade",
+        "description:Descricao",
+        "title:Titulo",
+        "cpf:cpf"
+    ];
+    for (const item of fields) {
+        if (item.indexOf(fieldToTranslate) != -1) {
+            field = /:(\w)+/g.exec(item)[0].replace(':', '');
+        }
+    }
+    return field;
+};
+
 export function errorResponse(errors: any): object {
     let errorsMessage = { errors: [] };
-    
+
     if (errors && errors['message']) errors = errors['message'];
     if (typeof errors === 'string') errors = JSON.parse(errors);
     if (!Array.isArray(errors)) errors = [{ message: errors, code: 0 }];

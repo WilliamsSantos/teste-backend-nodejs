@@ -1,4 +1,4 @@
-import { commonValidateEntityErrors, validators } from "../../utils/Util";
+import { commonValidateEntityErrors, translateFieldToPtBr, validators } from "../../utils/Util";
 import { ErrorObjectStructure, PropertyMountObject, ValidateEntityMethods } from "../../interfaces/validator/Interface";
 
 /**
@@ -26,31 +26,31 @@ export class ValidateEntity implements ValidateEntityMethods {
                                 if (rule.hasOwnProperty('min')) {
                                     isNotValid = validators['min'](this.entity[item], rule['min']);
                                     if (isNotValid)
-                                        errors.push(this.mountObjectError(item, { key: 'str:min', value: rule['min'] }));
+                                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'str:min', value: rule['min'] }));
                                 }
                                 if (rule.hasOwnProperty('max')) {
                                     isNotValid = validators['max'](this.entity[item], rule['max']);
                                     if (isNotValid)
-                                        errors.push(this.mountObjectError(item, { key: 'str:max', value: rule['max'] }));
+                                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'str:max', value: rule['max'] }));
                                 }
                             } else {
                                 switch (rule) {
                                     case 'require':
                                         isNotValid = validators[rule](this.entity[item]);
                                         if (isNotValid)
-                                            errors.push(this.mountObjectError(item, { key: 'empty' }));
+                                            errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty' }));
                                         break;
                                     case 'onlyNumbers':
                                         isNotValid = validators[rule](this.entity[item]);
                                         if (isNotValid)
-                                            errors.push(this.mountObjectError(item, { key: 'onlyNumbers' }));
+                                            errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'onlyNumbers' }));
                                         break
                                 }
                             continue;
                             }
                         }
                     } else {
-                        errors.push(this.mountObjectError(item, { key: 'empty' }));
+                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty' }));
                     }
                 });
             }

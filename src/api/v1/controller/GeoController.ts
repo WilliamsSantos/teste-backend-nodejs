@@ -73,7 +73,7 @@ export class GeoController {
             if (this.isValidAddress(addressInCache)) {
                 return addressInCache;
             }
-            return
+            return;
         }
     }
 

@@ -56,9 +56,11 @@ describe("Test the Address Controller", () => {
             postal_code: '57036-371'
         }
         await getConnection().transaction(async EntityManager => {
-            await new controller.AddressController(data).store(EntityManager).catch(err=>{
-                return expect(err).toEqual([{"code": "Cidade", "message": "Cidade não informado."}, {"code": "Estado", "message": "Estado não informado."}])
-            });
+            try {
+                const result = await new controller.AddressController(data).store(EntityManager);
+            } catch (error) {
+                expect(error).toStrictEqual(new Error(JSON.stringify([{"code":"Cidade","message":"Cidade não informado."},{"code":"Estado","message":"Estado não informado."}])));
+            }
         })
     });
-})
+});
