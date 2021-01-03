@@ -7,7 +7,7 @@ describe("Test the Address Controller", () => {
         return createConnection(config.dbTestConfig);
     });
     afterEach(() => {
-        let conn = getConnection();
+        const conn = getConnection();
         return conn.close();
     });
 
@@ -57,7 +57,7 @@ describe("Test the Address Controller", () => {
         }
         await getConnection().transaction(async EntityManager => {
             try {
-                const result = await new controller.AddressController(data).store(EntityManager);
+                await new controller.AddressController(data).store(EntityManager);
             } catch (error) {
                 expect(error).toStrictEqual(new Error(JSON.stringify([{"code":"Cidade","message":"Cidade não informado."},{"code":"Estado","message":"Estado não informado."}])));
             }

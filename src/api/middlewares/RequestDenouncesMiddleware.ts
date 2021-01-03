@@ -7,7 +7,7 @@ export function validateRequestDenouncesMiddleware(
   request: express.Request,
   response: express.Response,
   next: express.NextFunction
-) {
+):void {
   const data = request.body;
   const objectPropertsAccept = [
     'latitude',
@@ -27,7 +27,7 @@ export function validateRequestDenouncesMiddleware(
   ];
 
   const requiredFields = ['latitude', 'longitude', 'denunciante', 'denuncia'];
-  let errors: Array<object | string> = [];
+  const errors = [];
 
   if (Object.keys(data).length === 0) {
     response.status(400).json({ code: 0, message: 'Requisição vazia.' })
@@ -41,31 +41,31 @@ export function validateRequestDenouncesMiddleware(
 
   objectPropertsAccept.forEach(item => {
     if (typeof item != 'object') {
-      if (!data.hasOwnProperty(item)) errors.push(item);
+      if (!Object.prototype.hasOwnProperty.call(data, item)) errors.push(item);
     } else {
-      let property: string = Object.getOwnPropertyNames(item)[0];
-      for (let i of item[property]) {
-        if (!data[property].hasOwnProperty(i)) errors.push(`${property} > ${i}`);
+      const property: string = Object.getOwnPropertyNames(item)[0];
+      for (const i of item[property]) {
+        if (!Object.prototype.hasOwnProperty.call(data[property], i)) errors.push(`${property} > ${i}`);
       }
     }
   });
 
   if (errors.length) {
 
-    let errorsToTratment: Array<object> = []
+    const errorsToTratment = []
     errors.forEach(element => {
       errorsToTratment.push({ message: `Campo ${element} requerido`, code: element })
     });
 
-    let errRequest = errorResponse(errorsToTratment);
+    const errRequest = errorResponse(errorsToTratment);
 
     log('error', `Request middleware error: ${JSON.stringify(errRequest)}`);
 
-    return response.status(400).json(errRequest);
+    response.status(400).json(errRequest);
   } else {
     request.body = translateRequestToEnglish(data);
     next();
-  };
+  }
 }
 
 function translateRequestToEnglish(data: RequestApi) {

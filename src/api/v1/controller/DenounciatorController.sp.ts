@@ -11,7 +11,7 @@ describe("Test the Denunciator Controller", () => {
         return conn.close();
     });
 
-    test("It should be returned an Denunciator object created", async () => {
+    test("should be returned an Denunciator object created", async () => {
         const dataNewDenunciator = {
             name: 'Teste Denunciator',
             cpf: '11112312315'
@@ -30,7 +30,7 @@ describe("Test the Denunciator Controller", () => {
             })
         })
     });
-    test("It should be send a fail response if some data is wrong passed", async () => {
+    test("should be send a fail response if some data is wrong passed", async () => {
         const dataNewDenunciator = {
             name: 'Teste Denunciator',
             cpf: null

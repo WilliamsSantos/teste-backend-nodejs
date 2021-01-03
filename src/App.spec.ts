@@ -7,10 +7,9 @@ beforeEach(() => {
     return createConnection(config.dbTestConfig);
 });
 afterEach(() => {
-    let conn = getConnection();
+    const conn = getConnection();
     return conn.close();
 });
-
 describe("Test the router not implement", () => {
     test("It should response with 405 code Method Not Allowed", async () => {
         return await request(server.app)
@@ -249,7 +248,7 @@ describe("Test the router request middleware", () => {
     });
 });
 
-describe("Test the request fields validates", () => {
+describe("Test the request fields validates", () => {    
     test("It should return a errors message to field cpf with length != 11 with a error message", async () => {
         const bodyRequest = {
             "latitude": -9.648198,

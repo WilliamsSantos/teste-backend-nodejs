@@ -14,10 +14,7 @@ describe("Test the Redis Cache", () => {
             postal_code: '',
             json: {}
         }
-        await new cache.RedisCache().saveAddresInCache({
-            lat: geoData.latitude,
-            lng: geoData.longitude
-        }, address);
+        await new cache.RedisCache().saveAddresInCache(`${geoData.latitude},${geoData.longitude}`, address);
         expect(await new cache.RedisCache()
             .getAddress({ lat: geoData.latitude, lng: geoData.longitude })).toStrictEqual(address);
     })
@@ -34,10 +31,7 @@ describe("Test the Redis Cache", () => {
             postal_code: '',
             json: {}
         }
-        new cache.RedisCache().saveAddresInCache({
-            lat: geoData.latitude,
-            lng: geoData.longitude
-        }, addressNewCachedTest)
+        new cache.RedisCache().saveAddresInCache(`${geoData.latitude},${geoData.longitude}`, addressNewCachedTest)
 
         const addressCached = await new cache.RedisCache()
             .getAddress({ lat: geoData.latitude, lng: geoData.longitude })

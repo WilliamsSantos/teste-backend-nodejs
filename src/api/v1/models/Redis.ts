@@ -1,4 +1,5 @@
 import { redisClient } from '../../../config/Redis.client';
+import { GeoLocation } from '../../../interfaces/entity/Interface';
 import { TreatedAddressObject } from "../../../interfaces/geolocalization/Interfaces";
 
 export class RedisCache {
@@ -11,10 +12,10 @@ export class RedisCache {
         neightborhood: '',
         street: '',
         postal_code: '',
-        json: {}
+        json:{}
     }
 
-    async getAddress({ lat, lng }): Promise<TreatedAddressObject> {
+    async getAddress({ lat, lng }:GeoLocation): Promise<TreatedAddressObject> {
         const rawData = await redisClient.getAsync(`${lat},${lng}`);
         return rawData
             ? this.parseStringAddressToObject(rawData)

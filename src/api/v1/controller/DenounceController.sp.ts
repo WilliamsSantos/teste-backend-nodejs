@@ -12,7 +12,7 @@ describe("Test the Denounce Controller", () => {
         return conn.close();
     });
 
-    test("It should be returned an Denouncies object created", async () => {
+    test("should be returned an Denouncies object created", async () => {
         await getConnection().transaction(async EntityManager => {
             const newAddress = new Addresses({
                 lat: -9.648198,
@@ -55,7 +55,7 @@ describe("Test the Denounce Controller", () => {
             )
         })
     });
-    test("It should be send a fail response if some data is wrong passed", async () => {
+    test("should be send a fail response if some data is wrong passed", async () => {
         const dataDenounces = {
             title: 'denunce test title',
             description: "Existe um esgoto a céu aberto nesta localidade.",

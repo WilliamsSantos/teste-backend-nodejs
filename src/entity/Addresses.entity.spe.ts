@@ -1,15 +1,14 @@
+import { createConnection, getConnection } from "typeorm";
 import { Addresses } from "./Addresses.entity";
-import { createConnection } from "typeorm";
+import * as config from "../config/DbTestConfig";
 
 describe("Test the Address Entity", () => {
-
-    let connection = null;
-    beforeAll(async () => {
-        connection = await createConnection();
+    beforeEach(() => {
+        return createConnection(config.dbTestConfig);
     });
-
-    afterAll(async () => {
-        connection.close()
+    afterEach(() => {
+        const conn = getConnection();
+        return conn.close();
     });
 
     test("It should be returned an error message referring to the state field not passed", async () => {
@@ -24,15 +23,18 @@ describe("Test the Address Entity", () => {
             postal_code: '57036-371'
         }
         const create = new Addresses(data);
-        return await create.validate().catch(err => {
-            expect(err).toStrictEqual([
-                {
-                    "code": "Estado",
-                    "message": "Estado não informado.",
-                },
-
-            ]);
-        })
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Estado",
+                        "message": "Estado não informado."
+                    }
+                ])
+            ));
+        }
     });
     test("It should be returned an error message referring to the city field not passed", async () => {
         const data = {
@@ -46,15 +48,18 @@ describe("Test the Address Entity", () => {
             postal_code: '57036-371'
         }
         const create = new Addresses(data);
-        return await create.validate().catch(err => {
-            expect(err).toStrictEqual([
-                {
-                    "code": "Cidade",
-                    "message": "Cidade não informado.",
-                },
-
-            ]);
-        })
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Cidade",
+                        "message": "Cidade não informado."
+                    }
+                ])
+            ));
+        }
     });
     test("It should be returned an error message referring to the country field not passed", async () => {
         const data = {
@@ -68,14 +73,17 @@ describe("Test the Address Entity", () => {
             postal_code: '57036-371'
         }
         const create = new Addresses(data);
-        return await create.validate().catch(err => {
-            expect(err).toStrictEqual([
-                {
-                    "code": "Pais",
-                    "message": "Pais não informado.",
-                },
-
-            ]);
-        })
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Pais",
+                        "message": "Pais não informado."
+                    }
+                ])
+            ));
+        }
     });
 });

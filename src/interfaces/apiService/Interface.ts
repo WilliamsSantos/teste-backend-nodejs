@@ -1,6 +1,6 @@
 import { PathLike } from "fs";
 
-export interface Config { 
+export interface Config {
     returnRejectedPromiseOnError: boolean; 
     withCredentials: boolean; 
     timeout: number; 
@@ -19,12 +19,12 @@ export interface Config {
         lng: number 
     }; 
     paramsSerializer: (params: PathLike) => string; 
-};
+}
 
-export interface AxiosFunction { 
-    create?: Function; 
-    default: Function; 
-};
+export interface AxiosFunction {
+    get(config: Config); 
+    create?: ()=> { get:() => void }; 
+}
 
 export interface ParamsItens {
     lat:number,

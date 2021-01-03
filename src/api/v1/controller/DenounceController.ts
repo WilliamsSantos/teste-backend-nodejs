@@ -1,6 +1,5 @@
-import { EntityManager } from "typeorm";
 import { Denounces } from "../../../entity";
-import { DenounceObject, DenounceCreated } from "../../../interfaces/entity/Interface";
+import { DenounceObject } from "../../../interfaces/entity/Interface";
 import { BaseController } from "./AbstractBaseController";
 
 export class DenounceController extends BaseController {

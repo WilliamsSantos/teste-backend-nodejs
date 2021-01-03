@@ -14,7 +14,7 @@ export abstract class BaseController {
         this.entity = Model;
     }
 
-    store = async (transaction: EntityManager) => {
+    store = async (transaction: EntityManager):Promise<unknown> => {
         try {
             await this.entity.validate();
             return await transaction.save(this.entity);

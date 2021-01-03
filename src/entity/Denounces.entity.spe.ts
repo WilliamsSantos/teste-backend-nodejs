@@ -1,15 +1,14 @@
+import { createConnection, getConnection } from "typeorm";
 import { Denounces } from "./Denounces.entity";
-import { createConnection } from "typeorm";
+import * as config from "../config/DbTestConfig";
 
 describe("Test the Address Entity", () => {
-
-    let connection = null;
-    beforeAll(async () => {
-        connection = await createConnection()
+    beforeEach(() => {
+        return createConnection(config.dbTestConfig);
     });
-
-    afterAll(async () => {
-        connection.close()
+    afterEach(() => {
+        const conn = getConnection();
+        return conn.close();
     });
 
     test("It should be returned an error if denunciator_id not passed", async () => {
@@ -20,14 +19,18 @@ describe("Test the Address Entity", () => {
             address_id: 12234
         }
         const create = new Denounces(dataDenounces);
-        return await create.validate().catch(res => {
-            expect(res).toStrictEqual([
-                {
-                    "code": "Denunciante",
-                    "message": "Denunciante não informado."
-                }
-            ])
-        });
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Denunciante",
+                        "message": "Denunciante não informado."
+                    }
+                ])
+            ));
+        }
     });
     test("It should be returned an error if address_id not passed", async () => {
         const dataDenounces = {
@@ -37,14 +40,18 @@ describe("Test the Address Entity", () => {
             address_id: null
         }
         const create = new Denounces(dataDenounces);
-        return await create.validate().catch(res => {
-            expect(res).toStrictEqual([
-                {
-                    "code": "Endereço",
-                    "message": "Endereço não informado."
-                }
-            ])
-        });
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Endereço",
+                        "message": "Endereço não informado."
+                    }
+                ])
+            ));
+        }
     });
     test("It should be returned an error if title less then 10 length", async () => {
         const dataDenounces = {
@@ -54,14 +61,18 @@ describe("Test the Address Entity", () => {
             address_id: 23455
         }
         const create = new Denounces(dataDenounces);
-        return await create.validate().catch(res => {
-            expect(res).toStrictEqual([
-                {
-                    "code": "Titulo",
-                    "message": "Titulo deve ter no minimo 10 letras."
-                }
-            ])
-        });
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Titulo",
+                        "message": "Titulo deve ter no minimo 10 letras."
+                    }
+                ])
+            ));
+        }
     });
     test("It should be returned an error if title great then 35 length", async () => {
         const dataDenounces = {
@@ -71,31 +82,39 @@ describe("Test the Address Entity", () => {
             address_id: 23455
         }
         const create = new Denounces(dataDenounces);
-        return await create.validate().catch(res => {
-            expect(res).toStrictEqual([
-                {
-                    "code": "Titulo",
-                    "message": "Titulo deve ter no máximo 35 letras."
-                }
-            ])
-        });
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Titulo",
+                        "message": "Titulo deve ter no máximo 35 letras."
+                    }
+                ])
+            ));
+        }
     });
     test("It should be returned an error if description not passed", async () => {
         const dataDenounces = {
             title: 'denunce teste teste',
-            // description: "Existe um esgoto a céu aberto nesta localidade.",
+            description: null,
             denunciator_id: 12234,
             address_id: 23455
         }
         const create = new Denounces(dataDenounces);
-        return await create.validate().catch(res => {
-            expect(res).toStrictEqual([
-                {
-                    "code": "Descrição",
-                    "message": "Todas as denuncias precisam de 1 descrição.",
-                }
-            ])
-        });
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Descrição",
+                        "message": "Todas as denuncias precisam de 1 descrição."
+                    }
+                ])
+            ));
+        }
     });
     test("It should be returned an error if description less then 35", async () => {
         const dataDenounces = {
@@ -105,14 +124,18 @@ describe("Test the Address Entity", () => {
             address_id: 23455
         }
         const create = new Denounces(dataDenounces);
-        return await create.validate().catch(res => {
-            expect(res).toStrictEqual([
-                {
-                    "code": "Descrição",
-                    "message": "Descrição deve ter no minimo 35 letras.",
-                }
-            ])
-        });
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Descrição",
+                        "message": "Descrição deve ter no minimo 35 letras."
+                    }
+                ])
+            ));
+        }
     });
     test("It should be returned an error if description great then 355", async () => {
         const dataDenounces = {
@@ -122,13 +145,17 @@ describe("Test the Address Entity", () => {
             address_id: 23455
         }
         const create = new Denounces(dataDenounces);
-        return await create.validate().catch(res => {
-            expect(res).toStrictEqual([
-                {
-                    "code": "Descrição Muito Grande",
-                    "message": "Descrição deve ter no máximo 355 letras."
-                }
-            ])
-        });
+        try {
+            await create.validate();
+        } catch (error) {
+            expect(error).toStrictEqual(new Error(
+                JSON.stringify([
+                    {
+                        "code": "Descrição",
+                        "message": "Descrição deve ter no máximo 355 letras."
+                    }
+                ])
+            ));
+        }
     });
 });

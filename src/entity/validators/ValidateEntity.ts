@@ -7,10 +7,10 @@ import { ErrorObjectStructure, PropertyMountObject, ValidateEntityMethods } from
  */
 
 export class ValidateEntity implements ValidateEntityMethods {
-    requiredFields: Array<object> = [{}];
-    entity: object;
+    requiredFields;
+    entity;
 
-    constructor(Entity: object) {
+    constructor(Entity) {
         this.entity = Entity;
     }
 
@@ -18,17 +18,17 @@ export class ValidateEntity implements ValidateEntityMethods {
         const errors: ErrorObjectStructure[] = [];
         try {
             for (const field of this.requiredFields) {
-                let isNotValid: boolean = false;
+                let isNotValid = false;
                 Object.keys(field).map(item => {
-                    if (this.entity.hasOwnProperty(item)) {
+                    if (Object.prototype.hasOwnProperty.call(this.entity, item)) {
                         for (const rule of field[item]) {
                             if (typeof rule === 'object') {
-                                if (rule.hasOwnProperty('min')) {
+                                if (Object.prototype.hasOwnProperty.call(rule, 'min')) {
                                     isNotValid = validators['min'](this.entity[item], rule['min']);
                                     if (isNotValid)
                                         errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'str:min', value: rule['min'] }));
                                 }
-                                if (rule.hasOwnProperty('max')) {
+                                if (Object.prototype.hasOwnProperty.call(rule, 'max')) {
                                     isNotValid = validators['max'](this.entity[item], rule['max']);
                                     if (isNotValid)
                                         errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'str:max', value: rule['max'] }));
@@ -38,19 +38,19 @@ export class ValidateEntity implements ValidateEntityMethods {
                                     case 'require':
                                         isNotValid = validators[rule](this.entity[item]);
                                         if (isNotValid)
-                                            errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty' }));
+                                            errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty', value: null }));
                                         break;
                                     case 'onlyNumbers':
                                         isNotValid = validators[rule](this.entity[item]);
                                         if (isNotValid)
-                                            errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'onlyNumbers' }));
+                                            errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'onlyNumbers', value: null }));
                                         break
                                 }
                             continue;
                             }
                         }
                     } else {
-                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty' }));
+                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty', value:null }));
                     }
                 });
             }
@@ -67,7 +67,7 @@ export class ValidateEntity implements ValidateEntityMethods {
 
     mountObjectError(codeError: string, property: PropertyMountObject): ErrorObjectStructure {
         const { key, value } = property,
-            errorMessage = value
+            errorMessage = value !== null
                 ? commonValidateEntityErrors(key, codeError, value)
                 : commonValidateEntityErrors(key, codeError);
         return {

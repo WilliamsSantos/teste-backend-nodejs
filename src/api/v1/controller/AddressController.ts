@@ -1,5 +1,5 @@
 import { Addresses } from "../../../entity";
-import { Address, AddressCreated } from "../../../interfaces/entity/Interface";
+import { Address } from "../../../interfaces/entity/Interface";
 import { BaseController } from "./AbstractBaseController";
 
 export class AddressController extends BaseController {

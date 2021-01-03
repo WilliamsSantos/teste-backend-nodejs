@@ -9,7 +9,7 @@ describe("Test the GEO Controller", () => {
             "longitude": -35.713458,
         }
         try {
-            const response = await new controller.GeoController({ lat: geoData.latitude, lng: geoData.longitude }).getAddress();
+            await new controller.GeoController({ lat: geoData.latitude, lng: geoData.longitude }).getAddress();
         } catch (error) {
             expect(error).toStrictEqual(new Error(JSON.stringify("Endereço não encontrado para essa localidade.")));
         }
@@ -19,20 +19,23 @@ describe("Test the GEO Controller", () => {
             "latitude": -9.648198,
             "longitude": -35.713458,
         }
-        return await new controller.GeoController({ lat: geoData.latitude, lng: geoData.longitude }).getAddress().then(res => {
-            return expect(res).toEqual(
-                expect.objectContaining({
-                    "city":"Maceió",
-                    "country":"BR",
-                    "lat":-9.648198,
-                    "lng":-35.713458,
-                    "neightborhood":"",
-                    "postal_code":"57036-371",
-                    "state":"Alagoas",
-                    "street":"Avenida Dona Constança de Góes Monteiro"
-                })
-            )
-        })
+        try {
+            const res = await new controller.GeoController({ lat: geoData.latitude, lng: geoData.longitude }).getAddress();
+            expect(res).toEqual(
+                        expect.objectContaining({
+                            "city":"Maceió",
+                            "country":"BR",
+                            "lat":-9.648198,
+                            "lng":-35.713458,
+                            "neightborhood":"",
+                            "postal_code":"57036-371",
+                            "state":"Alagoas",
+                            "street":"Avenida Dona Constança de Góes Monteiro"
+                        })
+                    )
+        } catch (error) {
+            console.log(error)
+        }
     });
     test("It should response with false if country not found", async () => {
         const address = {
