@@ -1,18 +1,17 @@
-import { Connection, createConnection, getConnection } from "typeorm";
+import { createConnection, getConnection } from "typeorm";
 import controller = require("./DenunciatorController");
 import * as config from "../../../config/DbTestConfig";
 
 describe("Test the Denunciator Controller", () => {
-    let connection: Connection
     beforeEach(() => {
-        createConnection(config.dbTestConfig);
-        connection = getConnection();
+        return createConnection(config.dbTestConfig);
     });
     afterEach(() => {
-        return connection.close();
+        let conn = getConnection();
+        return conn.close();
     });
 
-    test("It should be returned an Denounciator object created", async () => {
+    test("It should be returned an Denunciator object created", async () => {
         const dataNewDenunciator = {
             name: 'Teste Denunciator',
             cpf: '11112312315'
@@ -37,14 +36,11 @@ describe("Test the Denunciator Controller", () => {
             cpf: null
         }
         await getConnection().transaction(async EntityManager => {
-            const create = await new controller.DenunciatorController(dataNewDenunciator).store(EntityManager).catch(err => {
-                return expect(err).toEqual([
-                    {
-                        "code": "Cpf",
-                        "message": "Cpf não informado.",
-                    },
-                ])
-            });
+            try {
+                const response = await new controller.DenunciatorController(dataNewDenunciator).store(EntityManager);
+            } catch (error) {
+                expect(error).toStrictEqual(new Error(JSON.stringify([{"code":"cpf","message":"cpf não informado."},{"code":"cpf","message":"cpf deve conter apenas digitos."}])));
+            }
         })
     });
 })
