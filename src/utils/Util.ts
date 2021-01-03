@@ -9,15 +9,16 @@ export function log(type: string, message: string | object): void {
     logger[type](message);
 }
 
-export function translateFieldToPtBr(fieldToTranslate:string):string {
-    let field:string = "";
-    const fields:string[] = [ 
+export function translateFieldToPtBr(fieldToTranslate: string): string {
+    let field: string = "";
+    const fields: string[] = [
         "latitude:Latitude",
         "state:Estado",
         "longitude:Longitude",
-        "denunciator:Denunciante",
+        "denunciator_id:Denunciante",
         "name:Nome",
         "denounce:Denuncia",
+        "address_id:Endereço",
         "city:Cidade",
         "description:Descricao",
         "title:Titulo",
@@ -71,7 +72,7 @@ export const commonValidateEntityErrors = (errorType: string, field?: string, pr
         if (property) message = message.replace('<property>', property);
         return message;
     } else {
-        return "Campo inválido."
+        return "Campo inválido.";
     }
 }
 
