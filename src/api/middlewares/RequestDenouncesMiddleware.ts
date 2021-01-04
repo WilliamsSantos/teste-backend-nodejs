@@ -19,7 +19,7 @@ export function validateRequestDenouncesMiddleware(
     const missingFields =
       requiredFields.filter((este, i) => Object.keys(data).indexOf(este) !== i);
     if (missingFields.length) {
-      response.status(400).json({ code: 0, message: `Requisição invalida, ${missingFields[0]} não encontrado.` })
+      response.status(400).json({ code: 0, message: `Requisição inválida, ${missingFields[0]} não encontrado.` })
     }
   }
 

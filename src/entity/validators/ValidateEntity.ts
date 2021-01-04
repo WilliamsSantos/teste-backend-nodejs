@@ -1,11 +1,12 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import { commonValidateEntityErrors, translateFieldToPtBr, validators } from "../../utils/Util";
 import { ErrorObjectStructure, PropertyMountObject, ValidateEntityMethods } from "../../interfaces/validator/Interface";
+import { entityErrors } from "../../utils/EnumEntityError";
 
 /**
  * Types of fields accepts and treatments
- * ex: [ 'require', 'only:numbers', {  'max'/'min' : x } ]
+ * ex: [ 'require', 'only:numbers', {  'num:max'/'num:min' or 'str:min'/'str:max' : x } ]
  */
-
 export class ValidateEntity implements ValidateEntityMethods {
     requiredFields;
     entity;
@@ -18,53 +19,50 @@ export class ValidateEntity implements ValidateEntityMethods {
         const errors: ErrorObjectStructure[] = [];
         try {
             for (const field of this.requiredFields) {
-                let isNotValid = false;
                 Object.keys(field).map(item => {
                     if (Object.prototype.hasOwnProperty.call(this.entity, item)) {
                         for (const rule of field[item]) {
-                            if (typeof rule === 'object') {
-                                if (Object.prototype.hasOwnProperty.call(rule, 'min')) {
-                                    isNotValid = validators['min'](this.entity[item], rule['min']);
-                                    if (isNotValid)
-                                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'str:min', value: rule['min'] }));
-                                }
-                                if (Object.prototype.hasOwnProperty.call(rule, 'max')) {
-                                    isNotValid = validators['max'](this.entity[item], rule['max']);
-                                    if (isNotValid)
-                                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'str:max', value: rule['max'] }));
-                                }
-                            } else {
-                                switch (rule) {
-                                    case 'require':
-                                        isNotValid = validators[rule](this.entity[item]);
-                                        if (isNotValid)
-                                            errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty', value: null }));
-                                        break;
-                                    case 'onlyNumbers':
-                                        isNotValid = validators[rule](this.entity[item]);
-                                        if (isNotValid)
-                                            errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'onlyNumbers', value: null }));
-                                        break
-                                }
-                            continue;
-                            }
+                            const response = this.typeRuleVerify(item, rule);
+                            if (response) errors.push(response); 
+                            else continue;
                         }
                     } else {
-                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty', value:null }));
+                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty', value: null }));
                     }
                 });
             }
-
             if (errors.length) {
-                throw errors;    
+                throw errors;
             } else {
-                return
+                return;
             }
         } catch (error) {
-            throw new Error(JSON.stringify(error)); 
+            throw new Error(JSON.stringify(error));
         }
     }
 
+    typeRuleVerify(item: string, rule: { [x: string]: string | number; }): ErrorObjectStructure {
+        let isNotValid = false, objectResponse: ErrorObjectStructure;
+        const rulesTypes = Object.keys(entityErrors);
+        for (const type of rulesTypes) {
+            if (Object.prototype.hasOwnProperty.call(rule, type) || String(rule).match(type)) {
+                const validate: string =
+                    type.indexOf(':') != -1
+                        ? /:(\w)+/g.exec(type)[0].replace(':', '')
+                        : type;
+
+                isNotValid = validators[validate](this.entity[item], rule[type]);
+
+                if (isNotValid)
+                    if (type.match(/num:/)) {
+                        objectResponse = this.mountObjectError(translateFieldToPtBr(item), { key: type, value: rule[type] });
+                    } else {
+                        objectResponse = this.mountObjectError(translateFieldToPtBr(item), { key: type, value: null });
+                    }
+            }
+        }
+        return objectResponse;
+    }
     mountObjectError(codeError: string, property: PropertyMountObject): ErrorObjectStructure {
         const { key, value } = property,
             errorMessage = value !== null

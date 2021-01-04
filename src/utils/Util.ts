@@ -1,16 +1,18 @@
-import { getRepository } from "typeorm";
+/* eslint-disable @typescript-eslint/ban-types */
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+// import { getRepository } from "typeorm";
+// import { ErrorCodes } from "../entity";
 import { logger } from "../../logs";
-import { ErrorCodes } from "../entity";
 import { BruteObjectsDenounces, ResponseDenounce } from "../interfaces/router/Interfaces";
 import { ValidatorsFunctions } from "../interfaces/validator/Interface";
 import { entityErrors } from "./EnumEntityError";
 
-export function log(type: string, message: string | object): void {
+export function log(type: string, message: string | unknown): void {
     logger[type](message);
 }
 
 export function translateFieldToPtBr(fieldToTranslate: string): string {
-    let field: string = "";
+    let field = "";
     const fields: string[] = [
         "latitude:Latitude",
         "state:Estado",
@@ -30,17 +32,17 @@ export function translateFieldToPtBr(fieldToTranslate: string): string {
         }
     }
     return field;
-};
+}
 
-export function errorResponse(errors: any): object {
-    let errorsMessage = { errors: [] };
+export function errorResponse(errors): object {
+    const errorsMessage = { errors: [] };
 
     if (errors && errors['message']) errors = errors['message'];
     if (typeof errors === 'string') errors = JSON.parse(errors);
     if (!Array.isArray(errors)) errors = [{ message: errors, code: 0 }];
 
-    errors.forEach((item: { [x: string]: any; }) => {
-        let errObj = {};
+    errors.forEach((item: { [x: string]: unknown; }) => {
+        const errObj = {};
         errObj['code'] = (item['code']) ? item['code'] : 0;
         errObj['message'] = (item['message']) ? item['message'] : 'Falha na requisição.';
         errorsMessage.errors.push(errObj);
@@ -49,23 +51,23 @@ export function errorResponse(errors: any): object {
     return errorsMessage;
 }
 
-// Not finished
-export async function errorTratmentToCode(errorCode: number) {
-    try {
-        const errorRepository = getRepository(ErrorCodes),
-            errorHandled = await errorRepository.find({
-                code: Number(errorCode)
-            });
-        if (!errorHandled.length) {
-            // return communErrors['standard'];
-        }
-        return errorHandled;
-    } catch (error) {
-        throw new Error(error.message);
-    }
-}
+// // Not finished
+// export async function errorTratmentToCode(errorCode: number) {
+//     try {
+//         const errorRepository = getRepository(ErrorCodes),
+//             errorHandled = await errorRepository.find({
+//                 code: Number(errorCode)
+//             });
+//         if (!errorHandled.length) {
+//             // return communErrors['standard'];
+//         }
+//         return errorHandled;
+//     } catch (error) {
+//         throw new Error(error.message);
+//     }
+// }
 
-export const commonValidateEntityErrors = (errorType: string, field?: string, property?: string | number) => {
+export const commonValidateEntityErrors = (errorType: string, field?: string, property?: string | number): string => {
     const errorsProperty = Object.getOwnPropertyNames(entityErrors);
     if (errorsProperty.indexOf(errorType) != -1) {
         let message = entityErrors[errorType].replace('<field>', field);

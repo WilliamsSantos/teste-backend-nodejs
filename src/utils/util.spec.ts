@@ -8,11 +8,11 @@ import {
 
 describe('Test the common validate entity errors util', () => {
     it('should response with a cpf string must be minumun 11 digits', () => {
-        const response = commonValidateEntityErrors('min', 'cpf', 11);
+        const response = commonValidateEntityErrors('num:min', 'cpf', 11);
         expect(response).toEqual("cpf deve ter no minimo 11 digitos.");
     });
     it('should response with a cpf string must be maximun 11 digits', () => {
-        const response = commonValidateEntityErrors('max', 'cpf', 11);
+        const response = commonValidateEntityErrors('num:max', 'cpf', 11);
         expect(response).toEqual("cpf deve ter no máximo 11 digitos.");
     });
     it('should response with a name must be at least 2 letters long.', () => {
@@ -28,7 +28,7 @@ describe('Test the common validate entity errors util', () => {
         expect(response).toEqual("cep deve conter apenas digitos.");
     });
     it('should response with a title is empty.', () => {
-        const response = commonValidateEntityErrors('empty', 'titulo');
+        const response = commonValidateEntityErrors('require', 'titulo');
         expect(response).toEqual("titulo não informado.");
     });
 });

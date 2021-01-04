@@ -11,7 +11,7 @@ afterEach(() => {
     return conn.close();
 });
 describe("Test the router not implement", () => {
-    test("It should response with 405 code Method Not Allowed", async () => {
+    test("should response with 405 code Method Not Allowed", async () => {
         return await request(server.app)
             .get("/v1/denunciar")
             .expect('Content-Type', /json/)
@@ -20,7 +20,7 @@ describe("Test the router not implement", () => {
                 expect(response.body).toEqual("Router Not Implement");
             });
     });
-    test("It should response router not Implements message", async () => {
+    test("should response router not Implements message", async () => {
         return await request(server.app)
             .post("/v1/denunciar")
             .expect('Content-Type', /json/)
@@ -32,7 +32,7 @@ describe("Test the router not implement", () => {
 });
 
 describe("Test the router request middleware", () => {
-    test("It should response with empty request message and status 400, if not have body send", async () => {
+    test("should response with empty request message and status 400, if not have body send", async () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .expect('Content-Type', /json/)
@@ -44,7 +44,7 @@ describe("Test the router request middleware", () => {
                 });
             });
     });
-    test("It should reply with the missing field denunciante in the request", async () => {
+    test("should reply with the missing field denunciante in the request", async () => {
         const bodyRequest = {
             "latitude": -9.5481839,
             "longitude": 340,
@@ -61,11 +61,11 @@ describe("Test the router request middleware", () => {
             .then(response => {
                 expect(response.body).toStrictEqual({
                     "code": 0,
-                    "message": "Requisição invalida, denunciante não encontrado.",
+                    "message": "Requisição inválida, denunciante não encontrado.",
                 });
             });
     });
-    test("It should reply with the missing field denunciante > nome in the request", async () => {
+    test("should reply with the missing field denunciante > nome in the request", async () => {
         const bodyRequest = {
             "latitude": -9.5481839,
             "longitude": 340,
@@ -93,7 +93,7 @@ describe("Test the router request middleware", () => {
                 });
             });
     });
-    test("It should reply with the missing field denunciante > cpf in the request", async () => {
+    test("should reply with the missing field denunciante > cpf in the request", async () => {
         const bodyRequest = {
             "latitude": -9.5481839,
             "longitude": 340,
@@ -121,7 +121,7 @@ describe("Test the router request middleware", () => {
                 });
             });
     });
-    test("It should reply with the missing field latitude in the request", async () => {
+    test("should reply with the missing field latitude in the request", async () => {
         const bodyRequest = {
             "longitude": 340,
             "denunciante": {
@@ -141,11 +141,11 @@ describe("Test the router request middleware", () => {
             .then(response => {
                 expect(response.body).toStrictEqual({
                     "code": 0,
-                    "message": "Requisição invalida, latitude não encontrado.",
+                    "message": "Requisição inválida, latitude não encontrado.",
                 });
             });
     });
-    test("It should reply with the missing field longitude in the request", async () => {
+    test("should reply with the missing field longitude in the request", async () => {
         const bodyRequest = {
             "latitude": -9.5481839,
             "denunciante": {
@@ -165,11 +165,11 @@ describe("Test the router request middleware", () => {
             .then(response => {
                 expect(response.body).toStrictEqual({
                     "code": 0,
-                    "message": "Requisição invalida, longitude não encontrado.",
+                    "message": "Requisição inválida, longitude não encontrado.",
                 });
             });
     });
-    test("It should reply with the missing field denuncia in the request", async () => {
+    test("should reply with the missing field denuncia in the request", async () => {
         const bodyRequest = {
             "latitude": -9.5481839,
             "longitude": 340,
@@ -186,11 +186,11 @@ describe("Test the router request middleware", () => {
             .then(response => {
                 expect(response.body).toStrictEqual({
                     "code": 0,
-                    "message": "Requisição invalida, denuncia não encontrado."
+                    "message": "Requisição inválida, denuncia não encontrado."
                 });
             });
     });
-    test("It should reply with the missing field denuncia > titulo in the request", async () => {
+    test("should reply with the missing field denuncia > titulo in the request", async () => {
         const bodyRequest = {
             "latitude": -9.5481839,
             "longitude": 340,
@@ -218,7 +218,7 @@ describe("Test the router request middleware", () => {
                 });
             });
     });
-    test("It should reply with the missing field denuncia > descricao in the request", async () => {
+    test("should reply with the missing field denuncia > descricao in the request", async () => {
         const bodyRequest = {
             "latitude": -9.5481839,
             "longitude": 340,
@@ -249,7 +249,7 @@ describe("Test the router request middleware", () => {
 });
 
 describe("Test the request fields validates", () => {    
-    test("It should return a errors message to field cpf with length != 11 with a error message", async () => {
+    test("should return a errors message to field cpf with length != 11 with a error message", async () => {
         const bodyRequest = {
             "latitude": -9.648198,
             "longitude": -35.713458,
@@ -271,14 +271,14 @@ describe("Test the request fields validates", () => {
                 expect(response.body).toStrictEqual({
                     "errors": [
                         {
-                            "code": "cpf",
-                            "message": "cpf deve ter no minimo 11 letras.",
+                            "code": "cpf", 
+                            "message": "cpf deve ter no minimo 11 digitos."
                         }
                     ]
-                })
+                });
             });
     });
-    test("It should return a errors array with message cpf must have a maximum of 11 letters and cpf must contain only digits", async () => {
+    test("should return a errors array with message cpf must have a maximum of 11 letters and cpf must contain only digits", async () => {
         const bodyRequest = {
             "latitude": -9.648198,
             "longitude": -35.713458,
@@ -300,22 +300,21 @@ describe("Test the request fields validates", () => {
                 expect(response.body).toStrictEqual({
                     "errors": [
                         {
-                            "code": "cpf",
-                            "message": "cpf deve conter apenas digitos.",
-                        },
+                            "code": "cpf", 
+                            "message": "cpf deve conter apenas digitos."
+                        }, 
                         {
-                            "code": "cpf",
-                            "message": "cpf deve ter no máximo 11 letras.",
+                            "code": "cpf", 
+                            "message": "cpf deve ter no máximo 11 digitos."
                         }
                     ]
-                }
-                );
+                });
             });
     });
 })
 
 describe("Test the sucessfull registre a denounce", () => {
-    test("It should response with 201 create status and denounce on object response", async () => {
+    test("should response with 201 create status and denounce on object response", async () => {
         const bodyRequest = {
             "latitude": -9.648198,
             "longitude": -35.713458,
