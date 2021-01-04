@@ -16,15 +16,19 @@ describe("Test the Denounciator Entity", () => {
             name: 'Teste Denunciator',
             cpf: null
         }
-        const create = new Denunciators(dataNewDenunciator);
         try {
+            const create = new Denunciators(dataNewDenunciator);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
                 JSON.stringify([
                     {
-                        "code": "Cpf",
-                        "message": "Cpf não informado."
+                        "code":"cpf",
+                        "message":"cpf não informado."
+                    },
+                    {
+                        "code":"cpf",
+                        "message":"cpf deve conter apenas digitos."
                     }
                 ])
             ));
@@ -35,8 +39,8 @@ describe("Test the Denounciator Entity", () => {
             "cpf": "12345678900",
             "name": null
         }
-        const create = new Denunciators(dataNewDenunciator);
         try {
+            const create = new Denunciators(dataNewDenunciator);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
@@ -54,8 +58,8 @@ describe("Test the Denounciator Entity", () => {
             "name": 'Teste Denunciator teste teste teste teste',
             "cpf": "12345678900"
         }
-        const create = new Denunciators(dataNewDenunciator);
         try {
+            const create = new Denunciators(dataNewDenunciator);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
@@ -73,19 +77,18 @@ describe("Test the Denounciator Entity", () => {
             cpf: '115-475-985-00',
             name: 'teste name'
         }
-        const create = new Denunciators(dataNewDenunciator);
         try {
+            const create = new Denunciators(dataNewDenunciator);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
                 JSON.stringify([
                     {
-                        "code": "Cpf",
-                        "message": "Cpf não deve conter caractéres especiais."
+                        "code":"cpf",
+                        "message":"cpf deve conter apenas digitos."
                     },
                     {
-                        "code": "Cpf",
-                        "message": "Cpf deve ter no máximo 11 digitos."
+                        "code":"cpf","message":"cpf deve ter no máximo 11 digitos."
                     }
                 ])
             ));
@@ -96,8 +99,8 @@ describe("Test the Denounciator Entity", () => {
             cpf: '15447885210',
             name: 'teste name'
         }
-        const create = new Denunciators(dataNewDenunciator);
         try {
+            const create = new Denunciators(dataNewDenunciator);
             const validate = await create.validate();
             expect(validate).toBeTruthy()
         } catch (error) {
