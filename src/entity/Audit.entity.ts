@@ -36,10 +36,10 @@ export class Audit extends BaseEntity {
     json_response: string;
 
     @Column()
-    json_send: string
+    json_send: string;
 
     @Column()
-    sucess: boolean = false
+    sucess: boolean = false;
 
     @CreateDateColumn()
     created_at: Date;

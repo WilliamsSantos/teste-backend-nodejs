@@ -14,7 +14,7 @@ export class ErrorCodes extends entityBase {
 
     constructor(data: ErrorCodeObject = {
         code: 0,
-        description: ''
+        description: ""
     }) {
         super();
         const { code, description } = data;
@@ -22,7 +22,7 @@ export class ErrorCodes extends entityBase {
         this.code = code;
         this.description = description;
 
-        this.setTableName('ErrorCodes');
+        this.setTableName("ErrorCodes");
     }
     @PrimaryGeneratedColumn()
     id: number;

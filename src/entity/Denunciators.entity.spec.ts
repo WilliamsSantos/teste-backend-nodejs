@@ -13,7 +13,7 @@ describe("Test the Denounciator Entity", () => {
 
     test("It should be returned an error if cpf not passed", async () => {
         const dataNewDenunciator = {
-            name: 'Teste Denunciator',
+            name: "Teste Denunciator",
             cpf: null
         }
         try {
@@ -55,7 +55,7 @@ describe("Test the Denounciator Entity", () => {
     });
     test("It should be returned an error if name length its great then 25", async () => {
         const dataNewDenunciator = {
-            "name": 'Teste Denunciator teste teste teste teste',
+            "name": "Teste Denunciator teste teste teste teste",
             "cpf": "12345678900"
         }
         try {
@@ -74,8 +74,8 @@ describe("Test the Denounciator Entity", () => {
     });
     test("It should be returned an error if cpf have a special characters", async () => {
         const dataNewDenunciator = {
-            cpf: '115-475-985-00',
-            name: 'teste name'
+            cpf: "115-475-985-00",
+            name: "teste name"
         }
         try {
             const create = new Denunciators(dataNewDenunciator);
@@ -96,8 +96,8 @@ describe("Test the Denounciator Entity", () => {
     });
     test("It should be returned true if cpf have accept value", async () => {
         const dataNewDenunciator = {
-            cpf: '15447885210',
-            name: 'teste name'
+            cpf: "15447885210",
+            name: "teste name"
         }
         try {
             const create = new Denunciators(dataNewDenunciator);
