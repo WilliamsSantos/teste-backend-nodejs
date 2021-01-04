@@ -49,7 +49,7 @@ export class Denounces extends entityBase {
     @Column()
     address_id: number;
 
-    validate():Promise<Error> {
+    validate(): Promise<Error> {
         return new DenounceValidate(this).validate();
     }
 }

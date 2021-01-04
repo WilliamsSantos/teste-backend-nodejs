@@ -2,7 +2,7 @@ export interface ValidatorsFunctions {
     require: (item: string) => boolean;
     min: (item: string, min: number) => boolean;
     max: (item: string, max: number) => boolean;
-    onlyNumbers: (item: number|string) => boolean;
+    onlyNumbers: (item: number | string) => boolean;
 }
 
 export interface ErrorObjectStructure {
@@ -10,9 +10,9 @@ export interface ErrorObjectStructure {
     message: string
 }
 
-export interface PropertyMountObject { 
-    key: string; 
-    value: string | number; 
+export interface PropertyMountObject {
+    key: string;
+    value: string | number;
 }
 
 export interface ValidateEntityMethods {
@@ -22,15 +22,15 @@ export interface ValidateEntityMethods {
     typeRuleVerify: (item: string, rule: { [x: string]: string | number; }) => ErrorObjectStructure;
 }
 
-export interface TreatedAuditObject { 
-    json_response: string, 
-    json_send: string, 
-    cpf: string 
+export interface TreatedAuditObject {
+    json_response: string,
+    json_send: string,
+    cpf: string
 }
 
-export interface TreatedDenounceObject { 
-    address_id: number, 
-    denunciator_id: number, 
+export interface TreatedDenounceObject {
+    address_id: number,
+    denunciator_id: number,
     title: string,
     description: string
 }

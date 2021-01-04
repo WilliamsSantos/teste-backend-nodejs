@@ -23,7 +23,7 @@ export class ValidateEntity implements ValidateEntityMethods {
                     if (Object.prototype.hasOwnProperty.call(this.entity, item)) {
                         for (const rule of field[item]) {
                             const response = this.typeRuleVerify(item, rule);
-                            if (response) errors.push(response); 
+                            if (response) errors.push(response);
                             else continue;
                         }
                     } else {

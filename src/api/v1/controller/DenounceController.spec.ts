@@ -31,7 +31,7 @@ describe("Test the Denounce Controller", () => {
 
             const saveTestAddress = await new controller.AddressController(newAddress).store(EntityManager);
             const saveTestDenunciator = await new controller.DenunciatorController(newDenunciator).store(EntityManager);
-    
+
             const dataDenounces = {
                 title: 'denunce test title',
                 description: "Existe um esgoto a céu aberto nesta localidade.",

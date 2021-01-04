@@ -4,7 +4,7 @@ import { log } from "../../../utils/Util";
 
 interface BaseFunctions {
     validate: () => Promise<Error>;
-    getTableName:() => string;
+    getTableName: () => string;
 }
 type BaseObjectsType = AddressCreated | DenunciatorCreated | DenounceCreated | BaseFunctions;
 
@@ -14,7 +14,7 @@ export abstract class BaseController {
         this.entity = Model;
     }
 
-    store = async (transaction: EntityManager):Promise<unknown> => {
+    store = async (transaction: EntityManager): Promise<unknown> => {
         try {
             await this.entity.validate();
             return await transaction.save(this.entity);

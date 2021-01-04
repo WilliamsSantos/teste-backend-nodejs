@@ -75,7 +75,7 @@ export class Addresses extends entityBase {
     @Column()
     postal_code: string;
 
-    validate():Promise<Error> {
+    validate(): Promise<Error> {
         return new addressValidate(this).validate();
     }
 }

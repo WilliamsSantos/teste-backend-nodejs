@@ -248,7 +248,7 @@ describe("Test the router request middleware", () => {
     });
 });
 
-describe("Test the request fields validates", () => {    
+describe("Test the request fields validates", () => {
     test("should return a errors message to field cpf with length != 11 with a error message", async () => {
         const bodyRequest = {
             "latitude": -9.648198,
@@ -271,7 +271,7 @@ describe("Test the request fields validates", () => {
                 expect(response.body).toStrictEqual({
                     "errors": [
                         {
-                            "code": "cpf", 
+                            "code": "cpf",
                             "message": "cpf deve ter no minimo 11 digitos."
                         }
                     ]
@@ -300,11 +300,11 @@ describe("Test the request fields validates", () => {
                 expect(response.body).toStrictEqual({
                     "errors": [
                         {
-                            "code": "cpf", 
+                            "code": "cpf",
                             "message": "cpf deve conter apenas digitos."
-                        }, 
+                        },
                         {
-                            "code": "cpf", 
+                            "code": "cpf",
                             "message": "cpf deve ter no máximo 11 digitos."
                         }
                     ]

@@ -39,7 +39,7 @@ describe("Test the Denunciator Controller", () => {
             try {
                 await new controller.DenunciatorController(dataNewDenunciator).store(EntityManager);
             } catch (error) {
-                expect(error).toStrictEqual(new Error(JSON.stringify([{"code":"cpf","message":"cpf não informado."},{"code":"cpf","message":"cpf deve conter apenas digitos."}])));
+                expect(error).toStrictEqual(new Error(JSON.stringify([{ "code": "cpf", "message": "cpf não informado." }, { "code": "cpf", "message": "cpf deve conter apenas digitos." }])));
             }
         })
     });

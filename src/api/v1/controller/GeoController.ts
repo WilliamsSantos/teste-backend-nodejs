@@ -10,7 +10,7 @@ export class GeoController {
     latitude: number;
     longitude: number;
     apiService: ApiService;
-    communError: { geo:{ notFound:string } };
+    communError: { geo: { notFound: string } };
 
     constructor(data: GeoLocation = { lat: 0, lng: 0 }) {
         this.latitude = data.lat;
@@ -60,14 +60,14 @@ export class GeoController {
         }
     }
 
-    private saveAddressInCacheWithThe(key: string, addressToCached: TreatedAddressObject): void{
+    private saveAddressInCacheWithThe(key: string, addressToCached: TreatedAddressObject): void {
         this.cache.saveAddresInCache(key, addressToCached);
     }
 
-    private async verifyAddressInCache(geo:GeoLocation = {lat:0, lng:0}):Promise<TreatedAddressObject>{
-        const addressInCache = 
-                await this.cache
-                    .getAddress(geo as GeoLocation);
+    private async verifyAddressInCache(geo: GeoLocation = { lat: 0, lng: 0 }): Promise<TreatedAddressObject> {
+        const addressInCache =
+            await this.cache
+                .getAddress(geo as GeoLocation);
 
         if (addressInCache) {
             if (this.isValidAddress(addressInCache)) {

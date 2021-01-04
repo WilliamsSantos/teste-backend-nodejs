@@ -23,12 +23,12 @@ describe("Test the Denounciator Entity", () => {
             expect(error).toStrictEqual(new Error(
                 JSON.stringify([
                     {
-                        "code":"cpf",
-                        "message":"cpf não informado."
+                        "code": "cpf",
+                        "message": "cpf não informado."
                     },
                     {
-                        "code":"cpf",
-                        "message":"cpf deve conter apenas digitos."
+                        "code": "cpf",
+                        "message": "cpf deve conter apenas digitos."
                     }
                 ])
             ));
@@ -84,11 +84,11 @@ describe("Test the Denounciator Entity", () => {
             expect(error).toStrictEqual(new Error(
                 JSON.stringify([
                     {
-                        "code":"cpf",
-                        "message":"cpf deve conter apenas digitos."
+                        "code": "cpf",
+                        "message": "cpf deve conter apenas digitos."
                     },
                     {
-                        "code":"cpf","message":"cpf deve ter no máximo 11 digitos."
+                        "code": "cpf", "message": "cpf deve ter no máximo 11 digitos."
                     }
                 ])
             ));
@@ -102,9 +102,9 @@ describe("Test the Denounciator Entity", () => {
         try {
             const create = new Denunciators(dataNewDenunciator);
             const validate = await create.validate();
-            expect(validate).toBeTruthy()
+            expect(validate).toBeTruthy();
         } catch (error) {
-           return;
+            return;
         }
     });
 });

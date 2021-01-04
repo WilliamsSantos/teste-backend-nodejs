@@ -1,7 +1,7 @@
 import * as controller from "./GeoController";
 
 describe("Test the GEO Controller", () => {
-    const emptyGeo = { lat:0,lng:0 };
+    const emptyGeo = { lat: 0, lng: 0 };
 
     test("It should response with not address detected to this local if API dont return a valid address", async () => {
         const geoData = {
@@ -22,17 +22,17 @@ describe("Test the GEO Controller", () => {
         try {
             const res = await new controller.GeoController({ lat: geoData.latitude, lng: geoData.longitude }).getAddress();
             expect(res).toEqual(
-                        expect.objectContaining({
-                            "city":"Maceió",
-                            "country":"BR",
-                            "lat":-9.648198,
-                            "lng":-35.713458,
-                            "neightborhood":"",
-                            "postal_code":"57036-371",
-                            "state":"Alagoas",
-                            "street":"Avenida Dona Constança de Góes Monteiro"
-                        })
-                    )
+                expect.objectContaining({
+                    "city": "Maceió",
+                    "country": "BR",
+                    "lat": -9.648198,
+                    "lng": -35.713458,
+                    "neightborhood": "",
+                    "postal_code": "57036-371",
+                    "state": "Alagoas",
+                    "street": "Avenida Dona Constança de Góes Monteiro"
+                })
+            )
         } catch (error) {
             return;
         }
@@ -47,7 +47,7 @@ describe("Test the GEO Controller", () => {
             neightborhood: 'neighboorhod test',
             street: 'street test',
             postal_code: '2343-234',
-            json:{}
+            json: {}
         };
         const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
         return expect(Geo).toBe(false);
@@ -62,7 +62,7 @@ describe("Test the GEO Controller", () => {
             neightborhood: 'neighboorhod test',
             street: 'street test',
             postal_code: '2343-234',
-            json:{}
+            json: {}
         };
         const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
         return expect(Geo).toBe(false);
@@ -77,7 +77,7 @@ describe("Test the GEO Controller", () => {
             neightborhood: 'neighboorhod test',
             street: 'street test',
             postal_code: '2343-234',
-            json:{}
+            json: {}
         };
         const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
         return expect(Geo).toBe(false);
@@ -92,7 +92,7 @@ describe("Test the GEO Controller", () => {
             neightborhood: 'neighboorhod test',
             street: 'street test',
             postal_code: '2343-234',
-            json:{}
+            json: {}
         };
         const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
         expect(Geo).toBe(true);

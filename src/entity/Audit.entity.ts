@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import {
     Entity,
     PrimaryGeneratedColumn,
@@ -46,7 +47,7 @@ export class Audit extends BaseEntity {
     @UpdateDateColumn()
     updated_at: Date;
 
-    validate(): Promise<any> {
+    validate(): Promise<Error> {
         throw new Error("Method not implemented to logs.");
     }
 }

@@ -7,7 +7,7 @@ export abstract class entityBase {
         this.tableName = name;
     }
 
-    getTableName = ():string => {
+    getTableName = (): string => {
         return this.tableName;
     }
 }

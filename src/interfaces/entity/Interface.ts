@@ -1,9 +1,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
-export interface DenounceObject { 
-    title: string, 
-    address_id: number, 
-    description: string 
-    denunciator_id: number, 
+export interface DenounceObject {
+    title: string,
+    address_id: number,
+    description: string
+    denunciator_id: number,
 }
 
 export interface DenounceCreated {
@@ -69,9 +69,9 @@ export interface AuditObject {
     json_response: string;
     json_send: string,
     sucess: boolean
-} 
+}
 
 export interface ErrorCodeObject {
-    code:number, 
+    code: number,
     description: string
 }

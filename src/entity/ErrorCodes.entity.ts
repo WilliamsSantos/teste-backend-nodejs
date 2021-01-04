@@ -43,6 +43,6 @@ export class ErrorCodes extends entityBase {
     updated_at: Date;
 
     validate(): Promise<Error> {
-        throw new Error("Method not implemented to ErrorsCode.");
+        throw new Error("Método ainda não implementado para  ErrorsCode.");
     }
 }

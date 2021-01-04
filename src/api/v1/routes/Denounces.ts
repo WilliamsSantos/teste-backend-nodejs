@@ -7,11 +7,11 @@ import {
     GeoController,
     DenunciatorController
 } from "../controller";
-import { 
-    AddressCreated, 
-    DenounceCreated, 
-    DenunciatorCreated, 
-    GeoLocation 
+import {
+    AddressCreated,
+    DenounceCreated,
+    DenunciatorCreated,
+    GeoLocation
 } from "../../../interfaces/entity/Interface";
 import { RequestDenounce, ResponseDenounce } from "../../../interfaces/router/Interfaces";
 import * as rateLimit from "express-rate-limit";
@@ -20,14 +20,14 @@ import { Audit } from "../../../entity";
 import { handlerRequestsConfig, limitsRequestConfig } from "../../../config/Configurations";
 
 const requestLimiter = rateLimit({
-    windowMs: limitsRequestConfig.maxRequestPermit, 
-    max: limitsRequestConfig.minutes 
+    windowMs: limitsRequestConfig.maxRequestPermit,
+    max: limitsRequestConfig.minutes
 }),
-speedRequestLimiter = slowDown({
-    windowMs: handlerRequestsConfig.minutesToDelayRequestBegin,
-    delayAfter: handlerRequestsConfig.requestsAllowMinutesConfig, 
-    delayMs: handlerRequestsConfig.startDelayPerRequestAbove 
-});
+    speedRequestLimiter = slowDown({
+        windowMs: handlerRequestsConfig.minutesToDelayRequestBegin,
+        delayAfter: handlerRequestsConfig.requestsAllowMinutesConfig,
+        delayMs: handlerRequestsConfig.startDelayPerRequestAbove
+    });
 
 const routerDenounces = Router();
 routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Request, res: Response): Promise<void> => {

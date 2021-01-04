@@ -2,7 +2,7 @@
 require('dotenv').config();
 require('winston-papertrail').Papertrail;
 import * as transports from "winston-papertrail";
-import * as winston  from "winston";
+import * as winston from "winston";
 /**
  * =======================================
  * Configurations of environment variables
@@ -28,7 +28,7 @@ export const requestApiServiceConfig = {
  * https://github.com/nfriedly/express-rate-limit
  */
 export const limitsRequestConfig = {
-    "minutes":  10 * 60 * 1000,
+    "minutes": 10 * 60 * 1000,
     "maxRequestPermit": 100
 };
 
@@ -48,10 +48,10 @@ export const handlerRequestsConfig = {
  * GEO LOCALIZATION API configs
 */
 export const geoConfig = {
-   "host": process.env.GEO_HOST,
-   "costumerKey": process.env.COSTUMER_KEY,
-   "costumerSecret": process.env.COSTUMER_SECRET,
-   "geoUrlApi": process.env.GEO_URL_API
+    "host": process.env.GEO_HOST,
+    "costumerKey": process.env.COSTUMER_KEY,
+    "costumerSecret": process.env.COSTUMER_SECRET,
+    "geoUrlApi": process.env.GEO_URL_API
 };
 
 /**

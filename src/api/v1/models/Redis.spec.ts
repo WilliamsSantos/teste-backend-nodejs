@@ -1,7 +1,7 @@
 import * as cache from "./Redis";
 describe("Test the Redis Cache", () => {
     test("should save and response with new address cached", async () => {
-        const geoData: {latitude:number, longitude: number} = { latitude: 3459, longitude: -35.713458 }
+        const geoData: { latitude: number, longitude: number } = { latitude: 3459, longitude: -35.713458 }
         const address = {
             lat: 0,
             lng: 0,

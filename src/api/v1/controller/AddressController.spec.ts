@@ -59,7 +59,7 @@ describe("Test the Address Controller", () => {
             try {
                 await new controller.AddressController(data).store(EntityManager);
             } catch (error) {
-                expect(error).toStrictEqual(new Error(JSON.stringify([{"code":"Cidade","message":"Cidade não informado."},{"code":"Estado","message":"Estado não informado."}])));
+                expect(error).toStrictEqual(new Error(JSON.stringify([{ "code": "Cidade", "message": "Cidade não informado." }, { "code": "Estado", "message": "Estado não informado." }])));
             }
         })
     });
