@@ -1,12 +1,12 @@
-FROM node:15
+FROM node:alpine3.12
 
 RUN mkdir /app
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY package.json ./
 
-RUN npm install --save && npm update
+RUN npm install --ignore-optional
 
 COPY . /app
 

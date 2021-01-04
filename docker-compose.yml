@@ -2,6 +2,7 @@ version: "3"
 
 services:
   redis-server:
+    container_name: 'redis_cache'
     image: "redis"
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
@@ -9,6 +10,7 @@ services:
       - "${REDIS_PORT}"
 
   roga-teste-postgres-compose:
+    container_name: 'postgres_db'
     image: postgres
     env_file:
       - .env
