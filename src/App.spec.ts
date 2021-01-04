@@ -1,6 +1,6 @@
 import * as request from "supertest";
 import { createConnection, getConnection } from "typeorm";
-import server = require("./App");
+import * as server from "./App";
 import * as config from "./config/DbTestConfig";
 
 beforeEach(() => {

@@ -1,5 +1,5 @@
 import { createConnection, getConnection } from "typeorm";
-import controller = require("./AddressController");
+import * as controller from "./AddressController";
 import * as config from "../../../config/DbTestConfig";
 
 describe("Test the Address Controller", () => {
