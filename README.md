@@ -65,7 +65,7 @@ O projeto atualmente possui algumas dependências importantes. Algumas das tecno
 - Jest
 - Typeorm
 
-Pensando na escalabilidade, também existem alguns packages(dependências) que foram instaladas para melhorar a performance prevenir ataques e etc, grande parte das configurações do sistema podem ser alteradas no arquivo `Configurations.ts`.
+Pensando na escalabilidade, também existem alguns packages(dependências) que foram instaladas para melhorar a performance prevenir ataques e etc, configurações estas que podem ser alteradas no arquivo `Configurations.ts`.
 
 ### Dependências que precisam de conta para acesso
 Dentre os serviços utilizados apenas o <b>papertrail</b> necessita de uma conta mas não é nenhum bixo de 7 cabeças, deixarei um link para mais informações sobre o serviço e como você poderá fazer uma conta, caso não tenha:
