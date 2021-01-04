@@ -44,6 +44,7 @@
     "test": "NODE_ENV=test jest",
     "build": "tsc --build",
     "clean": "tsc --build --clean",
+    "lint": "eslint ./src/",
     "db:seed": "ts-node src/seed/Errors.seed.ts",
     "start": "NODE_ENV=prod ts-node src/Server.ts"
   },
