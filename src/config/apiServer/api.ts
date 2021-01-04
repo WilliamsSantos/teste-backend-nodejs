@@ -35,7 +35,7 @@ export class ApiService {
     }
 
     errorResponseTreatment(error: Error): Error {
-        log('error', `Error in GeoController: ${error.message}`);
+        log("error", `Error in GeoController: ${error.message}`);
         throw error;
     }
 

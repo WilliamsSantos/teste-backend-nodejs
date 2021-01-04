@@ -15,12 +15,12 @@ describe("Test the Address Controller", () => {
         const data = {
             lat: -9.648198,
             lng: -35.713458,
-            country: 'BR',
-            state: 'Alagoas',
-            city: 'Maceió',
-            neightborhood: '',
-            street: 'Avenida Dona Constança de Góes Monteiro',
-            postal_code: '57036-371'
+            country: "BR",
+            state: "Alagoas",
+            city: "Maceió",
+            neightborhood: "",
+            street: "Avenida Dona Constança de Góes Monteiro",
+            postal_code: "57036-371"
         }
         await getConnection().transaction(async EntityManager => {
             const create = await new controller.AddressController(data).store(EntityManager);
@@ -31,15 +31,15 @@ describe("Test the Address Controller", () => {
                     "tableName": "Addresses",
                     "city": "Maceió",
                     "country": "BR",
-                    "created_at": create['created_at'],
-                    "id": create['id'],
+                    "created_at": create["created_at"],
+                    "id": create["id"],
                     "lat": -9.648198,
                     "lng": -35.713458,
                     "neightborhood": "",
                     "postal_code": "57036-371",
                     "state": "Alagoas",
                     "street": "Avenida Dona Constança de Góes Monteiro",
-                    "updated_at": create['updated_at']
+                    "updated_at": create["updated_at"]
                 }
             )
         })
@@ -48,12 +48,12 @@ describe("Test the Address Controller", () => {
         const data = {
             lat: null,
             lng: null,
-            country: 'BR',
+            country: "BR",
             state: null,
             city: null,
-            neightborhood: '',
-            street: 'Avenida Dona Constança de Góes Monteiro',
-            postal_code: '57036-371'
+            neightborhood: "",
+            street: "Avenida Dona Constança de Góes Monteiro",
+            postal_code: "57036-371"
         }
         await getConnection().transaction(async EntityManager => {
             try {

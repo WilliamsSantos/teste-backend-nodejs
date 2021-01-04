@@ -42,11 +42,11 @@ describe("Test the GEO Controller", () => {
             lat: 1233444,
             lng: 34335534,
             country: null,
-            state: 'state test',
-            city: 'city teste',
-            neightborhood: 'neighboorhod test',
-            street: 'street test',
-            postal_code: '2343-234',
+            state: "state test",
+            city: "city teste",
+            neightborhood: "neighboorhod test",
+            street: "street test",
+            postal_code: "2343-234",
             json: {}
         };
         const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
@@ -56,12 +56,12 @@ describe("Test the GEO Controller", () => {
         const address = {
             lat: 1233444,
             lng: 34335534,
-            country: 'Country test',
+            country: "Country test",
             state: null,
-            city: 'city teste',
-            neightborhood: 'neighboorhod test',
-            street: 'street test',
-            postal_code: '2343-234',
+            city: "city teste",
+            neightborhood: "neighboorhod test",
+            street: "street test",
+            postal_code: "2343-234",
             json: {}
         };
         const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
@@ -71,12 +71,12 @@ describe("Test the GEO Controller", () => {
         const address = {
             lat: 1233444,
             lng: 34335534,
-            country: 'Country test',
-            state: 'state test',
+            country: "Country test",
+            state: "state test",
             city: null,
-            neightborhood: 'neighboorhod test',
-            street: 'street test',
-            postal_code: '2343-234',
+            neightborhood: "neighboorhod test",
+            street: "street test",
+            postal_code: "2343-234",
             json: {}
         };
         const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
@@ -86,12 +86,12 @@ describe("Test the GEO Controller", () => {
         const address = {
             lat: 1233444,
             lng: 34335534,
-            country: 'Country test',
-            state: 'state test',
-            city: 'City Test',
-            neightborhood: 'neighboorhod test',
-            street: 'street test',
-            postal_code: '2343-234',
+            country: "Country test",
+            state: "state test",
+            city: "City Test",
+            neightborhood: "neighboorhod test",
+            street: "street test",
+            postal_code: "2343-234",
             json: {}
         };
         const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);

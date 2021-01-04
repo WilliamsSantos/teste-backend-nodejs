@@ -9,8 +9,8 @@ export class Denounces extends entityBase {
     constructor(data: DenounceObject = {
         address_id: 0,
         denunciator_id: 0,
-        description: '',
-        title: ''
+        description: "",
+        title: ""
     }) {
         super();
         const { address_id, denunciator_id, title, description } = data;
@@ -20,7 +20,7 @@ export class Denounces extends entityBase {
         this.title = title;
         this.description = description;
 
-        this.setTableName('Denounces');
+        this.setTableName("Denounces");
     }
 
     @PrimaryGeneratedColumn()

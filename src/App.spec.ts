@@ -14,7 +14,7 @@ describe("Test the router not implement", () => {
     test("should response with 405 code Method Not Allowed", async () => {
         return await request(server.app)
             .get("/v1/denunciar")
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(405)
             .then(response => {
                 expect(response.body).toEqual("Router Not Implement");
@@ -23,7 +23,7 @@ describe("Test the router not implement", () => {
     test("should response router not Implements message", async () => {
         return await request(server.app)
             .post("/v1/denunciar")
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(405)
             .then(response => {
                 expect(response.body).toEqual("Router Not Implement");
@@ -35,7 +35,7 @@ describe("Test the router request middleware", () => {
     test("should response with empty request message and status 400, if not have body send", async () => {
         return await request(server.app)
             .post("/v1/denuncias")
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -56,7 +56,7 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -80,7 +80,7 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -108,7 +108,7 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -136,7 +136,7 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -160,7 +160,7 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -181,7 +181,7 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -205,7 +205,7 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -233,7 +233,7 @@ describe("Test the router request middleware", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -265,7 +265,7 @@ describe("Test the request fields validates", () => {
         await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -294,7 +294,7 @@ describe("Test the request fields validates", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(400)
             .then(response => {
                 expect(response.body).toStrictEqual({
@@ -330,7 +330,7 @@ describe("Test the sucessfull registre a denounce", () => {
         return await request(server.app)
             .post("/v1/denuncias")
             .send(bodyRequest)
-            .expect('Content-Type', /json/)
+            .expect("Content-Type", /json/)
             .expect(201)
             .then(response => {
                 response.body.id = 1;

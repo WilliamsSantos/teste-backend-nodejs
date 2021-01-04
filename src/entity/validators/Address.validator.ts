@@ -5,9 +5,9 @@ export class addressValidate extends ValidateEntity {
     constructor(address: Address) {
         super(address);
         this.requiredFields = [
-            { 'city': ['require', { 'str:max': 10 }] },
-            { 'country': ['require'] },
-            { 'state': ['require'] }
+            { "city": ["require", { "str:max": 10 }] },
+            { "country": ["require"] },
+            { "state": ["require"] }
         ];
     }
 }

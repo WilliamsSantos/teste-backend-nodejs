@@ -5,7 +5,7 @@ import { entityErrors } from "../../utils/EnumEntityError";
 
 /**
  * Types of fields accepts and treatments
- * ex: [ 'require', 'only:numbers', {  'num:max'/'num:min' or 'str:min'/'str:max' : x } ]
+ * ex: [ "require", "only:numbers", {  "num:max"/"num:min" or "str:min"/"str:max" : x } ]
  */
 export class ValidateEntity implements ValidateEntityMethods {
     requiredFields;
@@ -27,7 +27,7 @@ export class ValidateEntity implements ValidateEntityMethods {
                             else continue;
                         }
                     } else {
-                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: 'empty', value: null }));
+                        errors.push(this.mountObjectError(translateFieldToPtBr(item), { key: "empty", value: null }));
                     }
                 });
             }
@@ -47,8 +47,8 @@ export class ValidateEntity implements ValidateEntityMethods {
         for (const type of rulesTypes) {
             if (Object.prototype.hasOwnProperty.call(rule, type) || String(rule).match(type)) {
                 const validate: string =
-                    type.indexOf(':') != -1
-                        ? /:\w.+/g.exec(type)[0].replace(':', '')
+                    type.indexOf(":") != -1
+                        ? /:\w.+/g.exec(type)[0].replace(":", "")
                         : type;
 
                 isNotValid = validators[validate](this.entity[item], rule[type]);

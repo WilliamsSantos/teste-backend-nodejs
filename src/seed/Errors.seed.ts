@@ -9,21 +9,21 @@ const exec = async () => {
         await getConnection().transaction(async transaction => {
             await transaction.getRepository(ErrorCodes).save({
                 code: 1,
-                description: 'Requisição inválida.'
+                description: "Requisição inválida."
             });
             await transaction.getRepository(ErrorCodes).save({
                 code: 2,
-                description: 'Endereço não encontrado para essa localidade.'
+                description: "Endereço não encontrado para essa localidade."
             });
 
             setTimeout(() => {
-                console.log('Finished');
+                console.log("Finished");
                 process.exit(1);
             }, 4000);
         })
     } catch (error) {
         const { message } = error;
-        log('error', `Falha ao salvar os dados no db: ${message}`);
+        log("error", `Falha ao salvar os dados no db: ${message}`);
         throw new Error(message);
     }
 }

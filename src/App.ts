@@ -17,14 +17,14 @@ import * as routerDenounces from "./api/v1/routes/Denounces";
 // database connect
 connectServerOnDB();
 
-app.set('trust proxy', 1);
+app.set("trust proxy", 1);
 app.use(cors());
 app.use(bodyParser.json());
-app.use(loggerMorgan('dev'));
+app.use(loggerMorgan("dev"));
 app.use(expressWinston.logger({
   transports: [logger],
   meta: false,
-  msg: `{{req.ip}} - {{res.statusCode}} - {{req.method}} - {{res.responseTime}}ms - {{req.url}} - {{req.headers['user-agent']}}`,
+  msg: `{{req.ip}} - {{res.statusCode}} - {{req.method}} - {{res.responseTime}}ms - {{req.url}} - {{req.headers["user-agent"]}}`,
   expressFormat: false,
   colorize: true
 }));
@@ -32,6 +32,6 @@ app.use(expressWinston.logger({
 app.use(`/${process.env.API_VERSION}/denuncias`, validateRequestDenouncesMiddleware, routerDenounces);
 
 // No routing indexed
-app.use('*', (_req: express.Request, res: express.Response) => {
-  return res.status(405).json('Router Not Implement');
+app.use("*", (_req: express.Request, res: express.Response) => {
+  return res.status(405).json("Router Not Implement");
 });

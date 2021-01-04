@@ -27,7 +27,7 @@ export function translateFieldToPtBr(fieldToTranslate: string): string {
     ];
     for (const item of fields) {
         if (item.indexOf(fieldToTranslate) != -1) {
-            field = /:\w.+/g.exec(item)[0].replace(':', '');
+            field = /:\w.+/g.exec(item)[0].replace(":", "");
         }
     }
     return field;
@@ -36,14 +36,14 @@ export function translateFieldToPtBr(fieldToTranslate: string): string {
 export function errorResponse(errors): object {
     const errorsMessage = { errors: [] };
 
-    if (errors && errors['message']) errors = errors['message'];
-    if (typeof errors === 'string') errors = JSON.parse(errors);
+    if (errors && errors["message"]) errors = errors["message"];
+    if (typeof errors === "string") errors = JSON.parse(errors);
     if (!Array.isArray(errors)) errors = [{ message: errors, code: 0 }];
 
     errors.forEach((item: { [x: string]: unknown; }) => {
         const errObj = {};
-        errObj['code'] = (item['code']) ? item['code'] : 0;
-        errObj['message'] = (item['message']) ? item['message'] : 'Falha na requisição.';
+        errObj["code"] = (item["code"]) ? item["code"] : 0;
+        errObj["message"] = (item["message"]) ? item["message"] : "Falha na requisição.";
         errorsMessage.errors.push(errObj);
     });
 
@@ -58,7 +58,7 @@ export function errorResponse(errors): object {
 //                 code: Number(errorCode)
 //             });
 //         if (!errorHandled.length) {
-//             // return communErrors['standard'];
+//             // return communErrors["standard"];
 //         }
 //         return errorHandled;
 //     } catch (error) {
@@ -69,8 +69,8 @@ export function errorResponse(errors): object {
 export const commonValidateEntityErrors = (errorType: string, field?: string, property?: string | number): string => {
     const errorsProperty = Object.getOwnPropertyNames(entityErrors);
     if (errorsProperty.indexOf(errorType) != -1) {
-        let message = entityErrors[errorType].replace('<field>', field);
-        if (property) message = message.replace('<property>', property);
+        let message = entityErrors[errorType].replace("<field>", field);
+        if (property) message = message.replace("<property>", property);
         return message;
     } else {
         return "Campo inválido.";
@@ -103,13 +103,13 @@ export function mountObjectToResponseFrom(data: BruteObjectsDenounces): Response
 }
 
 export const validators: ValidatorsFunctions = {
-    require: (item = '') => {
+    require: (item = "") => {
         return !(item && item != null && String(item).length && item != undefined);
     },
-    min: (item = '', min = 1) => {
+    min: (item = "", min = 1) => {
         return item && item.length < min;
     },
-    max: (item = '', max = 0) => {
+    max: (item = "", max = 0) => {
         return item && item.length > max;
     },
     onlyNumbers: (item = 0) => {

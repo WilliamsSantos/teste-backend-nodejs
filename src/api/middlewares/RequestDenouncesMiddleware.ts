@@ -14,7 +14,7 @@ export function validateRequestDenouncesMiddleware(
   const objectPropertsAccept = propertiesAcceptsArray
 
   if (Object.keys(data).length === 0) {
-    response.status(400).json({ code: 0, message: 'Requisição vazia.' })
+    response.status(400).json({ code: 0, message: "Requisição vazia." })
   } else {
     const missingFields =
       requiredFields.filter((este, i) => Object.keys(data).indexOf(este) !== i);
@@ -24,7 +24,7 @@ export function validateRequestDenouncesMiddleware(
   }
 
   objectPropertsAccept.forEach(item => {
-    if (typeof item != 'object') {
+    if (typeof item != "object") {
       if (!Object.prototype.hasOwnProperty.call(data, item)) errors.push(item);
     } else {
       const property: string = Object.getOwnPropertyNames(item)[0];
@@ -43,7 +43,7 @@ export function validateRequestDenouncesMiddleware(
 
     const errRequest = errorResponse(errorsToTratment);
 
-    log('error', `Request middleware error: ${JSON.stringify(errRequest)}`);
+    log("error", `Request middleware error: ${JSON.stringify(errRequest)}`);
 
     response.status(400).json(errRequest);
   } else {

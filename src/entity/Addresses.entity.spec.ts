@@ -15,12 +15,12 @@ describe("Test the Address Entity", () => {
         const data = {
             lat: -9.648198,
             lng: -35.713458,
-            country: 'BR',
+            country: "BR",
             state: null,
-            city: 'Maceió',
-            neightborhood: '',
-            street: 'Avenida Dona Constança de Góes Monteiro',
-            postal_code: '57036-371'
+            city: "Maceió",
+            neightborhood: "",
+            street: "Avenida Dona Constança de Góes Monteiro",
+            postal_code: "57036-371"
         }
         try {
             await new Addresses(data).validate();
@@ -39,12 +39,12 @@ describe("Test the Address Entity", () => {
         const data = {
             lat: -9.648198,
             lng: -35.713458,
-            country: 'BR',
-            state: 'Alagoas',
+            country: "BR",
+            state: "Alagoas",
             city: null,
-            neightborhood: '',
-            street: 'Avenida Dona Constança de Góes Monteiro',
-            postal_code: '57036-371'
+            neightborhood: "",
+            street: "Avenida Dona Constança de Góes Monteiro",
+            postal_code: "57036-371"
         }
         try {
             const create = new Addresses(data);
@@ -65,11 +65,11 @@ describe("Test the Address Entity", () => {
             lat: -9.648198,
             lng: -35.713458,
             country: null,
-            state: 'Alagoas',
-            city: 'Maceió',
-            neightborhood: '',
-            street: 'Avenida Dona Constança de Góes Monteiro',
-            postal_code: '57036-371'
+            state: "Alagoas",
+            city: "Maceió",
+            neightborhood: "",
+            street: "Avenida Dona Constança de Góes Monteiro",
+            postal_code: "57036-371"
         }
         try {
             const create = new Addresses(data);

@@ -5,12 +5,12 @@ describe("Test the Redis Cache", () => {
         const address = {
             lat: 0,
             lng: 0,
-            country: '',
-            state: '',
-            city: '',
-            neightborhood: '',
-            street: '',
-            postal_code: '',
+            country: "",
+            state: "",
+            city: "",
+            neightborhood: "",
+            street: "",
+            postal_code: "",
             json: {}
         }
         await new cache.RedisCache().saveAddresInCache(`${geoData.latitude},${geoData.longitude}`, address);

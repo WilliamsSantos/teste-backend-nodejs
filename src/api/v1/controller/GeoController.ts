@@ -33,12 +33,12 @@ export class GeoController {
                 const addressTreated: TreatedAddressObject = {
                     lat: this.latitude,
                     lng: this.longitude,
-                    country: adressFound['adminArea1'],
-                    state: adressFound['adminArea3'],
-                    city: adressFound['adminArea5'],
-                    neightborhood: adressFound['adminArea6'],
-                    street: adressFound['street'],
-                    postal_code: adressFound['postalCode'],
+                    country: adressFound["adminArea1"],
+                    state: adressFound["adminArea3"],
+                    city: adressFound["adminArea5"],
+                    neightborhood: adressFound["adminArea6"],
+                    street: adressFound["street"],
+                    postal_code: adressFound["postalCode"],
                     json: address
                 };
 
@@ -55,7 +55,7 @@ export class GeoController {
             }
         } catch (error) {
             const { message } = error;
-            log('error', message);
+            log("error", message);
             throw new Error(JSON.stringify(message));
         }
     }

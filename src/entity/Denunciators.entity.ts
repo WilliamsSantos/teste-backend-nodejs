@@ -14,8 +14,8 @@ import { DenunciatorValidate } from "./validators/Denounciators.validator";
 export class Denunciators extends entityBase {
 
     constructor(data: DenunciatorObject = {
-        cpf: '',
-        name: ''
+        cpf: "",
+        name: ""
     }) {
         super();
 
@@ -23,7 +23,7 @@ export class Denunciators extends entityBase {
 
         this.name = name;
         this.cpf = cpf;
-        this.setTableName('Denunciators');
+        this.setTableName("Denunciators");
     }
 
     @PrimaryGeneratedColumn()

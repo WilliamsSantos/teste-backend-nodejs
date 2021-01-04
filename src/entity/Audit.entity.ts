@@ -13,9 +13,9 @@ import { AuditObject } from "../interfaces/entity/Interface";
 export class Audit extends BaseEntity {
 
     constructor(data: AuditObject = {
-        cpf: '',
-        json_response: '',
-        json_send: '',
+        cpf: "",
+        json_response: "",
+        json_send: "",
         sucess: false
     }) {
         super();
@@ -48,6 +48,6 @@ export class Audit extends BaseEntity {
     updated_at: Date;
 
     validate(): Promise<Error> {
-        throw new Error("Method not implemented to logs.");
+        throw new Error("Método não implementado para Audit.");
     }
 }

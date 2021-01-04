@@ -8,7 +8,7 @@ const PORT = process.env.DEFAULT_PORT || 3000,
             console.log(`>> Listening on PORT: ${PORT}.`);
         });
 
-process.on('SIGINT', () => {
+process.on("SIGINT", () => {
     server.close();
-    console.log('>> App closed.');
+    console.log(">> App closed.");
 });

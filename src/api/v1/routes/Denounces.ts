@@ -30,7 +30,7 @@ const requestLimiter = rateLimit({
     });
 
 const routerDenounces = Router();
-routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Request, res: Response): Promise<void> => {
+routerDenounces.post("/", requestLimiter, speedRequestLimiter, async (req: Request, res: Response): Promise<void> => {
     const { denounces, denunciator, longitude, latitude }: RequestDenounce = req.body;
 
     let denouncesSave: DenounceCreated, denunciatorSave: DenunciatorCreated, addressSave: AddressCreated;
@@ -75,7 +75,7 @@ routerDenounces.post('/', requestLimiter, speedRequestLimiter, async (req: Reque
         res.status(201).json(responseJson);
     } catch (error) {
         const errors = errorResponse(error);
-        log('error', `Erro message: ${JSON.stringify(errors)}`);
+        log("error", `Erro message: ${JSON.stringify(errors)}`);
         res.status(400).json(errors);
     }
 });

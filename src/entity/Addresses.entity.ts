@@ -9,12 +9,12 @@ export class Addresses extends entityBase {
     constructor(data: Address = {
         lat: 0,
         lng: 0,
-        country: '',
-        state: '',
-        city: '',
-        neightborhood: '',
-        street: '',
-        postal_code: '',
+        country: "",
+        state: "",
+        city: "",
+        neightborhood: "",
+        street: "",
+        postal_code: "",
     }) {
         super();
         const { city, country, lat, lng,
@@ -29,7 +29,7 @@ export class Addresses extends entityBase {
         this.state = state;
         this.street = street;
 
-        this.setTableName('Addresses');
+        this.setTableName("Addresses");
     }
 
     @PrimaryGeneratedColumn()
