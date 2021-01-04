@@ -101,7 +101,7 @@ describe("Test the Denounciator Entity", () => {
             const validate = await create.validate();
             expect(validate).toBeTruthy()
         } catch (error) {
-           console.log();
+           return;
         }
     });
 });

@@ -17,7 +17,6 @@ export class ErrorCodes extends entityBase {
         description: ''
     }) {
         super();
-
         const { code, description } = data;
 
         this.code = code;
@@ -43,7 +42,7 @@ export class ErrorCodes extends entityBase {
     @UpdateDateColumn()
     updated_at: Date;
 
-    validate(): Promise<any> {
+    validate(): Promise<Error> {
         throw new Error("Method not implemented to ErrorsCode.");
     }
 }

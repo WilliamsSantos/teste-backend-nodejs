@@ -60,8 +60,8 @@ describe("Test the Address Entity", () => {
             denunciator_id: 12234,
             address_id: 23455
         }
-        const create = new Denounces(dataDenounces);
         try {
+            const create = new Denounces(dataDenounces);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
@@ -81,8 +81,8 @@ describe("Test the Address Entity", () => {
             denunciator_id: 12234,
             address_id: 23455
         }
-        const create = new Denounces(dataDenounces);
         try {
+            const create = new Denounces(dataDenounces);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
@@ -102,15 +102,15 @@ describe("Test the Address Entity", () => {
             denunciator_id: 12234,
             address_id: 23455
         }
-        const create = new Denounces(dataDenounces);
         try {
+            const create = new Denounces(dataDenounces);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
                 JSON.stringify([
                     {
-                        "code": "Descrição",
-                        "message": "Todas as denuncias precisam de 1 descrição."
+                        "code": "Descricao",
+                        "message": "Descricao não informado."
                     }
                 ])
             ));
@@ -123,15 +123,15 @@ describe("Test the Address Entity", () => {
             denunciator_id: 12234,
             address_id: 23455
         }
-        const create = new Denounces(dataDenounces);
         try {
+            const create = new Denounces(dataDenounces);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
                 JSON.stringify([
                     {
-                        "code": "Descrição",
-                        "message": "Descrição deve ter no minimo 35 letras."
+                        "code": "Descricao",
+                        "message": "Descricao deve ter no minimo 35 letras."
                     }
                 ])
             ));
@@ -144,15 +144,15 @@ describe("Test the Address Entity", () => {
             denunciator_id: 12234,
             address_id: 23455
         }
-        const create = new Denounces(dataDenounces);
         try {
+            const create = new Denounces(dataDenounces);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
                 JSON.stringify([
                     {
-                        "code": "Descrição",
-                        "message": "Descrição deve ter no máximo 355 letras."
+                        "code": "Descricao",
+                        "message": "Descricao deve ter no máximo 355 letras."
                     }
                 ])
             ));

@@ -38,42 +38,42 @@ describe('Test the validators util', () => {
         const stringToTest = "";
         const emptyString = validators['require'](stringToTest);
         expect(emptyString).toBeTruthy();
-    })
+    });
     it('should response with a boolean false if the string is not empty', () => {
         const stringToTest = "Not empty string";
         const notEmptyString = validators['require'](stringToTest);
         expect(notEmptyString).toBeFalsy();
-    })
+    });
     it('should response with a boolean true if the string is less then 3 length', () => {
         const stringToTest = "wi";
         const stringLessThen3Length = validators['min'](stringToTest, 3);
         expect(stringLessThen3Length).toBeTruthy();
-    })
+    });
     it('should response with a boolean false if the string is not less then 3 length', () => {
         const stringToTest = "will";
         const stringNotLessThen3Length = validators['min'](stringToTest, 3);
         expect(stringNotLessThen3Length).toBeFalsy();
-    })
+    });
     it('should response with a boolean true if the string is more then 10 length', () => {
         const stringToTest = "williams Teste the maximun length validator";
         const stringMoreThen10Length = validators['max'](stringToTest, 10);
         expect(stringMoreThen10Length).toBeTruthy();
-    })
+    });
     it('should response with a boolean false if the string is not more then 10 length', () => {
         const stringToTest = "williams S";
         const stringNoMoreThen10Length = validators['max'](stringToTest, 10);
         expect(stringNoMoreThen10Length).toBeFalsy();
-    })
+    });
     it('should response with a boolean true if the string not have only numbers', () => {
         const stringToTest = "114.234.234-33";
         const stringNotHaveOnlyNumbers = validators['onlyNumbers'](stringToTest);
         expect(stringNotHaveOnlyNumbers).toBeTruthy();
-    })
+    });
     it('should response with a boolean false if the string have only numbers', () => {
         const stringToTest = "11423423433";
         const stringNotHaveOnlyNumbers = validators['onlyNumbers'](stringToTest);
         expect(stringNotHaveOnlyNumbers).toBeFalsy();
-    })
+    });
 });
 
 describe('Test the mount object to response util', () => {
@@ -150,5 +150,25 @@ describe('Test the translate field to Pt-Br util', () => {
         const field = "denunciator";
         const result = translateFieldToPtBr(field);
         expect(result).toBe("Denunciante");
+    });
+    it('should input state string and output Estado translate', () => {
+        const field = "state";
+        const result = translateFieldToPtBr(field);
+        expect(result).toBe("Estado");
+    });
+    it('should input denounce string and output Denuncia translate', () => {
+        const field = "denounce";
+        const result = translateFieldToPtBr(field);
+        expect(result).toBe("Denuncia");
+    });
+    it('should input address_id string and output Endereço translate', () => {
+        const field = "address_id";
+        const result = translateFieldToPtBr(field);
+        expect(result).toBe("Endereço");
+    });
+    it('should input description string and output Descricao translate', () => {
+        const field = "description";
+        const result = translateFieldToPtBr(field);
+        expect(result).toBe("Descricao");
     });
 })

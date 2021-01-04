@@ -34,7 +34,7 @@ describe("Test the GEO Controller", () => {
                         })
                     )
         } catch (error) {
-            console.log(error)
+            return;
         }
     });
     test("It should response with false if country not found", async () => {
@@ -49,8 +49,8 @@ describe("Test the GEO Controller", () => {
             postal_code: '2343-234',
             json:{}
         };
-        const Geo = new controller.GeoController(emptyGeo).isValidAddress(address)
-        return expect(Geo).toBe(false)
+        const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
+        return expect(Geo).toBe(false);
     });
     test("It should response with false if state was not found", async () => {
         const address = {
@@ -64,8 +64,8 @@ describe("Test the GEO Controller", () => {
             postal_code: '2343-234',
             json:{}
         };
-        const Geo = new controller.GeoController(emptyGeo).isValidAddress(address)
-        return expect(Geo).toBe(false)
+        const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
+        return expect(Geo).toBe(false);
     });
     test("It should response with false if city not found", async () => {
         const address = {
@@ -79,8 +79,8 @@ describe("Test the GEO Controller", () => {
             postal_code: '2343-234',
             json:{}
         };
-        const Geo = new controller.GeoController(emptyGeo).isValidAddress(address)
-        return expect(Geo).toBe(false)
+        const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
+        return expect(Geo).toBe(false);
     });
     test("It should response with true if the address object its a valid address", async () => {
         const address = {
@@ -94,7 +94,7 @@ describe("Test the GEO Controller", () => {
             postal_code: '2343-234',
             json:{}
         };
-        const Geo = new controller.GeoController(emptyGeo).isValidAddress(address)
-        expect(Geo).toBe(true)
+        const Geo = new controller.GeoController(emptyGeo).isValidAddress(address);
+        expect(Geo).toBe(true);
     });
 });

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 import * as Axios from "axios";
 import { log } from "../../utils/Util";
 import { apiConfig } from "./api.client";

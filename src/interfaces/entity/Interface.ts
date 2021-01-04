@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 export interface DenounceObject { 
     title: string, 
     address_id: number, 

@@ -2,7 +2,7 @@ import * as redis from "redis";
 import { promisify } from "util";
 import { redisConfig } from "../config/Configurations";
 
-let connect =  {
+const connect =  {
   "host": redisConfig.host,
   "port": parseInt(redisConfig.port)
 }

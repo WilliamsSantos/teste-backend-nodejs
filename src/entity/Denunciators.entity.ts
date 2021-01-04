@@ -41,7 +41,7 @@ export class Denunciators extends entityBase {
     @UpdateDateColumn()
     updated_at: Date;
 
-    validate() {
+    validate():Promise<Error> {
         return new DenunciatorValidate(this).validate();
     }
 }

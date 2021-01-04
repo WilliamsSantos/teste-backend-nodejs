@@ -22,9 +22,8 @@ describe("Test the Address Entity", () => {
             street: 'Avenida Dona Constança de Góes Monteiro',
             postal_code: '57036-371'
         }
-        const create = new Addresses(data);
         try {
-            await create.validate();
+            await new Addresses(data).validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
                 JSON.stringify([
@@ -47,8 +46,8 @@ describe("Test the Address Entity", () => {
             street: 'Avenida Dona Constança de Góes Monteiro',
             postal_code: '57036-371'
         }
-        const create = new Addresses(data);
         try {
+            const create = new Addresses(data);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(
@@ -72,8 +71,8 @@ describe("Test the Address Entity", () => {
             street: 'Avenida Dona Constança de Góes Monteiro',
             postal_code: '57036-371'
         }
-        const create = new Addresses(data);
         try {
+            const create = new Addresses(data);
             await create.validate();
         } catch (error) {
             expect(error).toStrictEqual(new Error(

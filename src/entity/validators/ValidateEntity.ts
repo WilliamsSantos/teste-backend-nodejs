@@ -48,13 +48,13 @@ export class ValidateEntity implements ValidateEntityMethods {
             if (Object.prototype.hasOwnProperty.call(rule, type) || String(rule).match(type)) {
                 const validate: string =
                     type.indexOf(':') != -1
-                        ? /:(\w)+/g.exec(type)[0].replace(':', '')
+                        ? /:\w.+/g.exec(type)[0].replace(':', '')
                         : type;
 
                 isNotValid = validators[validate](this.entity[item], rule[type]);
 
                 if (isNotValid)
-                    if (type.match(/num:/)) {
+                    if (type.match(/num:/) || type.match(/str:/)) {
                         objectResponse = this.mountObjectError(translateFieldToPtBr(item), { key: type, value: rule[type] });
                     } else {
                         objectResponse = this.mountObjectError(translateFieldToPtBr(item), { key: type, value: null });

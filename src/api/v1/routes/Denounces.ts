@@ -1,5 +1,5 @@
-import { Request, Response, Router } from "express";
 import { getConnection } from "typeorm";
+import { Request, Response, Router } from "express";
 import { log, errorResponse, mountObjectToResponseFrom } from "../../../utils/Util";
 import {
     DenounceController,

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
 require('dotenv').config();
 require('winston-papertrail').Papertrail;
 import * as transports from "winston-papertrail";

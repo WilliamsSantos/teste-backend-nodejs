@@ -1,7 +1,5 @@
 /* eslint-disable @typescript-eslint/ban-types */
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
-// import { getRepository } from "typeorm";
-// import { ErrorCodes } from "../entity";
 import { logger } from "../../logs";
 import { BruteObjectsDenounces, ResponseDenounce } from "../interfaces/router/Interfaces";
 import { ValidatorsFunctions } from "../interfaces/validator/Interface";
@@ -15,6 +13,7 @@ export function translateFieldToPtBr(fieldToTranslate: string): string {
     let field = "";
     const fields: string[] = [
         "latitude:Latitude",
+        "country:Pais",
         "state:Estado",
         "longitude:Longitude",
         "denunciator_id:Denunciante",
@@ -28,7 +27,7 @@ export function translateFieldToPtBr(fieldToTranslate: string): string {
     ];
     for (const item of fields) {
         if (item.indexOf(fieldToTranslate) != -1) {
-            field = /:(\w)+/g.exec(item)[0].replace(':', '');
+            field = /:\w.+/g.exec(item)[0].replace(':', '');
         }
     }
     return field;

@@ -50,32 +50,32 @@ export class Addresses extends entityBase {
     @Column({
         length: 255
     })
-    street: string
+    street: string;
 
     @Column({
         length: 255
     })
-    neightborhood: string
+    neightborhood: string;
 
     @Column({
         length: 25
     })
-    city: string
+    city: string;
 
     @Column({
         length: 20
     })
-    state: string
+    state: string;
 
     @Column({
         length: 255
     })
-    country: string
+    country: string;
 
     @Column()
-    postal_code: string
+    postal_code: string;
 
-    validate() {
+    validate():Promise<Error> {
         return new addressValidate(this).validate();
     }
 }
